@@ -4,6 +4,7 @@ dotenv.config({ path: `.env.local` });
 
 import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import Image from "next/image";
 
 export default function TextToImgModal({
   open,
@@ -14,7 +15,7 @@ export default function TextToImgModal({
 }) {
   const [imgSrc, setImgSrc] = useState("");
   const [loading, setLoading] = useState(false);
-  const onSubmit = async (e) => {
+  const onSubmit = async (e: any) => {
     e.preventDefault();
     setLoading(true);
     const response = await fetch("/api/txt2img", {
@@ -27,7 +28,7 @@ export default function TextToImgModal({
       },
     });
     const data = await response.json();
-    setImgSrc(data);
+    setImgSrc(data[0]);
     setLoading(false);
   };
   return (
@@ -79,7 +80,16 @@ export default function TextToImgModal({
                     </div>
                   </div>
                 </div>
-                {imgSrc && !loading && <img src={imgSrc} alt="img" />}
+                {imgSrc && !loading && (
+                  <Image
+                    width={0}
+                    height={0}
+                    sizes="100vw"
+                    src={imgSrc}
+                    alt="img"
+                    className="w-full h-full object-contain"
+                  />
+                )}
                 {loading && (
                   <p className="flex items-center justify-center">
                     <svg

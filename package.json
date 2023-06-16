@@ -1,6 +1,6 @@
 {
-  "name": "linkchat",
-  "version": "0.1.0",
+  "name": "ai-getting-started",
+  "version": "0.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",

@@ -3,7 +3,7 @@ import { useState } from "react";
 import Modal from "./Modal";
 import QAModal from "./QAModal";
 import TextToImgModal from "./TextToImgModal";
-
+import Image from "next/image";
 const examples = [
   {
     name: "Text to image",
@@ -46,7 +46,10 @@ export default function Examples() {
           >
             <div className="absolute -bottom-px left-10 right-10 h-px bg-gradient-to-r from-sky-300/0 via-sky-300/70 to-sky-300/0"></div>
             <div className="flex flex-1 flex-col p-8">
-              <img
+              <Image
+                width={0}
+                height={0}
+                sizes="100vw"
                 className="mx-auto h-32 w-32 flex-shrink-0 rounded-full"
                 src={example.imageUrl}
                 alt=""

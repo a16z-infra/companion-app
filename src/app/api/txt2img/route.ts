@@ -7,7 +7,7 @@ dotenv.config({ path: `.env.local` });
 export async function POST(request: Request) {
   const { prompt } = await request.json();
   const replicate = new Replicate({
-    auth: process.env.REPLICATE_API_TOKEN,
+    auth: process.env.REPLICATE_API_TOKEN || "",
   });
 
   const output = await replicate.run(
@@ -19,5 +19,5 @@ export async function POST(request: Request) {
     }
   );
 
-  return NextResponse.json(output[0]);
+  return NextResponse.json(output);
 }
