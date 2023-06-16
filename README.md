@@ -2,15 +2,21 @@
 
 https://ai-getting-started.fly.dev/
 
-### Stack
+## Stack
 
-Auth: Clerk
-App logic: next.js
-VectorDB: Pinecone
-LLM Orchestration: Langchain.js
-Models + inference: Replicate
-Deployment: Fly
+- Auth: Clerk
+- App logic: next.js
+- VectorDB: Pinecone
+- LLM Orchestration: Langchain.js
+- Models + inference: Replicate
+- Deployment: Fly
 
+## Scripts
+
+### Index blogs
+```bash
+node src/scripts/indexBlogs.mjs
+```
 
 ## Operations:
 1. Init a nextjs apphttps://nextjs.org/docs/getting-started/installation
