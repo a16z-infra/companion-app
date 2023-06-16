@@ -11,6 +11,7 @@
   "dependencies": {
     "@clerk/nextjs": "^4.19.1",
     "@headlessui/react": "^1.7.15",
+    "@pinecone-database/pinecone": "^0.1.6",
     "@tailwindcss/forms": "^0.5.3",
     "@types/node": "20.2.5",
     "@types/react": "18.2.8",

@@ -73,7 +73,10 @@ export default function TextToImgModal({
                     <div className="my-2">
                       <p className="text-sm text-gray-500">
                         Powered by{" "}
-                        <a href="https://replicate.com/stability-ai/stable-diffusion">
+                        <a
+                          className="underline"
+                          href="https://replicate.com/stability-ai/stable-diffusion"
+                        >
                           stability-ai/stable-diffusion
                         </a>
                       </p>

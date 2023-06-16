@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import Modal from "./Modal";
 import QAModal from "./QAModal";
 import TextToImgModal from "./TextToImgModal";
 import Image from "next/image";
@@ -21,12 +20,10 @@ const examples = [
 ];
 
 export default function Examples() {
-  const [open, setOpen] = useState(false);
   const [QAModalOpen, setQAModalOpen] = useState(false);
   const [TextToImageModalOpen, setTextToImageModalOpen] = useState(false);
   return (
     <div>
-      <Modal open={open} setOpen={setOpen} />
       <QAModal open={QAModalOpen} setOpen={setQAModalOpen} />
       <TextToImgModal
         open={TextToImageModalOpen}

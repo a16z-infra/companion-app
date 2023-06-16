@@ -19,7 +19,6 @@ Deployment: Fly
 4. Install langchain.js: https://js.langchain.com/docs/getting-started/install
 
 
-
 ## Refs
 - https://js.langchain.com/docs/modules/indexes/vector_stores/integrations/pinecone
 - https://js.langchain.com/docs/modules/models/llms/integrations#replicate
