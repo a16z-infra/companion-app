@@ -5,8 +5,7 @@ import { NextResponse } from "next/server";
 dotenv.config({ path: `.env.local` });
 
 export async function POST(request: Request) {
-  const req = await request.json();
-  console.log(req);``
+  const { prompt } = await request.json();
   const replicate = new Replicate({
     auth: process.env.REPLICATE_API_TOKEN,
   });
@@ -15,10 +14,10 @@ export async function POST(request: Request) {
     "stability-ai/stable-diffusion:db21e45d3f7023abc2a46ee38a23973f6dce16bb082a930b0c49861f96d1e5bf",
     {
       input: {
-        prompt: "a vision of paradise. unreal engine",
+        prompt,
       },
     }
   );
 
-  return NextResponse.json(output);
+  return NextResponse.json(output[0]);
 }

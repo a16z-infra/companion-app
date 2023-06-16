@@ -2,9 +2,8 @@ import dotenv from "dotenv";
 
 dotenv.config({ path: `.env.local` });
 
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import Replicate from "replicate";
 
 export default function TextToImgModal({
   open,
@@ -13,21 +12,23 @@ export default function TextToImgModal({
   open: boolean;
   setOpen: any;
 }) {
+  const [imgSrc, setImgSrc] = useState("");
+  const [loading, setLoading] = useState(false);
   const onSubmit = async (e) => {
     e.preventDefault();
-    const replicate = new Replicate({
-      auth: process.env.REPLICATE_API_TOKEN,
+    setLoading(true);
+    const response = await fetch("/api/txt2img", {
+      method: "POST",
+      body: JSON.stringify({
+        prompt: e.target.value,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
-
-    const output = await replicate.run(
-      "stability-ai/stable-diffusion:db21e45d3f7023abc2a46ee38a23973f6dce16bb082a930b0c49861f96d1e5bf",
-      {
-        input: {
-          prompt: "a vision of paradise. unreal engine",
-        },
-      }
-    );
-    console.log(output);
+    const data = await response.json();
+    setImgSrc(data);
+    setLoading(false);
   };
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -59,7 +60,7 @@ export default function TextToImgModal({
                 <div>
                   <input
                     className="w-full flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm focus:outline-none  sm:text-sm sm:leading-6"
-                    placeholder="Ask a question"
+                    placeholder="Describe the image you want"
                     // when user click enter key, submit the form
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
@@ -67,21 +68,42 @@ export default function TextToImgModal({
                       }
                     }}
                   ></input>
-                  <div className="mt-3 sm:mt-5">
-                    <Dialog.Title
-                      as="h3"
-                      className="text-base font-semibold leading-6 text-gray-300"
-                    >
-                      Ask questions about this project
-                    </Dialog.Title>
-                    <div className="mt-2">
+                  <div className="mt-3">
+                    <div className="my-2">
                       <p className="text-sm text-gray-500">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Consequatur amet labore.
+                        Powered by{" "}
+                        <a href="https://replicate.com/stability-ai/stable-diffusion">
+                          stability-ai/stable-diffusion
+                        </a>
                       </p>
                     </div>
                   </div>
                 </div>
+                {imgSrc && !loading && <img src={imgSrc} alt="img" />}
+                {loading && (
+                  <p className="flex items-center justify-center">
+                    <svg
+                      className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        stroke-width="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
+                    </svg>
+                  </p>
+                )}
               </Dialog.Panel>
             </Transition.Child>
           </div>
