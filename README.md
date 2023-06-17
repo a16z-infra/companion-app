@@ -66,7 +66,7 @@ Now you are ready to test out the app locally! To do this, simply run `npm run d
 
 6. Deploy the app
 You can deploy the app in many platforms: Fly, Netlify, Vercel, Render, Railway.... 
-If you want to deploy the app on fly, simply run `fly launch` and then `fly deploy`; you may also want to run `fly scale memory 512` to scale up the fly vm memory for this app. (TODO - fly secrets)
+If you want to deploy the app on fly, simply run `fly launch`, `cat .env.local | fly secrets import` to upload secrets and then `fly deploy`; you may also want to run `fly scale memory 512` to scale up the fly vm memory for this app. 
 
 ## Refs
 - https://js.langchain.com/docs/modules/indexes/vector_stores/integrations/pinecone
