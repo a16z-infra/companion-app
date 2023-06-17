@@ -73,6 +73,8 @@ platforms: Fly, Netlify, Vercel, Render, Railway....
 
 If you want to deploy the app on fly, simply run `fly launch`, `cat .env.local | fly secrets import` to upload secrets and then `fly deploy`; you may also want to run `fly scale memory 512` to scale up the fly vm memory for this app. 
 
+Lastly, don't forget to update Clerk for the environment you deploy to: simply switch to the "production" environment and add the environment url (TODO - add a screenshot)
+
 ## Refs
 - https://js.langchain.com/docs/modules/indexes/vector_stores/integrations/pinecone
 - https://js.langchain.com/docs/modules/models/llms/integrations#replicate
