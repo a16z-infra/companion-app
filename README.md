@@ -55,6 +55,7 @@ d. **Pinecone API key**
 - Once the index is successfully created, click on "API Keys" on the left side nav and create an API key: copy "Environment" value to `PINECONE_ENVIRONMENT` variable, and "Value" to `PINECONE_API_KEY`
 
 4. Generate embeddings 
+
 There are a few markdown files under `/blogs` directory as examples so you can do Q&A on it. To generate embeddings and store them in the vector database for future queries, you can run the following command: 
 
 ```bash
@@ -62,10 +63,14 @@ node src/scripts/indexBlogs.mjs
 ```
 
 5. Run app locally
+
 Now you are ready to test out the app locally! To do this, simply run `npm run dev` under the project root.
 
 6. Deploy the app
-You can deploy the app in many platforms: Fly, Netlify, Vercel, Render, Railway.... 
+
+You can deploy the app easily in many 
+platforms: Fly, Netlify, Vercel, Render, Railway.... 
+
 If you want to deploy the app on fly, simply run `fly launch`, `cat .env.local | fly secrets import` to upload secrets and then `fly deploy`; you may also want to run `fly scale memory 512` to scale up the fly vm memory for this app. 
 
 ## Refs
