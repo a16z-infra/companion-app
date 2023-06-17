@@ -16,7 +16,7 @@
 ## Quickstart 
 The simplest way to try out this stack is to test it out locally and traverse throgh code files to understand how each component work. Here are the steps to get started. 
 
-1. Fork repo 
+1. Fork repo [NOTE: if they copy the below, they will clone main vs. the fork, should remove 'a16z'/]
 
 ```git clone git@github.com:a16z/ai-getting-started.git```
 
@@ -50,7 +50,7 @@ Visit https://replicate.com/account/api-tokens to get your Replicate API key
 
 d. **Pinecone API key**
 - Create a Pinecone index by visiting https://app.pinecone.io/ and click on "Create Index"
-- Give it an index name (this will be `PINECONE_INDEX`)
+- Give it an index name (this will be the environment variable `PINECONE_INDEX`)
 - Fill in Dimension as `1536`
 - Once the index is successfully created, click on "API Keys" on the left side nav and create an API key: copy "Environment" value to `PINECONE_ENVIRONMENT` variable, and "Value" to `PINECONE_API_KEY`
 
@@ -73,7 +73,7 @@ platforms: Fly, Netlify, Vercel, Render, Railway....
 
 If you want to deploy the app on fly, simply run `fly launch`, `cat .env.local | fly secrets import` to upload secrets and then `fly deploy`; you may also want to run `fly scale memory 512` to scale up the fly vm memory for this app. 
 
-Lastly, don't forget to update Clerk for the environment you deploy to: simply switch to the "production" environment and add the environment url (TODO - add a screenshot)
+Lastly, don't forget to update Clerk for the environment you deploy to: simply switch to the "production" environment and add the environment url (TODO - add a screenshot + tell not to use 'ai-getting-started' name because it is taken + consider single machine deployment so no payment method is prompted)  
 
 ## Refs
 - https://js.langchain.com/docs/modules/indexes/vector_stores/integrations/pinecone
