@@ -30,7 +30,7 @@ npm install
 3. Fill out secrets 
 
 ```
-cp .env.local copy.example .env.local
+cp .env.local.example .env.local
 ```
 
 a. **Clerk Secrets**
