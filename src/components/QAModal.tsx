@@ -13,7 +13,7 @@ export default function QAModal({
   const onSubmit = async (e: any) => {
     e.preventDefault();
     setLoading(true);
-    const response = await fetch("/api/qa", {
+    const response = await fetch("/api/qa-pinecone", {
       method: "POST",
       body: JSON.stringify({
         prompt: e.target.value,
