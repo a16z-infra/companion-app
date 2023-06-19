@@ -13,7 +13,7 @@ export default function QAModal({
   const onSubmit = async (e: any) => {
     e.preventDefault();
     setLoading(true);
-    const response = await fetch("/api/qa", {
+    const response = await fetch("/api/qa-pg-vector", {
       method: "POST",
       body: JSON.stringify({
         prompt: e.target.value,
@@ -24,7 +24,6 @@ export default function QAModal({
     });
     const data = await response.json();
     setAnswer(data.text);
-    // console.log(data);
     setLoading(false);
   };
   return (
@@ -68,7 +67,12 @@ export default function QAModal({
                     <div className="mt-2">
                       <p className="text-sm text-gray-500">
                         Ask questions about{" "}
-                        <a href="https://a16z.com/2023/06/06/ai-will-save-the-world/" className="underline">Why AI Will Save the World</a>
+                        <a
+                          href="https://a16z.com/2023/06/06/ai-will-save-the-world/"
+                          className="underline"
+                        >
+                          Why AI Will Save the World
+                        </a>
                       </p>
                     </div>
                     {answer && !loading && (
