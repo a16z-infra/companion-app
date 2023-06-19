@@ -13,7 +13,7 @@ export default function QAModal({
   const onSubmit = async (e: any) => {
     e.preventDefault();
     setLoading(true);
-    const response = await fetch("/api/qa-pg-vector", {
+    const response = await fetch("/api/qa", {
       method: "POST",
       body: JSON.stringify({
         prompt: e.target.value,
