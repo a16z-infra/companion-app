@@ -16,7 +16,7 @@
 ## Quickstart 
 The simplest way to try out this stack is to test it out locally and traverse throgh code files to understand how each component work. Here are the steps to get started. 
 
-### 1. Fork repo 
+### 1. Clone repo
 
 ```
 git clone git@github.com:a16z/ai-getting-started.git
@@ -70,12 +70,16 @@ Now you are ready to test out the app locally! To do this, simply run `npm run d
 
 ### 6. Deploy the app
 
-You can deploy the app easily on many 
-platforms: Fly, Netlify, Vercel, Render, Railway.... 
+You can deploy the app easily on many platforms: Fly, Netlify, Vercel, Render, Railway.... here are the steps to deploy to a few common platforms. 
 
-If you want to deploy the app on fly, simply run `fly launch`, `cat .env.local | fly secrets import` to upload secrets and then `fly deploy`; you may also want to run `fly scale memory 512` to scale up the fly vm memory for this app. 
+#### Deploy to fly.io
 
-Lastly, don't forget to update Clerk for the environment you deploy to: simply switch to the "production" environment and add the environment url (TODO - add a screenshot)
+- Run `fly launch` -- this will generate a `fly.toml` that includes all the configurations you will need 
+- Run `fly deploy` to deploy the app. You may also want to run `fly scale memory 512` to scale up the fly vm memory for this app. 
+- Now you are ready to create a new production environment under the [current Clerk setup](https://dashboard.clerk.com/). For more details on deploying a production app with Clerk, check out their documentation [here](https://clerk.com/docs/deployments/overview)
+- Create a new file `.env.prod` locally and fill in all the production-environment secrets. Remember to update `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY` by copying secrets from Clerk's production instance
+-`cat .env.prod | fly secrets import` to upload secrets
+
 
 ## Refs
 - https://js.langchain.com/docs/modules/indexes/vector_stores/integrations/pinecone
