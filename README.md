@@ -62,14 +62,23 @@ e. **Supabase API key**
 - Create a Supabase instance [here](https://supabase.com/dashboard/projects); then go to Project Settings -> API 
 - `SUPABASE_URL` is the URL value under "Project URL"
 - `SUPABASE_PRIVATE_KEY` is the key starts with `ey` under Project API Keys
+- Now, you should enable pgvector on Supabase and create a schema. You can do this easily by clicking on "SQL editor" on the left hand side on supabase UI and then clicking on "+New Query". Copy paste [this code snippet](https://github.com/a16z/ai-getting-started/blob/main/pgvector.sql) in the SQL editor and click "Run".
 
 ### 4. Generate embeddings 
 
 There are a few markdown files under `/blogs` directory as examples so you can do Q&A on it. To generate embeddings and store them in the vector database for future queries, you can run the following command: 
 
+#### If using Pinecone
 ```bash
 node src/scripts/indexBlogs.mjs
 ```
+#### If using Supabase pgvector
+In `QAModel.tsx`, replace `/api/qa-pinecone` with `api/qa-pg-vector`.
+
+```bash
+node src/scripts/indexBlogPGVector.mjs
+```
+
 
 ### 5. Run app locally
 
