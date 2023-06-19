@@ -1,6 +1,5 @@
 import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { response } from "express";
 
 export default function QAModal({
   open,
@@ -16,7 +15,7 @@ export default function QAModal({
     e.preventDefault();
     setLoading(true);
 
-    const response = await fetch("/api/qa-pg-vector", {
+    const response = await fetch("/api/qa-pinecone", {
       method: "POST",
       body: JSON.stringify({
         prompt: e.target.value,
