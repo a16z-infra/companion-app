@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint", 
+    "generate": "node src/scripts/indexBlogs.mjs"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.19.1",

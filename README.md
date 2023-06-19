@@ -14,7 +14,7 @@
 - Deployment: [Fly](https://fly.io/)
 
 ## Quickstart 
-The simplest way to try out this stack is to test it out locally and traverse throgh code files to understand how each component work. Here are the steps to get started. 
+The simplest way to try out this stack is to test it out locally and traverse through code files to understand how each component work. Here are the steps to get started. 
 
 ### 1. Clone repo
 
@@ -70,7 +70,7 @@ There are a few markdown files under `/blogs` directory as examples so you can d
 
 #### If using Pinecone
 ```bash
-node src/scripts/indexBlogs.mjs
+npm run generate
 ```
 #### If using Supabase pgvector
 In `QAModel.tsx`, replace `/api/qa-pinecone` with `api/qa-pg-vector`.
