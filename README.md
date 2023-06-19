@@ -7,7 +7,7 @@
 
 - Auth: [Clerk](https://clerk.com/)
 - App logic: [Next.js](https://nextjs.org/)
-- VectorDB: [Pinecone](https://www.pinecone.io/)
+- VectorDB: [Pinecone](https://www.pinecone.io/) / [Supabase pgvector](https://supabase.com/docs/guides/database/extensions/pgvector)
 - LLM Orchestration: [Langchain.js](https://js.langchain.com/docs/) 
 - Image Model: [Replicate](https://replicate.com/)
 - Text Model: [OpenAI](https://platform.openai.com/docs/models)
@@ -50,11 +50,18 @@ c. **Replicate API key**
 
 Visit https://replicate.com/account/api-tokens to get your Replicate API key
 
+> **_NOTE:_**  By default, this template uses Pinecone as vector store, but you can turn on Supabase pgvector easily. This means you only need to fill out either Pinecone API key _or_ Supabase API key. 
+
 d. **Pinecone API key**
 - Create a Pinecone index by visiting https://app.pinecone.io/ and click on "Create Index"
 - Give it an index name (this will be `PINECONE_INDEX`)
 - Fill in Dimension as `1536`
 - Once the index is successfully created, click on "API Keys" on the left side nav and create an API key: copy "Environment" value to `PINECONE_ENVIRONMENT` variable, and "Value" to `PINECONE_API_KEY`
+
+e. **Supabase API key**
+- Create a Supabase instance [here](https://supabase.com/dashboard/projects); then go to Project Settings -> API 
+- `SUPABASE_URL` is the URL value under "Project URL"
+- `SUPABASE_PRIVATE_KEY` is the key starts with `ey` under Project API Keys
 
 ### 4. Generate embeddings 
 
