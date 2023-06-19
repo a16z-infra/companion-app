@@ -9,10 +9,12 @@ export default function QAModal({
   setOpen: any;
 }) {
   const [answer, setAnswer] = useState("");
+  const [pinecone, setPinecone] = useState(true);
   const [loading, setLoading] = useState(false);
   const onSubmit = async (e: any) => {
     e.preventDefault();
     setLoading(true);
+
     const response = await fetch("/api/qa-pinecone", {
       method: "POST",
       body: JSON.stringify({
@@ -25,6 +27,7 @@ export default function QAModal({
     const data = await response.json();
     setAnswer(data.text);
     setLoading(false);
+    setPinecone(response.url.match("/qa-pinecone") !== null);
   };
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -78,6 +81,10 @@ export default function QAModal({
                     {answer && !loading && (
                       <div className="mt-2">
                         <p className="text-sm text-gray-200">{answer}</p>
+                        <p className="text-sm text-gray-500">
+                          Vector store used:{" "}
+                          {pinecone ? "Pinecone" : "Supabase pgvector"}
+                        </p>
                       </div>
                     )}
                     {loading && (
