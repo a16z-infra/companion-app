@@ -26,7 +26,7 @@ The simplest way to try out this stack is to test it out locally and traverse th
 ### 1. Clone repo
 
 ```
-git clone git@github.com:a16z/ai-getting-started.git
+git clone git@github.com:a16z-infra/ai-getting-started.git
 ```
 
 ### 2. Install dependencies 
@@ -69,7 +69,7 @@ e. **Supabase API key**
 - Create a Supabase instance [here](https://supabase.com/dashboard/projects); then go to Project Settings -> API 
 - `SUPABASE_URL` is the URL value under "Project URL"
 - `SUPABASE_PRIVATE_KEY` is the key starts with `ey` under Project API Keys
-- Now, you should enable pgvector on Supabase and create a schema. You can do this easily by clicking on "SQL editor" on the left hand side on supabase UI and then clicking on "+New Query". Copy paste [this code snippet](https://github.com/a16z/ai-getting-started/blob/main/pgvector.sql) in the SQL editor and click "Run".
+- Now, you should enable pgvector on Supabase and create a schema. You can do this easily by clicking on "SQL editor" on the left hand side on supabase UI and then clicking on "+New Query". Copy paste [this code snippet](https://github.com/a16z-infra/ai-getting-started/blob/main/pgvector.sql) in the SQL editor and click "Run".
 
 ### 4. Generate embeddings 
 
@@ -99,7 +99,8 @@ You can deploy the app easily on many platforms: Fly, Netlify, Vercel, Render, R
 
 - Run `fly launch` -- this will generate a `fly.toml` that includes all the configurations you will need 
 - Run `fly deploy -ha=false` to deploy the app -- the -ha flag makes sure fly only spins up one instance, which is included in the free plan. You also want to run `fly scale memory 512` to scale up the fly vm memory for this app. 
-- Now you are ready to create a new production environment under the [current Clerk setup](https://dashboard.clerk.com/). For more details on deploying a production app with Clerk, check out their documentation [here](https://clerk.com/docs/deployments/overview)
+- If you want to deploy the current setup in a different environment (i.e on fly), the existing Clerk development instance should continue to work in a non-localhost setting.
+- If you are ready to deploy to production , you should create a prod environment under the [current Clerk setup](https://dashboard.clerk.com/) on Clerk. For more details on deploying a production app with Clerk, check out their documentation [here](https://clerk.com/docs/deployments/overview). Note that you will likely need to manage your own domain and do domain verification as part of the process.
 - Create a new file `.env.prod` locally and fill in all the production-environment secrets. Remember to update `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY` by copying secrets from Clerk's production instance
 -`cat .env.prod | fly secrets import` to upload secrets
 
