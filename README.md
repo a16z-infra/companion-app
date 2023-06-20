@@ -110,7 +110,8 @@ If you are new to contributing to OSS, here are a step-by-step guide:
 1. Clcik on `Fork` on the top right of this page
 2. Work on your change and push it to your forked repo. Now when you navigate to the forked repo's UI, you should see the following:
 <img width="904" alt="Screen Shot 2023-06-19 at 5 46 05 PM" src="https://github.com/a16z-infra/ai-getting-started/assets/3489963/7f811a08-1751-49b3-8719-7337b5c7dfa9">
-3. Click on "Contribute" -> "Open Pull Request"
+
+3. Click on "Contribute" -> "Open Pull Request".
 4. Once you have a PR, you can add reviewers.
 
 ### Other contribution
