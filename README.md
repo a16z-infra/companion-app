@@ -103,9 +103,9 @@ You can deploy the app easily on many platforms: Fly, Netlify, Vercel, Render, R
 ## How to contribute to this repo
 
 ### Code contribution workflow
-You can fork this repo, make the changes, and create a PR. Add @ykhli or @timqian as reviewers. 
+You can fork this repo, make changes, and create a PR. Add @ykhli or @timqian as reviewers. 
 
-If you are new to contributing to OSS, here are a step-by-step guide: 
+If you are new to contributing on github, here is a step-by-step guide: 
 
 1. Clcik on `Fork` on the top right of this page
 2. Work on your change and push it to your forked repo. Now when you navigate to the forked repo's UI, you should see the following:
