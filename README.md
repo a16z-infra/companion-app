@@ -74,13 +74,13 @@ There are a few markdown files under `/blogs` directory as examples so you can d
 
 #### If using Pinecone
 ```bash
-npm run generate
+npm run generate-embeddings-pinecone
 ```
 #### If using Supabase pgvector
 In `QAModel.tsx`, replace `/api/qa-pinecone` with `api/qa-pg-vector`.
 
 ```bash
-node src/scripts/indexBlogPGVector.mjs
+npm run generate-embeddings-supabase
 ```
 
 
