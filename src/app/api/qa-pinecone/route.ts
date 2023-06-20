@@ -4,7 +4,8 @@ import { VectorDBQAChain } from "langchain/chains";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { OpenAI } from "langchain/llms/openai";
 import { PineconeStore } from "langchain/vectorstores/pinecone";
-import { NextResponse } from "next/server";
+import { StreamingTextResponse, LangChainStream } from "ai";
+import { CallbackManager } from "langchain/callbacks";
 
 dotenv.config({ path: `.env.local` });
 
@@ -22,16 +23,19 @@ export async function POST(request: Request) {
     { pineconeIndex }
   );
 
-  /* Use as part of a chain (currently no metadata filters) */
+  const { stream, handlers } = LangChainStream();
   const model = new OpenAI({
+    streaming: true,
     modelName: "gpt-3.5-turbo-16k",
     openAIApiKey: process.env.OPENAI_API_KEY,
+    callbackManager: CallbackManager.fromHandlers(handlers),
   });
+
   const chain = VectorDBQAChain.fromLLM(model, vectorStore, {
     k: 1,
     returnSourceDocuments: true,
   });
-  const response = await chain.call({ query: prompt });
-  console.log(response);
-  return NextResponse.json(response);
+  chain.call({ query: prompt }).catch(console.error);
+
+  return new StreamingTextResponse(stream);
 }

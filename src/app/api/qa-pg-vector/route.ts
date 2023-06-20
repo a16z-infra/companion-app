@@ -4,12 +4,14 @@ import { createClient } from "@supabase/supabase-js";
 import { OpenAI } from "langchain/llms/openai";
 import dotenv from "dotenv";
 import { VectorDBQAChain } from "langchain/chains";
-import { NextResponse } from "next/server";
+import { StreamingTextResponse, LangChainStream } from "ai";
+import { CallbackManager } from "langchain/callbacks";
 
 dotenv.config({ path: `.env.local` });
 
-export async function POST(request: Request) {
-  const { prompt } = await request.json();
+export async function POST(req: Request) {
+  const { prompt } = await req.json()
+
   const privateKey = process.env.SUPABASE_PRIVATE_KEY;
   if (!privateKey) throw new Error(`Expected env var SUPABASE_PRIVATE_KEY`);
 
@@ -26,18 +28,21 @@ export async function POST(request: Request) {
       queryName: "match_documents",
     }
   );
-  const result = await vectorStore.similaritySearch(prompt, 1);
+
+  const { stream, handlers } = LangChainStream();
 
   const model = new OpenAI({
+    streaming: true,
     modelName: "gpt-3.5-turbo-16k",
     openAIApiKey: process.env.OPENAI_API_KEY,
-  });
-  const chain = VectorDBQAChain.fromLLM(model, vectorStore, {
-    k: 1,
-    returnSourceDocuments: true,
+    callbackManager: CallbackManager.fromHandlers(handlers),
   });
 
-  const response = await chain.call({ query: prompt });
-  console.log(response);
-  return NextResponse.json(response);
+  const chain = VectorDBQAChain.fromLLM(model, vectorStore, {
+    k: 1,
+    returnSourceDocuments: false,
+  });
+
+  chain.call({ query: prompt }).catch(console.error);
+  return new StreamingTextResponse(stream);
 }
