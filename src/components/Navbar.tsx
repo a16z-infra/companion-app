@@ -5,7 +5,7 @@ import Link from "next/link";
 const navigation = [
   {
     name: "About",
-    href: "https://github.com/a16z/ai-getting-started",
+    href: "https://github.com/a16z-infra/ai-getting-started",
     current: false,
   },
   // { name: "Github", href: "#", current: false },
