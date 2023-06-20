@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate-embeddings-pinecone": "node src/scripts/indexBlogs.mjs",
+    "generate-embeddings-supabase": "node src/scripts/indexBlogPGVector.mjs"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.19.1",

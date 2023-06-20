@@ -1,6 +1,6 @@
 // Call embeding API and insert to supabase
-// Ref: https://js.langchain.com/docs/modules/indexes/vector_stores/integrations/pinecone
-//      https://js.langchain.com/docs/modules/indexes/vector_stores/integrations/supabase
+// Ref: https://js.langchain.com/docs/modules/indexes/vector_stores/integrations/supabase
+
 import dotenv from "dotenv";
 import { Document } from "langchain/document";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
@@ -22,7 +22,10 @@ const lanchainDocs = fileNames.map((fileName) => {
   });
 });
 
-const client = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_PRIVATE_KEY);
+const client = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_PRIVATE_KEY
+);
 
 await SupabaseVectorStore.fromDocuments(
   lanchainDocs,
