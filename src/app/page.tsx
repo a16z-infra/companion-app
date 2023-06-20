@@ -11,7 +11,7 @@ export default function Home() {
         </h1>
 
         <p className="mx-auto mt-4 max-w-xl text-center text-xl leading-8 text-slate-400">
-          Help you setup an AI project with ease, example use cases:
+          Help you setup an AI project with ease. Here are two example use cases:
         </p>
 
         <Examples />

@@ -1,5 +1,6 @@
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import { useCompletion } from "ai/react";
 
 export default function QAModal({
   open,
@@ -8,25 +9,11 @@ export default function QAModal({
   open: boolean;
   setOpen: any;
 }) {
-  const [answer, setAnswer] = useState("");
-  const [loading, setLoading] = useState(false);
-  const onSubmit = async (e: any) => {
-    e.preventDefault();
-    setLoading(true);
-    const response = await fetch("/api/qa", {
-      method: "POST",
-      body: JSON.stringify({
-        prompt: e.target.value,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
+  const { completion, input, isLoading, handleInputChange, handleSubmit } =
+    useCompletion({
+      api: "/api/qa-pg-vector",
     });
-    const data = await response.json();
-    setAnswer(data.text);
-    // console.log(data);
-    setLoading(false);
-  };
+
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={setOpen}>
@@ -55,29 +42,34 @@ export default function QAModal({
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-gray-800 px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:p-6 w-full max-w-3xl">
                 <div>
-                  <input
-                    placeholder="Will AI Take All Our Jobs?"
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        onSubmit(e);
-                      }
-                    }}
-                    className="w-full flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm focus:outline-none  sm:text-sm sm:leading-6"
-                  ></input>
+                  <form onSubmit={handleSubmit}>
+                    <input
+                      placeholder="Will AI Take All Our Jobs?"
+                      className="w-full flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm focus:outline-none  sm:text-sm sm:leading-6"
+                      value={input}
+                      onChange={handleInputChange}
+                    />
+                  </form>
                   <div className="mt-3 sm:mt-5">
                     <div className="mt-2">
                       <p className="text-sm text-gray-500">
                         Ask questions about{" "}
-                        <a href="https://a16z.com/2023/06/06/ai-will-save-the-world/" className="underline">Why AI Will Save the World</a>
+                        <a
+                          href="https://a16z.com/2023/06/06/ai-will-save-the-world/"
+                          className="underline"
+                        >
+                          Why AI Will Save the World
+                        </a>
                       </p>
                     </div>
-                    {answer && !loading && (
+                    {completion && (
                       <div className="mt-2">
-                        <p className="text-sm text-gray-200">{answer}</p>
+                        <p className="text-sm text-gray-200">{completion}</p>
                       </div>
                     )}
-                    {loading && (
-                      <p className="flex items-center justify-center">
+
+                    {isLoading && !completion && (
+                      <p className="flex items-center justify-center mt-4">
                         <svg
                           className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
                           xmlns="http://www.w3.org/2000/svg"

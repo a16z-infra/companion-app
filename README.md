@@ -5,29 +5,35 @@
 
 ## Stack
 
-- Auth: Clerk
-- App logic: Next.js
-- VectorDB: Pinecone
-- LLM Orchestration: Langchain.js 
-- Image Model: Replicate
-- Text Model: OpenAI
-- Deployment: Fly
+- Auth: [Clerk](https://clerk.com/)
+- App logic: [Next.js](https://nextjs.org/)
+- VectorDB: [Pinecone](https://www.pinecone.io/) / [Supabase pgvector](https://supabase.com/docs/guides/database/extensions/pgvector)
+- LLM Orchestration: [Langchain.js](https://js.langchain.com/docs/) 
+- Image Model: [Replicate](https://replicate.com/)
+- Text Model: [OpenAI](https://platform.openai.com/docs/models)
+- Deployment: [Fly](https://fly.io/)
+
+## Overview
+- 🚀 [Quickstart](#quickstart)
+- 💻 [Contribute to this repo](#how-to-contribute-to-this-repo)
 
 ## Quickstart 
-The simplest way to try out this stack is to test it out locally and traverse throgh code files to understand how each component work. Here are the steps to get started. 
+The simplest way to try out this stack is to test it out locally and traverse through code files to understand how each component work. Here are the steps to get started. 
 
-1. Fork repo [NOTE: if they copy the below, they will clone main vs. the fork, should remove 'a16z'/]
+### 1. Clone repo
 
-```git clone git@github.com:a16z/ai-getting-started.git```
+```
+git clone git@github.com:a16z/ai-getting-started.git
+```
 
-2. Install dependencies 
+### 2. Install dependencies 
 
 ```
 cd ai-getting-started
 npm install 
 ```
 
-3. Fill out secrets 
+### 3. Fill out secrets 
 
 ```
 cp .env.local.example .env.local
@@ -48,32 +54,68 @@ c. **Replicate API key**
 
 Visit https://replicate.com/account/api-tokens to get your Replicate API key
 
+> **_NOTE:_**  By default, this template uses Pinecone as vector store, but you can turn on Supabase pgvector easily. This means you only need to fill out either Pinecone API key _or_ Supabase API key. 
+
 d. **Pinecone API key**
 - Create a Pinecone index by visiting https://app.pinecone.io/ and click on "Create Index"
 - Give it an index name (this will be the environment variable `PINECONE_INDEX`)
 - Fill in Dimension as `1536`
 - Once the index is successfully created, click on "API Keys" on the left side nav and create an API key: copy "Environment" value to `PINECONE_ENVIRONMENT` variable, and "Value" to `PINECONE_API_KEY`
 
-4. Generate embeddings 
+e. **Supabase API key**
+- Create a Supabase instance [here](https://supabase.com/dashboard/projects); then go to Project Settings -> API 
+- `SUPABASE_URL` is the URL value under "Project URL"
+- `SUPABASE_PRIVATE_KEY` is the key starts with `ey` under Project API Keys
+- Now, you should enable pgvector on Supabase and create a schema. You can do this easily by clicking on "SQL editor" on the left hand side on supabase UI and then clicking on "+New Query". Copy paste [this code snippet](https://github.com/a16z/ai-getting-started/blob/main/pgvector.sql) in the SQL editor and click "Run".
+
+### 4. Generate embeddings 
 
 There are a few markdown files under `/blogs` directory as examples so you can do Q&A on it. To generate embeddings and store them in the vector database for future queries, you can run the following command: 
 
+#### If using Pinecone
 ```bash
-node src/scripts/indexBlogs.mjs
+npm run generate-embeddings-pinecone
+```
+#### If using Supabase pgvector
+In `QAModel.tsx`, replace `/api/qa-pinecone` with `api/qa-pg-vector`.
+
+```bash
+npm run generate-embeddings-supabase
 ```
 
-5. Run app locally
+
+### 5. Run app locally
 
 Now you are ready to test out the app locally! To do this, simply run `npm run dev` under the project root.
 
-6. Deploy the app
+### 6. Deploy the app
 
-You can deploy the app easily on many 
-platforms: Fly, Netlify, Vercel, Render, Railway.... 
+You can deploy the app easily on many platforms: Fly, Netlify, Vercel, Render, Railway.... here are the steps to deploy to a few common platforms. 
 
-If you want to deploy the app on fly, simply run `fly launch`, `cat .env.local | fly secrets import` to upload secrets and then `fly deploy`; you may also want to run `fly scale memory 512` to scale up the fly vm memory for this app. 
+#### Deploy to fly.io
 
-Lastly, don't forget to update Clerk for the environment you deploy to: simply switch to the "production" environment and add the environment url (TODO - add a screenshot + tell not to use 'ai-getting-started' name because it is taken + consider single machine deployment so no payment method is prompted)  
+- Run `fly launch` -- this will generate a `fly.toml` that includes all the configurations you will need 
+- Run `fly deploy -ha=false` to deploy the app -- the -ha flag makes sure fly only spins up one instance, which is included in the free plan. You also want to run `fly scale memory 512` to scale up the fly vm memory for this app. 
+- Now you are ready to create a new production environment under the [current Clerk setup](https://dashboard.clerk.com/). For more details on deploying a production app with Clerk, check out their documentation [here](https://clerk.com/docs/deployments/overview)
+- Create a new file `.env.prod` locally and fill in all the production-environment secrets. Remember to update `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY` by copying secrets from Clerk's production instance
+-`cat .env.prod | fly secrets import` to upload secrets
+
+## How to contribute to this repo
+
+### Code contribution workflow
+You can fork this repo, make changes, and create a PR. Add @ykhli or @timqian as reviewers. 
+
+If you are new to contributing on github, here is a step-by-step guide: 
+
+1. Clcik on `Fork` on the top right of this page
+2. Work on your change and push it to your forked repo. Now when you navigate to the forked repo's UI, you should see the following:
+<img width="904" alt="Screen Shot 2023-06-19 at 5 46 05 PM" src="https://github.com/a16z-infra/ai-getting-started/assets/3489963/7f811a08-1751-49b3-8719-7337b5c7dfa9">
+
+3. Click on "Contribute" -> "Open Pull Request".
+4. Once you have a PR, you can add reviewers.
+
+### Other contributions
+Feel free to open feature requests, bug reports etc under Issues.
 
 ## Refs
 - https://js.langchain.com/docs/modules/indexes/vector_stores/integrations/pinecone
