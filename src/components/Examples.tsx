@@ -6,7 +6,7 @@ import Image from "next/image";
 const examples = [
   {
     name: "Text to image",
-    title: "Powered by stable-diffusion model on Replicate",
+    title: "Powered by stable-diffusion on Replicate",
     imageUrl:
       "https://tjzk.replicate.delivery/models_models_featured_image/710f5e9f-9561-4e4f-9d1e-614205f62597/stable-diffusion.webp",
   },

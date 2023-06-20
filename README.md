@@ -58,7 +58,7 @@ Visit https://replicate.com/account/api-tokens to get your Replicate API key
 
 d. **Pinecone API key**
 - Create a Pinecone index by visiting https://app.pinecone.io/ and click on "Create Index"
-- Give it an index name (this will be `PINECONE_INDEX`)
+- Give it an index name (this will be the environment variable `PINECONE_INDEX`)
 - Fill in Dimension as `1536`
 - Once the index is successfully created, click on "API Keys" on the left side nav and create an API key: copy "Environment" value to `PINECONE_ENVIRONMENT` variable, and "Value" to `PINECONE_API_KEY`
 
@@ -116,7 +116,6 @@ If you are new to contributing on github, here is a step-by-step guide:
 
 ### Other contributions
 Feel free to open feature requests, bug reports etc under Issues.
-
 
 ## Refs
 - https://js.langchain.com/docs/modules/indexes/vector_stores/integrations/pinecone
