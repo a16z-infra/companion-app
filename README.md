@@ -1,6 +1,9 @@
 # AI Getting Started
 
-<img width="1346" alt="Screen Shot 2023-06-16 at 10 37 51 PM" src="https://github.com/a16z/ai-getting-started/assets/3489963/f09753fc-daf1-4176-904e-b320d2c68fd1">
+[Live Demo (deployed on fly.io)](https://ai-getting-started.com/)
+
+<img width="1305" alt="Screen Shot 2023-06-20 at 1 30 56 PM" src="https://github.com/a16z-infra/ai-getting-started/assets/3489963/66e6fc87-0193-4b4c-a346-f8d6cf623d2f">
+
 
 
 ## Stack
