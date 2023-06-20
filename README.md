@@ -114,7 +114,7 @@ If you are new to contributing on github, here is a step-by-step guide:
 3. Click on "Contribute" -> "Open Pull Request".
 4. Once you have a PR, you can add reviewers.
 
-### Other contribution
+### Other contributions
 Feel free to open feature requests, bug reports etc under Issues.
 
 
