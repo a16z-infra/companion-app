@@ -1,3 +1,5 @@
+-- Reference: https://js.langchain.com/docs/modules/indexes/vector_stores/integrations/supabase#create-a-table-and-search-function-in-your-database
+-- Visit Supabase blogpost for more: https://supabase.com/blog/openai-embeddings-postgres-vector
 -- Enable the pgvector extension to work with embedding vectors
 create extension vector;
 
