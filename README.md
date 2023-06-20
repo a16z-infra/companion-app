@@ -13,6 +13,10 @@
 - Text Model: [OpenAI](https://platform.openai.com/docs/models)
 - Deployment: [Fly](https://fly.io/)
 
+## Overview
+- 🚀 [Quickstart](#quickstart)
+- 💻 [Contribute to this repo](#how-to-contribute-to-this-repo)
+
 ## Quickstart 
 The simplest way to try out this stack is to test it out locally and traverse throgh code files to understand how each component work. Here are the steps to get started. 
 
@@ -95,6 +99,22 @@ You can deploy the app easily on many platforms: Fly, Netlify, Vercel, Render, R
 - Now you are ready to create a new production environment under the [current Clerk setup](https://dashboard.clerk.com/). For more details on deploying a production app with Clerk, check out their documentation [here](https://clerk.com/docs/deployments/overview)
 - Create a new file `.env.prod` locally and fill in all the production-environment secrets. Remember to update `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY` by copying secrets from Clerk's production instance
 -`cat .env.prod | fly secrets import` to upload secrets
+
+## How to contribute to this repo
+
+### Code contribution workflow
+You can fork this repo, make the changes, and create a PR. Add @ykhli or @timqian as reviewers. 
+
+If you are new to contributing to OSS, here are a step-by-step guide: 
+
+1. Clcik on `Fork` on the top right of this page
+2. Work on your change and push it to your forked repo. Now when you navigate to the forked repo's UI, you should see the following:
+<img width="904" alt="Screen Shot 2023-06-19 at 5 46 05 PM" src="https://github.com/a16z-infra/ai-getting-started/assets/3489963/7f811a08-1751-49b3-8719-7337b5c7dfa9">
+3. Click on "Contribute" -> "Open Pull Request"
+4. Once you have a PR, you can add reviewers.
+
+### Other contribution
+Feel free to open feature requests, bug reports etc under Issues.
 
 
 ## Refs
