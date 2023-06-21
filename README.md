@@ -23,10 +23,11 @@
 ## Quickstart 
 The simplest way to try out this stack is to test it out locally and traverse through code files to understand how each component work. Here are the steps to get started. 
 
-### 1. Clone repo
+### 1. Fork and Clone repo
 
+Fork the repo to your Github account, then run the following command to clone the repo: 
 ```
-git clone git@github.com:a16z-infra/ai-getting-started.git
+git clone git@github.com:[YOUR_GITHUB_ACCOUNT_NAME]/ai-getting-started.git
 ```
 
 ### 2. Install dependencies 
@@ -73,14 +74,15 @@ e. **Supabase API key**
 
 ### 4. Generate embeddings 
 
-There are a few markdown files under `/blogs` directory as examples so you can do Q&A on it. To generate embeddings and store them in the vector database for future queries, you can run the following command: 
+There are a few markdown files under `/blogs` directory as examples so you can do Q&A on them. To generate embeddings and store them in the vector database for future queries, you can run the following command: 
 
 #### If using Pinecone
+Run the following command to generate embeddings and store them in Pinecone: 
 ```bash
 npm run generate-embeddings-pinecone
 ```
 #### If using Supabase pgvector
-In `QAModel.tsx`, replace `/api/qa-pinecone` with `api/qa-pg-vector`.
+In `QAModel.tsx`, replace `/api/qa-pinecone` with `/api/qa-pg-vector`. Then run the following command to generate embeddings and store them in Supabase pgvector:
 
 ```bash
 npm run generate-embeddings-supabase
@@ -93,26 +95,29 @@ Now you are ready to test out the app locally! To do this, simply run `npm run d
 
 ### 6. Deploy the app
 
-You can deploy the app easily on many platforms: Fly, Netlify, Vercel, Render, Railway.... here are the steps to deploy to a few common platforms. 
-
 #### Deploy to fly.io
-
-- Run `fly launch` -- this will generate a `fly.toml` that includes all the configurations you will need 
+- Register an account on fly.io and then [install flyctl](https://fly.io/docs/hands-on/install-flyctl/)
+- Run `fly launch` under project root -- this will generate a `fly.toml` that includes all the configurations you will need 
 - Run `fly deploy -ha=false` to deploy the app -- the -ha flag makes sure fly only spins up one instance, which is included in the free plan. You also want to run `fly scale memory 512` to scale up the fly vm memory for this app. 
-- If you want to deploy the current setup in a different environment (i.e on fly), the existing Clerk development instance should continue to work in a non-localhost setting.
-- If you are ready to deploy to production , you should create a prod environment under the [current Clerk setup](https://dashboard.clerk.com/) on Clerk. For more details on deploying a production app with Clerk, check out their documentation [here](https://clerk.com/docs/deployments/overview). Note that you will likely need to manage your own domain and do domain verification as part of the process.
+- For any other non-localhost environment, the existing Clerk development instance should continue to work. You can upload the secrets to Fly by running `cat .env.local | fly secrets import`
+- If you are ready to deploy to production, you should create a prod environment under the [current Clerk instance](https://dashboard.clerk.com/). For more details on deploying a production app with Clerk, check out their documentation [here](https://clerk.com/docs/deployments/overview). **Note that you will likely need to manage your own domain and do domain verification as part of the process.**
 - Create a new file `.env.prod` locally and fill in all the production-environment secrets. Remember to update `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY` by copying secrets from Clerk's production instance
 -`cat .env.prod | fly secrets import` to upload secrets
+
+#### Other deployment options
+- [Netlify](https://www.netlify.com/)
+- [Vercel](https://vercel.com/)
+
 
 ## How to contribute to this repo
 
 ### Code contribution workflow
-You can fork this repo, make changes, and create a PR. Add @ykhli or @timqian as reviewers. 
+You can fork this repo, make changes, and create a PR. Add **@ykhli or @timqian** as reviewers. 
 
 If you are new to contributing on github, here is a step-by-step guide: 
 
 1. Clcik on `Fork` on the top right of this page
-2. Work on your change and push it to your forked repo. Now when you navigate to the forked repo's UI, you should see the following:
+2. Work on your change and push it to your forked repo. Now when you navigate to the forked repo's UI, you should see something like the following:
 <img width="904" alt="Screen Shot 2023-06-19 at 5 46 05 PM" src="https://github.com/a16z-infra/ai-getting-started/assets/3489963/7f811a08-1751-49b3-8719-7337b5c7dfa9">
 
 3. Click on "Contribute" -> "Open Pull Request".
