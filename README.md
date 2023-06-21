@@ -105,8 +105,8 @@ Now you are ready to test out the app locally! To do this, simply run `npm run d
 -`cat .env.prod | fly secrets import` to upload secrets
 
 #### Other deployment options
-[Netlify](https://www.netlify.com/)
-[Vercel](https://vercel.com/)
+- [Netlify](https://www.netlify.com/)
+- [Vercel](https://vercel.com/)
 
 
 ## How to contribute to this repo
