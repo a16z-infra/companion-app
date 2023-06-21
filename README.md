@@ -15,6 +15,7 @@
 - LLM Orchestration: [Langchain.js](https://js.langchain.com/docs/) 
 - Image Model: [Replicate](https://replicate.com/)
 - Text Model: [OpenAI](https://platform.openai.com/docs/models)
+- Text streamming: [ai sdk](https://github.com/vercel-labs/ai)
 - Deployment: [Fly](https://fly.io/)
 
 ## Overview
