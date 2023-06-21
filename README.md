@@ -93,8 +93,6 @@ Now you are ready to test out the app locally! To do this, simply run `npm run d
 
 ### 6. Deploy the app
 
-You can deploy the app easily on many platforms: Fly, Netlify, Vercel, Render, Railway.... here are the steps to deploy to a few common platforms. 
-
 #### Deploy to fly.io
 
 - Run `fly launch` -- this will generate a `fly.toml` that includes all the configurations you will need 
@@ -103,6 +101,11 @@ You can deploy the app easily on many platforms: Fly, Netlify, Vercel, Render, R
 - If you are ready to deploy to production , you should create a prod environment under the [current Clerk setup](https://dashboard.clerk.com/) on Clerk. For more details on deploying a production app with Clerk, check out their documentation [here](https://clerk.com/docs/deployments/overview). Note that you will likely need to manage your own domain and do domain verification as part of the process.
 - Create a new file `.env.prod` locally and fill in all the production-environment secrets. Remember to update `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY` by copying secrets from Clerk's production instance
 -`cat .env.prod | fly secrets import` to upload secrets
+
+#### Other deployment options
+[Netlify](https://www.netlify.com/)
+[Vercel](https://vercel.com/)
+
 
 ## How to contribute to this repo
 
