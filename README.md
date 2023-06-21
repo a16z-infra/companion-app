@@ -2,8 +2,9 @@
 
 [Live Demo (deployed on fly.io)](https://ai-getting-started.com/)
 
-<img width="1305" alt="Screen Shot 2023-06-20 at 1 30 56 PM" src="https://github.com/a16z-infra/ai-getting-started/assets/3489963/66e6fc87-0193-4b4c-a346-f8d6cf623d2f">
 
+
+<img width="1305" alt="Screen Shot 2023-06-20 at 1 30 56 PM" src="https://github.com/a16z-infra/ai-getting-started/assets/3489963/bcc762d2-68f5-4c4e-8c49-14602bee4995">
 
 
 ## Stack
@@ -47,8 +48,8 @@ a. **Clerk Secrets**
 
 Go to https://dashboard.clerk.com/ -> "Add Application" -> Fill in Application name/select how your users should sign in -> Create Application
 Now you should see both `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY` on the screen
+<img width="1011" alt="clerk" src="https://github.com/a16z-infra/ai-getting-started/assets/3489963/6ce72263-4e83-406d-838e-08a95ea79023">
 
-<img width="1011" alt="Screen Shot 2023-06-16 at 10 23 56 PM" src="https://github.com/a16z/ai-getting-started/assets/3489963/d816b8a7-9bd6-451c-8e26-becd2a1c819a">
 
 b. **OpenAI API key**
 
@@ -118,7 +119,8 @@ If you are new to contributing on github, here is a step-by-step guide:
 
 1. Clcik on `Fork` on the top right of this page
 2. Work on your change and push it to your forked repo. Now when you navigate to the forked repo's UI, you should see something like the following:
-<img width="904" alt="Screen Shot 2023-06-19 at 5 46 05 PM" src="https://github.com/a16z-infra/ai-getting-started/assets/3489963/7f811a08-1751-49b3-8719-7337b5c7dfa9">
+<img width="904" alt="pr-preview" src="https://github.com/a16z-infra/ai-getting-started/assets/3489963/631e5f45-39ec-4b54-b9d1-b963e279dcc6">
+
 
 3. Click on "Contribute" -> "Open Pull Request".
 4. Once you have a PR, you can add reviewers.
