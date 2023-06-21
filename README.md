@@ -95,10 +95,10 @@ Now you are ready to test out the app locally! To do this, simply run `npm run d
 
 #### Deploy to fly.io
 
-- Run `fly launch` -- this will generate a `fly.toml` that includes all the configurations you will need 
+- Run `fly launch` under project root -- this will generate a `fly.toml` that includes all the configurations you will need 
 - Run `fly deploy -ha=false` to deploy the app -- the -ha flag makes sure fly only spins up one instance, which is included in the free plan. You also want to run `fly scale memory 512` to scale up the fly vm memory for this app. 
-- If you want to deploy the current setup in a different environment (i.e on fly), the existing Clerk development instance should continue to work in a non-localhost setting.
-- If you are ready to deploy to production , you should create a prod environment under the [current Clerk setup](https://dashboard.clerk.com/) on Clerk. For more details on deploying a production app with Clerk, check out their documentation [here](https://clerk.com/docs/deployments/overview). Note that you will likely need to manage your own domain and do domain verification as part of the process.
+- For any other non-localhost environment, the existing Clerk development instance should continue to work. You can upload the secrets to Fly by running `cat .env.local | fly secrets import`
+- If you are ready to deploy to production, you should create a prod environment under the [current Clerk instance](https://dashboard.clerk.com/). For more details on deploying a production app with Clerk, check out their documentation [here](https://clerk.com/docs/deployments/overview). **Note that you will likely need to manage your own domain and do domain verification as part of the process.**
 - Create a new file `.env.prod` locally and fill in all the production-environment secrets. Remember to update `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY` by copying secrets from Clerk's production instance
 -`cat .env.prod | fly secrets import` to upload secrets
 
