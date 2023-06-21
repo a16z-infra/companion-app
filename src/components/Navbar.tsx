@@ -8,7 +8,6 @@ const navigation = [
     href: "https://github.com/a16z-infra/ai-getting-started",
     current: false,
   },
-  // { name: "Github", href: "#", current: false },
 ];
 
 function classNames(...classes: string[]) {
