@@ -6,7 +6,7 @@ import { Document } from "langchain/document";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { SupabaseVectorStore } from "langchain/vectorstores/supabase";
 import { createClient } from "@supabase/supabase-js";
-import { CharacterTextSplitter } from "langchain/text_splitter";
+import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 
 import fs from "fs";
 import path from "path";
@@ -14,40 +14,42 @@ import path from "path";
 dotenv.config({ path: `.env.local` });
 
 const fileNames = fs.readdirSync("blogs");
-const splitter = new CharacterTextSplitter({
-  chunkSize: 1536,
-  chunkOverlap: 200,
+const splitter = RecursiveCharacterTextSplitter.fromLanguage("markdown", {
+  chunkSize: 1000,
+  chunkOverlap: 50,
 });
 
-const lanchainDocs = await Promise.all(
+const langchainDocs = await Promise.all(
   fileNames.map(async (fileName) => {
     const filePath = path.join("blogs", fileName);
     const fileContent = fs.readFileSync(filePath, "utf8");
-
-    const splitDocs = await splitter.creatDocuments(
-      [fileContent],
-      [{ fileName }],
-      {
-        chunkHeader: "DOCUMENT NAME: " + fileName + "\n",
-        appendChunkOverlapHeader: true,
-      }
-    );
-    return splitDocs;
+    const splitDocs = await splitter.splitText(fileContent);
+    return splitDocs.map((doc) => {
+      return new Document({
+        metadata: { fileName },
+        pageContent: doc,
+      });
+    });
   })
 );
 
-console.log(lanchainDocs);
+const auth = {
+  detectSessionInUrl: false,
+  persistSession: false,
+  autoRefreshToken: false,
+};
 
-// const client = createClient(
-//   process.env.SUPABASE_URL,
-//   process.env.SUPABASE_PRIVATE_KEY
-// );
+const client = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_PRIVATE_KEY,
+  { auth }
+);
 
-// await SupabaseVectorStore.fromDocuments(
-//   lanchainDocs,
-//   new OpenAIEmbeddings({ openAIApiKey: process.env.OPENAI_API_KEY }),
-//   {
-//     client,
-//     tableName: "documents",
-//   }
-// );
+await SupabaseVectorStore.fromDocuments(
+  langchainDocs.flat(),
+  new OpenAIEmbeddings({ openAIApiKey: process.env.OPENAI_API_KEY }),
+  {
+    client,
+    tableName: "documents",
+  }
+);

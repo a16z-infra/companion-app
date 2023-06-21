@@ -10,7 +10,7 @@ import { CallbackManager } from "langchain/callbacks";
 dotenv.config({ path: `.env.local` });
 
 export async function POST(req: Request) {
-  const { prompt } = await req.json()
+  const { prompt } = await req.json();
 
   const privateKey = process.env.SUPABASE_PRIVATE_KEY;
   if (!privateKey) throw new Error(`Expected env var SUPABASE_PRIVATE_KEY`);
@@ -18,7 +18,12 @@ export async function POST(req: Request) {
   const url = process.env.SUPABASE_URL;
   if (!url) throw new Error(`Expected env var SUPABASE_URL`);
 
-  const client = createClient(url, privateKey);
+  const auth = {
+    detectSessionInUrl: false,
+    persistSession: false,
+    autoRefreshToken: false,
+  };
+  const client = createClient(url, privateKey, { auth });
 
   const vectorStore = await SupabaseVectorStore.fromExistingIndex(
     new OpenAIEmbeddings({ openAIApiKey: process.env.OPENAI_API_KEY }),
