@@ -13,7 +13,6 @@ const examples = [
   {
     name: "Q&A on documents",
     title: "Ask questions about an a16z blog",
-    link: "https://blog.samaltman.com/",
     imageUrl:
       "https://a16z.com/wp-content/uploads/2023/02/cropped-favicon-512.png",
   },
