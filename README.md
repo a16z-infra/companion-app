@@ -25,7 +25,7 @@ The simplest way to try out this stack is to test it out locally and traverse th
 
 ### 1. Fork and Clone repo
 
-For the repo to your Github account, then run the following command to clone the repo: 
+Fork the repo to your Github account, then run the following command to clone the repo: 
 ```
 git clone git@github.com:[YOUR_GITHUB_ACCOUNT_NAME]/ai-getting-started.git
 ```
