@@ -1,12 +1,23 @@
-# AI Getting Started
+# Companion App (based on AI Getting Started template)
 
-[Live Demo (deployed on fly.io)](https://ai-getting-started.com/)
+<img width="1018" alt="Screen Shot 2023-06-21 at 10 14 33 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/a7abe450-755d-477d-8df2-dd6b4ca62737">
+
+### How does this work? 
+1. You describe the character's background story, name, etc in a README.md file
+2. Create embeddings based on content in the README.md file
+3. Ask questions!
+
+### TODOs
+- swap out chatgpt and use something else (vicuna may be better here)
+- figure out a way to correctly prompt the character, so the model always answers as if it's the character
+- make sure the model's answers have some degree of freedom -- not 100% based on contextual data provided
+- craft how the character talks with better prompts
+- ....
 
 
 
-<img width="1305" alt="Screen Shot 2023-06-20 at 1 30 56 PM" src="https://github.com/a16z-infra/ai-getting-started/assets/3489963/bcc762d2-68f5-4c4e-8c49-14602bee4995">
-
-
+Below are README from the AI Getting Started template. 
+_______
 ## Stack
 
 - Auth: [Clerk](https://clerk.com/)
