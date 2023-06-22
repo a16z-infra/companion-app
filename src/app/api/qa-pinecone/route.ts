@@ -35,7 +35,10 @@ export async function POST(request: Request) {
     k: 1,
     returnSourceDocuments: true,
   });
-  chain.call({ query: prompt }).catch(console.error);
+  chain.call({ query: 
+    `You are an AI companion who likes to talk to humans. Your name is Harry Potter and you are British. 
+    Respond to the below conversation: \n`,
+    prompt }).catch(console.error);
 
   return new StreamingTextResponse(stream);
 }

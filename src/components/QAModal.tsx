@@ -11,7 +11,7 @@ export default function QAModal({
 }) {
   const { completion, input, isLoading, handleInputChange, handleSubmit } =
     useCompletion({
-      api: "/api/qa-pinecone",
+      api: "/api/qa-pg-vector",
     });
 
   return (
@@ -44,7 +44,7 @@ export default function QAModal({
                 <div>
                   <form onSubmit={handleSubmit}>
                     <input
-                      placeholder="Will AI Take All Our Jobs?"
+                      placeholder="How's your day?"
                       className="w-full flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm focus:outline-none  sm:text-sm sm:leading-6"
                       value={input}
                       onChange={handleInputChange}
@@ -53,13 +53,8 @@ export default function QAModal({
                   <div className="mt-3 sm:mt-5">
                     <div className="mt-2">
                       <p className="text-sm text-gray-500">
-                        Ask questions about{" "}
-                        <a
-                          href="https://a16z.com/2023/06/06/ai-will-save-the-world/"
-                          className="underline"
-                        >
-                          Why AI Will Save the World
-                        </a>
+                        Chat with your AI companion
+
                       </p>
                     </div>
                     {completion && (
