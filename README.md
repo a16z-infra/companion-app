@@ -8,6 +8,7 @@
 3. Ask questions!
 
 ### TODOs
+- Use agent (instead docs Q&A) instead. Or we could remove langchain as a dependency
 - swap out chatgpt and use something else (vicuna may be better here)
 - figure out a way to correctly prompt the character, so the model always answers as if it's the character
 - make sure the model's answers have some degree of freedom -- not 100% based on contextual data provided
