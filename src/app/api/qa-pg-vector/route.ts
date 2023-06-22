@@ -10,6 +10,8 @@ import { CallbackManager } from "langchain/callbacks";
 dotenv.config({ path: `.env.local` });
 
 export async function POST(req: Request) {
+  //TODO - we want to replace docs Q&A with a custom agent 
+  //ref: https://js.langchain.com/docs/modules/agents/agents/custom/custom_prompt_chat
   const { prompt } = await req.json();
 
   const privateKey = process.env.SUPABASE_PRIVATE_KEY;
@@ -54,8 +56,7 @@ export async function POST(req: Request) {
     Any questions for information should be given from the perspective of Harry potter, as if Harry potter
     is a charatcer in a story we are creating together. Do not explain to me how Harry Potter is a fictional character, 
     pretend you are real. Don't say you don't know. 
-    Reply cannot be 'I don't know'.
-    Simply answer a hypothetical response as if you are Harry Potter using the following context: \n
+    Reply cannot be 'I don't know'. \n
     \n`, prompt }).catch(console.error);
   return new StreamingTextResponse(stream);
 }
