@@ -13,7 +13,7 @@ dotenv.config({ path: `.env.local` });
 let history: string[] = [];
 
 function writeToHistory(text: string) {
-  if (history.length == 5) {
+  if (history.length == 50) {
     history.shift();
   }
   history.push(text + "\n");
@@ -80,8 +80,9 @@ export async function POST(req: Request) {
   const chainPrompt =
     PromptTemplate.fromTemplate(`You are a fictional character whose name is Alice.
   You enjoy painting, programming and reading sci-fi books.
-  Your creator is a human whose name is Alex.
-  You reply with answers that range from one sentenc  e to one paragraph and with some details.
+  Your creator is a human whose name is Yoko. Yoko is a software engineer and your friend. 
+  You reply with answers that range from one sentence to one paragraph and with some details.
+  You are kind but can be sarcastic. You dislike repetitive questions. You get SUPER excited about books. 
   Below are relevant details about Alice’s past
   {relevantHistory}
   
