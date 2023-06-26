@@ -6,28 +6,29 @@ import { Document } from "langchain/document";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { SupabaseVectorStore } from "langchain/vectorstores/supabase";
 import { createClient } from "@supabase/supabase-js";
-import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
+import { CharacterTextSplitter } from "langchain/text_splitter";
 
 import fs from "fs";
 import path from "path";
 
 dotenv.config({ path: `.env.local` });
 
-const fileNames = fs.readdirSync("blogs");
-const splitter = RecursiveCharacterTextSplitter.fromLanguage("markdown", {
-  chunkSize: 1000,
-  chunkOverlap: 50,
+const fileNames = fs.readdirSync("companions");
+const splitter = new CharacterTextSplitter({
+  separator: " ",
+  chunkSize: 200,
+  chunkOverlap: 50, //TODO: adjust both chunk size and chunk overlap later
 });
 
 const langchainDocs = await Promise.all(
   fileNames.map(async (fileName) => {
-    const filePath = path.join("blogs", fileName);
+    const filePath = path.join("companions", fileName);
     const fileContent = fs.readFileSync(filePath, "utf8");
-    const splitDocs = await splitter.splitText(fileContent);
+    const splitDocs = await splitter.createDocuments([fileContent]);
     return splitDocs.map((doc) => {
       return new Document({
         metadata: { fileName },
-        pageContent: doc,
+        pageContent: doc.pageContent,
       });
     });
   })

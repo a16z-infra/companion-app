@@ -54,7 +54,6 @@ export default function QAModal({
                     <div className="mt-2">
                       <p className="text-sm text-gray-500">
                         Chat with your AI companion
-
                       </p>
                     </div>
                     {completion && (
