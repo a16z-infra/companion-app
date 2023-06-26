@@ -6,15 +6,7 @@ import { useCompletion } from "ai/react";
 
 import { getLLMServerAction } from './actions';
 
-let llmstr = "";
-function successCallback(result) {
-    llmstr = result;
-}
-
-function failureCallback(error) {
-  console.error(`Error retrieving LLM name from server ${error}`);
-}
-
+var llmstr:string = String("");
 
 export default function QAModal({
   open,
@@ -26,9 +18,14 @@ export default function QAModal({
 
   // This is a hack to call the async server function so we know what LLM directory to use. The server function
   // returns the LLM variable specified in .env.local
-  if(llmstr == ""){
-  const llm = getLLMServerAction();
-  llm.then(successCallback, failureCallback);
+  if (llmstr == "") {
+    const llm = getLLMServerAction();
+    llm.then((res) => {
+      llmstr = String(res);
+    });
+    llm.catch((err) => {
+      // This is never called
+    });
   }
 
   const { completion, input, isLoading, handleInputChange, handleSubmit } =

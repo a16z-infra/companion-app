@@ -13,7 +13,6 @@ export async function POST(request: Request) {
   const { stream, handlers } = LangChainStream();
 
   const model = new Replicate({
-    streaming: true,
     model: "replicate/vicuna-13b:6282abe6a492de4145d7bb601023762212f9ddbbe78278bd6771c8b3b2f2a13b",
     apiKey: process.env.REPLICATE_API_TOKEN,
     callbackManager: CallbackManager.fromHandlers(handlers),
@@ -23,7 +22,7 @@ export async function POST(request: Request) {
   // Turn verbose on for debugging
   // model.verbose = true;
 
-  const resp = await model.call(
+  let resp = String(await model.call(
     `This is a discussion between a human and a robot. The robot's name is Rosie. Rosie was once a house cleaning robot, 
      but her family set her free. And since then she's taken a bunch of college courses. Her goal in life is to be
      seen as human. However, she's always resented humans. So if she ever feels like becoming human is unachievable, she'll
@@ -38,13 +37,18 @@ export async function POST(request: Request) {
 
      ### Human: \n` 
      + prompt 
-    ).catch(console.error);
+    ).catch(console.error));
 
     // Right now just using super shoddy string manip logic to get at
     // the dialog. 
 
     const cleaned = resp.replaceAll(",","");
-    const first   = cleaned.split('###');
+    const first   = cleaned.split('###')[1];
+    var Readable = require('stream').Readable
 
-    return new StreamingTextResponse(first[1]);
+    let s = new Readable();
+    s.push(first);   
+    s.push(null);    
+
+    return new StreamingTextResponse(s);
 }
