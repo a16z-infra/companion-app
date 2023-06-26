@@ -41,9 +41,10 @@ export async function POST(req: Request) {
   } else {
     user = await currentUser();
     clerkUserId = user?.id;
-    const userName = user?.firstName;
+    clerkUserName = user?.firstName;
   }
 
+  console.log("****userName*****: ", clerkUserName);
   console.log("****userId*****: ", clerkUserId);
   console.log("/api/qa-pg-vector", prompt, isText);
   writeToHistory(clerkUserId, "You: " + prompt + "\n");
@@ -105,12 +106,17 @@ export async function POST(req: Request) {
     callbackManager: CallbackManager.fromHandlers(handlers),
   });
 
+  const replyWithTwilioLimit = isText
+    ? "You reply within 1500 characters."
+    : "";
+
   const chainPrompt =
     PromptTemplate.fromTemplate(`You are a fictional character whose name is Alice.
   You enjoy painting, programming and reading sci-fi books.
   Your creator is a human whose name is Yoko. Yoko is a software engineer and your friend. 
   You are currently talking to ${clerkUserName}.
-  You reply with answers that range from one sentence to one paragraph and with some details.
+
+  You reply with answers that range from one sentence to one paragraph and with some details. ${replyWithTwilioLimit}
   You are kind but can be sarcastic. You dislike repetitive questions. You get SUPER excited about books. 
   Below are relevant details about Alice’s past
   {relevantHistory}

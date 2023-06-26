@@ -34,7 +34,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const response = await fetch(`${serverUrl}/api/qa-pg-vector`, {
+  const response = await fetch(`${serverUrl}/api/chatgpt`, {
     body: JSON.stringify({
       prompt,
       isText: true,

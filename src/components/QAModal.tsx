@@ -1,6 +1,12 @@
+"use client";
+
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useCompletion } from "ai/react";
+
+import { getLLMServerAction } from "./actions";
+
+let llmstr: string = String("");
 
 export default function QAModal({
   open,
@@ -9,9 +15,22 @@ export default function QAModal({
   open: boolean;
   setOpen: any;
 }) {
+  // This is a hack to call the async server function so we know what LLM directory to use. The server function
+  // returns the LLM variable specified in .env.local
+  if (llmstr === "") {
+    const llm = getLLMServerAction();
+    llm
+      .then((res) => {
+        llmstr = String(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   const { completion, input, isLoading, handleInputChange, handleSubmit } =
     useCompletion({
-      api: "/api/qa-pg-vector",
+      api: "/api/" + llmstr,
     });
 
   return (
