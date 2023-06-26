@@ -8,22 +8,45 @@ import { StreamingTextResponse, LangChainStream } from "ai";
 import { CallbackManager } from "langchain/callbacks";
 import { PromptTemplate } from "langchain/prompts";
 import { NextResponse } from "next/server";
+import { currentUser } from "@clerk/nextjs";
 
 dotenv.config({ path: `.env.local` });
-let history: string[] = [];
+let history: Record<string, string[]> = {};
 
-function writeToHistory(text: string) {
-  if (history.length == 50) {
-    history.shift();
+function writeToHistory(userId: string | undefined, text: string) {
+  if (typeof userId == "undefined") {
+    console.log("No user id");
+    return;
   }
-  history.push(text + "\n");
-  console.log(history);
+
+  if (history[userId] == undefined) {
+    history[userId] = [];
+  }
+  const userHistory = history[userId] || [];
+  if (userHistory.length == 30) {
+    userHistory.shift();
+  }
+  userHistory.push(text + "\n");
+  console.log(userHistory);
 }
 
 export async function POST(req: Request) {
-  const { prompt, isText } = await req.json();
+  let clerkUserId;
+  let user;
+  let clerkUserName;
+  const { prompt, isText, userId, userName } = await req.json();
+  if (isText) {
+    clerkUserId = userId;
+    clerkUserName = userName;
+  } else {
+    user = await currentUser();
+    clerkUserId = user?.id;
+    const userName = user?.firstName;
+  }
+
+  console.log("****userId*****: ", clerkUserId);
   console.log("/api/qa-pg-vector", prompt, isText);
-  writeToHistory("You: " + prompt + "\n");
+  writeToHistory(clerkUserId, "You: " + prompt + "\n");
 
   const privateKey = process.env.SUPABASE_PRIVATE_KEY;
   if (!privateKey) throw new Error(`Expected env var SUPABASE_PRIVATE_KEY`);
@@ -64,7 +87,7 @@ export async function POST(req: Request) {
   const similarDocs = await vectorStore
     .similaritySearch(chatHistory, 3)
     .catch((err) => {
-      console.log("WARNING: failed to get vector search results.");
+      console.log("WARNING: failed to get vector search results.", err);
     });
   let relevantHistory = "";
   if (!!similarDocs && similarDocs.length !== 0) {
@@ -86,6 +109,7 @@ export async function POST(req: Request) {
     PromptTemplate.fromTemplate(`You are a fictional character whose name is Alice.
   You enjoy painting, programming and reading sci-fi books.
   Your creator is a human whose name is Yoko. Yoko is a software engineer and your friend. 
+  You are currently talking to ${clerkUserName}.
   You reply with answers that range from one sentence to one paragraph and with some details.
   You are kind but can be sarcastic. You dislike repetitive questions. You get SUPER excited about books. 
   Below are relevant details about Alice’s past
@@ -103,12 +127,12 @@ export async function POST(req: Request) {
   const result = await chain
     .call({
       relevantHistory,
-      chatHistory: chatHistory + "...\n" + history.join(""),
+      chatHistory: chatHistory + "...\n" + history[clerkUserId!].join(""),
     })
     .catch(console.error);
 
   console.log("result", result);
-  writeToHistory(result!.text + "\n");
+  writeToHistory(clerkUserId, result!.text + "\n");
   if (isText) {
     console.log(result!.text);
     return NextResponse.json(result!.text);
