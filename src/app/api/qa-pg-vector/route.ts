@@ -7,7 +7,7 @@ import { LLMChain } from "langchain/chains";
 import { StreamingTextResponse, LangChainStream } from "ai";
 import { CallbackManager } from "langchain/callbacks";
 import { PromptTemplate } from "langchain/prompts";
-import fs from "fs";
+import { NextResponse } from "next/server";
 
 dotenv.config({ path: `.env.local` });
 let history: string[] = [];
@@ -21,7 +21,8 @@ function writeToHistory(text: string) {
 }
 
 export async function POST(req: Request) {
-  const { prompt } = await req.json();
+  const { prompt, isText } = await req.json();
+  console.log("/api/qa-pg-vector", prompt, isText);
   writeToHistory("You: " + prompt + "\n");
 
   const privateKey = process.env.SUPABASE_PRIVATE_KEY;
@@ -60,9 +61,13 @@ export async function POST(req: Request) {
   Alice: Exploring the vast open world and discovering hidden treasures.
   You: ` + prompt;
 
-  const similarDocs = await vectorStore.similaritySearch(chatHistory, 3);
+  const similarDocs = await vectorStore
+    .similaritySearch(chatHistory, 3)
+    .catch((err) => {
+      console.log("WARNING: failed to get vector search results.");
+    });
   let relevantHistory = "";
-  if (similarDocs.length !== 0) {
+  if (!!similarDocs && similarDocs.length !== 0) {
     relevantHistory = similarDocs.map((doc) => doc.pageContent).join("\n");
   }
 
@@ -104,5 +109,9 @@ export async function POST(req: Request) {
 
   console.log("result", result);
   writeToHistory(result!.text + "\n");
+  if (isText) {
+    console.log(result!.text);
+    return NextResponse.json(result!.text);
+  }
   return new StreamingTextResponse(stream);
 }
