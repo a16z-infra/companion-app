@@ -5,7 +5,7 @@ import TextToImgModal from "./TextToImgModal";
 import Image from "next/image";
 const examples = [
   {
-    name: "Companion MVP",
+    name: "Lucky the Space Corgi",
     title: "Talk to your AI companion",
     imageUrl: "/corgi.png",
   },
