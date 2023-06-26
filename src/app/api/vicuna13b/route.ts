@@ -12,7 +12,6 @@ export async function POST(request: Request) {
 
   const { stream, handlers } = LangChainStream();
 
-  console.log("Before Replicat ctor");
   const model = new Replicate({
     streaming: true,
     model: "replicate/vicuna-13b:6282abe6a492de4145d7bb601023762212f9ddbbe78278bd6771c8b3b2f2a13b",

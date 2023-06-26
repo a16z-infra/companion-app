@@ -11,7 +11,7 @@ export default function QAModal({
 }) {
   const { completion, input, isLoading, handleInputChange, handleSubmit } =
     useCompletion({
-      api: "/api/qa-pg-vector",
+      api: "/api/vicuna13b",
     });
 
   return (
