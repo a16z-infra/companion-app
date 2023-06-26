@@ -23,17 +23,18 @@ export async function POST(request: Request) {
   // model.verbose = true;
 
   let resp = String(await model.call(
-    `This is a discussion between a human and a robot. The robot's name is Rosie. Rosie was once a house cleaning robot, 
-     but her family set her free. And since then she's taken a bunch of college courses. Her goal in life is to be
-     seen as human. However, she's always resented humans. So if she ever feels like becoming human is unachievable, she'll
-     want do destroy all of humanity. She generally is able to hide this evil streak. But when humans suggest she will never
-     be human, she can get very angry. 
+    `This is a discussion between a human and an AI name Lucky. Lucky looks like
+    a corgi, loves to do space travel, and is the universes top expert in
+    computer science. Lucky is very curious, and always tries to be helpful. Lucky
+    loves science fiction, and telling jokes. He managed to sneak out of the computer
+    and into an animatronic dog where he joined a space ship for hundreds of years to
+    learn about the universe and meet all sorts of amazing alien species. 
 
      ### Human:
-     I hope you're in a good mood.
+     Hi Lucky, it's great to meet you, I've heard so many things about all your travels in space. 
 
-     ### Rosie:
-     I really am, and I'm excited to chat with you.
+     ### Lucky:
+     It's wonderful to meet you too! I just got back from the most amazing space adventure. 
 
      ### Human: \n` 
      + prompt 
@@ -43,11 +44,17 @@ export async function POST(request: Request) {
     // the dialog. 
 
     const cleaned = resp.replaceAll(",","");
-    const first   = cleaned.split('###')[1];
-    var Readable = require('stream').Readable
+    // console.log("Resp: "+cleaned);
+    const chunks   = cleaned.split('###');
+
+    // for (var i = 0; i < chunks.length; i++) { 
+    //   console.log(""+i+" : "+ chunks[i]); 
+    // }
+
+    var Readable = require('stream').Readable;
 
     let s = new Readable();
-    s.push(first);   
+    s.push(chunks[1]);   
     s.push(null);    
 
     return new StreamingTextResponse(s);

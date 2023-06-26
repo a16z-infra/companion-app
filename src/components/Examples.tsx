@@ -7,8 +7,7 @@ const examples = [
   {
     name: "Companion MVP",
     title: "Talk to your AI companion",
-    imageUrl:
-      "https://a16z.com/wp-content/uploads/2023/02/cropped-favicon-512.png",
+    imageUrl: "/corgi.png",
   },
 ];
 
