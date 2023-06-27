@@ -5,22 +5,24 @@ import { CallbackManager } from "langchain/callbacks";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { PineconeClient } from "@pinecone-database/pinecone";
 import { PineconeStore } from "langchain/vectorstores/pinecone";
-import { writeToHistory } from "@/app/utils/memory";
+import MemoryManager from "@/app/utils/memory";
 import { currentUser } from "@clerk/nextjs";
 
 dotenv.config({ path: `.env.local` });
-const COMPANION_FILE_NAME = "Rosie.txt";
+const COMPANION_NAME = "Rosie";
+const COMPANION_FILE_NAME = COMPANION_NAME + ".txt";
 let history: Record<string, string[]> = {};
 
 export async function POST(request: Request) {
   const { prompt } = await request.json();
+  const memoryManager = MemoryManager.getInstance(COMPANION_NAME);
   // Get user from Clerk
   const user = await currentUser();
   const clerkUserId = user?.id;
   const clerkUserName = user?.firstName;
 
   const { stream, handlers } = LangChainStream();
-  writeToHistory(history, clerkUserId, "### Human: " + prompt);
+  await memoryManager.writeToHistory(clerkUserId, "### Human: " + prompt);
 
   // Query Pinecone
   const client = new PineconeClient();
@@ -99,7 +101,7 @@ export async function POST(request: Request) {
 
   const cleaned = resp.replaceAll(",", "");
   const first = cleaned.split("###")[1];
-  writeToHistory(history, clerkUserId, "### " + first.trim());
+  await memoryManager.writeToHistory(clerkUserId, "### " + first.trim());
   var Readable = require("stream").Readable;
 
   let s = new Readable();

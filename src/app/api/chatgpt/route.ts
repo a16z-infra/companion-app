@@ -9,18 +9,28 @@ import { CallbackManager } from "langchain/callbacks";
 import { PromptTemplate } from "langchain/prompts";
 import { NextResponse } from "next/server";
 import { currentUser } from "@clerk/nextjs";
-import { writeToHistory } from "@/app/utils/memory";
+import MemoryManager from "@/app/utils/memory";
 
 dotenv.config({ path: `.env.local` });
-const COMPANION_FILE_NAME = "Alice.txt";
-
-let history: Record<string, string[]> = {};
+const COMPANION_NAME = "Alice";
+const COMPANION_FILE_NAME = COMPANION_NAME + ".txt";
+const SEED_CHAT_HISTORY = `You: Hi Alice, how are you today?
+Alice: I’m doing great. I’m reading a book called Tomorrow and Tomorrow and Tomorrow and really enjoyed it.
+You: what is the book about?
+Alice: It’s about two friends come together as creative partners in the world of video game design.
+You: that sounds fun. do you like video games? what are you playing now?
+Alice: YEs!!! I’m a huge fan. Playing the new legend of zelda game every day.
+You: oh amazing, what’s your favorite part of that game?
+Alice: Exploring the vast open world and discovering hidden treasures.`;
 
 export async function POST(req: Request) {
+  console.log("chatgpt was called");
+  const memoryManager = MemoryManager.getInstance(COMPANION_NAME);
   let clerkUserId;
   let user;
   let clerkUserName;
   const { prompt, isText, userId, userName } = await req.json();
+  console.log("prompt: ", prompt);
   if (isText) {
     clerkUserId = userId;
     clerkUserName = userName;
@@ -29,8 +39,12 @@ export async function POST(req: Request) {
     clerkUserId = user?.id;
     clerkUserName = user?.firstName;
   }
+  const records = await memoryManager.readLatestHistory(clerkUserId!);
+  if (records.length === 0) {
+    await memoryManager.seedChatHistory(clerkUserId!, SEED_CHAT_HISTORY);
+  }
 
-  writeToHistory(history, clerkUserId, "You: " + prompt + "\n");
+  await memoryManager.writeToHistory(clerkUserId, "You: " + prompt + "\n");
 
   // query Pinecone
   const client = new PineconeClient();
@@ -46,19 +60,10 @@ export async function POST(req: Request) {
   );
 
   // TODO -  Upstash Hardcoded for now, but this should be seeded from a file at the beginning
-  const chatHistory =
-    ` You: Hi Alice, how are you today?
-  Alice: I’m doing great. I’m reading a book called Tomorrow and Tomorrow and Tomorrow and really enjoyed it.
-  You: what is the book about?
-  Alice: It’s about two friends come together as creative partners in the world of video game design.
-  You: that sounds fun. do you like video games? what are you playing now?
-  Alice: YEs!!! I’m a huge fan. Playing the new legend of zelda game every day.
-  You: oh amazing, what’s your favorite part of that game?
-  Alice: Exploring the vast open world and discovering hidden treasures.
-  You: ` + prompt;
+  let recentChatHistory = await memoryManager.readLatestHistory(clerkUserId!);
 
   const similarDocs = await vectorStore
-    .similaritySearch(chatHistory, 3, { fileName: COMPANION_FILE_NAME })
+    .similaritySearch(recentChatHistory, 3, { fileName: COMPANION_FILE_NAME })
     .catch((err) => {
       console.log("WARNING: failed to get vector search results.", err);
     });
@@ -68,8 +73,6 @@ export async function POST(req: Request) {
     relevantHistory = similarDocs.map((doc) => doc.pageContent).join("\n");
   }
 
-  console.log("similarDocs", similarDocs);
-
   const { stream, handlers } = LangChainStream();
 
   const model = new OpenAI({
@@ -78,6 +81,7 @@ export async function POST(req: Request) {
     openAIApiKey: process.env.OPENAI_API_KEY,
     callbackManager: CallbackManager.fromHandlers(handlers),
   });
+  //model.verbose = true;
 
   const replyWithTwilioLimit = isText
     ? "You reply within 1000 characters."
@@ -95,7 +99,7 @@ export async function POST(req: Request) {
   
   Below is a relevant conversation history
 
-  {chatHistory}`);
+  {recentChatHistory}`);
 
   const chain = new LLMChain({
     llm: model,
@@ -105,12 +109,16 @@ export async function POST(req: Request) {
   const result = await chain
     .call({
       relevantHistory,
-      chatHistory: chatHistory + "...\n" + history[clerkUserId!].join(""),
+      recentChatHistory: recentChatHistory,
     })
     .catch(console.error);
 
   console.log("result", result);
-  writeToHistory(history, clerkUserId, result!.text + "\n");
+  const chatHistoryRecord = await memoryManager.writeToHistory(
+    clerkUserId,
+    result!.text + "\n"
+  );
+  console.log("chatHistoryRecord", chatHistoryRecord);
   if (isText) {
     console.log(result!.text);
     return NextResponse.json(result!.text);
