@@ -105,10 +105,9 @@ export async function POST(request: Request) {
 
   const cleaned = resp.replaceAll(",", "");
   const chunks = cleaned.split("###");
-  const response = chunks.length > 1 ? chunks[1] : chunks[0];
-
-  console.log("response", response);
-
+  const response = (chunks.length > 0)? chunks[1] : chunks[0];
+  
+  await memoryManager.writeToHistory(clerkUserId, "### " + response.trim());
   var Readable = require("stream").Readable;
 
   let s = new Readable();
