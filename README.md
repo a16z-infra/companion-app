@@ -2,23 +2,6 @@
 
 <img width="1018" alt="Screen Shot 2023-06-21 at 10 14 33 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/a7abe450-755d-477d-8df2-dd6b4ca62737">
 
-### How does this work? 
-1. You describe the character's background story, name, etc in a README.md file
-2. Create embeddings based on content in the README.md file
-3. Ask questions!
-
-### TODOs
-- Use agent (instead docs Q&A) instead. Or we could remove langchain as a dependency
-- swap out chatgpt and use something else (vicuna may be better here)
-- figure out a way to correctly prompt the character, so the model always answers as if it's the character
-- make sure the model's answers have some degree of freedom -- not 100% based on contextual data provided
-- craft how the character talks with better prompts
-- ....
-
-
-
-Below are README from the AI Getting Started template. 
-_______
 ## Stack
 
 - Auth: [Clerk](https://clerk.com/)
@@ -28,7 +11,31 @@ _______
 - Image Model: [Replicate](https://replicate.com/)
 - Text Model: [OpenAI](https://platform.openai.com/docs/models)
 - Text streaming: [ai sdk](https://github.com/vercel-labs/ai)
+- Conversation history: [Upstash](https://upstash.com/)
 - Deployment: [Fly](https://fly.io/)
+
+
+### How does this work? 
+1. You describe the character's background story, name, etc in a README.md file
+2. Create embeddings based on content in the [companion name].md file
+3. Ask questions!
+
+#### Set up Upstash 
+1. Sign in to [Upstash](https://upstash.com/)
+2. Under "Redis" on the top nav, click on "Create Database"
+3. Give it a name, and then select regions and other options based on your preference. Click on "Create"
+<img width="524" alt="Screen Shot 2023-06-27 at 3 46 48 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/14905d22-7689-410b-a9a7-9f1a59d380a2">
+4. Scroll down to "REST API" section and click on ".env". Now you can copy paste both environment variables to your `.env.local`
+<img width="879" alt="Screen Shot 2023-06-27 at 3 48 32 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/2793177d-c197-428a-95d5-0f66a5b1f6c4">
+
+
+
+
+
+
+Below are README from the AI Getting Started template. 
+_______
+
 
 ## Overview
 - 🚀 [Quickstart](#quickstart)
