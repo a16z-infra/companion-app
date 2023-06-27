@@ -1,6 +1,6 @@
-import { SupabaseVectorStore } from "langchain/vectorstores/supabase";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
-import { createClient } from "@supabase/supabase-js";
+import { PineconeClient } from "@pinecone-database/pinecone";
+import { PineconeStore } from "langchain/vectorstores/pinecone";
 import { OpenAI } from "langchain/llms/openai";
 import dotenv from "dotenv";
 import { LLMChain } from "langchain/chains";
@@ -9,26 +9,12 @@ import { CallbackManager } from "langchain/callbacks";
 import { PromptTemplate } from "langchain/prompts";
 import { NextResponse } from "next/server";
 import { currentUser } from "@clerk/nextjs";
+import { writeToHistory } from "@/app/utils/memory";
 
 dotenv.config({ path: `.env.local` });
+const COMPANION_FILE_NAME = "Alice.txt";
+
 let history: Record<string, string[]> = {};
-
-function writeToHistory(userId: string | undefined, text: string) {
-  if (typeof userId == "undefined") {
-    console.log("No user id");
-    return;
-  }
-
-  if (history[userId] == undefined) {
-    history[userId] = [];
-  }
-  const userHistory = history[userId] || [];
-  if (userHistory.length == 30) {
-    userHistory.shift();
-  }
-  userHistory.push(text + "\n");
-  console.log(userHistory);
-}
 
 export async function POST(req: Request) {
   let clerkUserId;
@@ -44,36 +30,20 @@ export async function POST(req: Request) {
     clerkUserName = user?.firstName;
   }
 
-  console.log("****userName*****: ", clerkUserName);
-  console.log("****userId*****: ", clerkUserId);
-  writeToHistory(clerkUserId, "You: " + prompt + "\n");
+  writeToHistory(history, clerkUserId, "You: " + prompt + "\n");
 
-  //*******
-  const privateKey = process.env.SUPABASE_PRIVATE_KEY;
-  if (!privateKey) throw new Error(`Expected env var SUPABASE_PRIVATE_KEY`);
+  // query Pinecone
+  const client = new PineconeClient();
+  await client.init({
+    apiKey: process.env.PINECONE_API_KEY || "",
+    environment: process.env.PINECONE_ENVIRONMENT || "",
+  });
+  const pineconeIndex = client.Index(process.env.PINECONE_INDEX || "");
 
-  const url = process.env.SUPABASE_URL;
-  if (!url) throw new Error(`Expected env var SUPABASE_URL`);
-
-  const auth = {
-    detectSessionInUrl: false,
-    persistSession: false,
-    autoRefreshToken: false,
-  };
-  const client = createClient(url, privateKey, { auth });
-
-  // pull out a few things from the prompt for vector search
-
-  const vectorStore = await SupabaseVectorStore.fromExistingIndex(
+  const vectorStore = await PineconeStore.fromExistingIndex(
     new OpenAIEmbeddings({ openAIApiKey: process.env.OPENAI_API_KEY }),
-    {
-      client,
-      tableName: "documents",
-      queryName: "match_documents",
-    }
+    { pineconeIndex }
   );
-
-  //*******
 
   // TODO -  Hardcoded for now, but this should be seeded from a file at the beginning
   const chatHistory =
@@ -88,10 +58,11 @@ export async function POST(req: Request) {
   You: ` + prompt;
 
   const similarDocs = await vectorStore
-    .similaritySearch(chatHistory, 3)
+    .similaritySearch(chatHistory, 3, { fileName: COMPANION_FILE_NAME })
     .catch((err) => {
       console.log("WARNING: failed to get vector search results.", err);
     });
+
   let relevantHistory = "";
   if (!!similarDocs && similarDocs.length !== 0) {
     relevantHistory = similarDocs.map((doc) => doc.pageContent).join("\n");
@@ -109,7 +80,7 @@ export async function POST(req: Request) {
   });
 
   const replyWithTwilioLimit = isText
-    ? "You reply within 1500 characters."
+    ? "You reply within 1000 characters."
     : "";
 
   const chainPrompt =
@@ -139,7 +110,7 @@ export async function POST(req: Request) {
     .catch(console.error);
 
   console.log("result", result);
-  writeToHistory(clerkUserId, result!.text + "\n");
+  writeToHistory(history, clerkUserId, result!.text + "\n");
   if (isText) {
     console.log(result!.text);
     return NextResponse.json(result!.text);

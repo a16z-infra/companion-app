@@ -49,6 +49,7 @@ export async function POST(request: Request) {
 
   const to = queryMap["From"];
   const from = queryMap["To"];
+  console.log("responseText: ", responseText);
   await twilioClient.messages
     .create({
       body: responseText,

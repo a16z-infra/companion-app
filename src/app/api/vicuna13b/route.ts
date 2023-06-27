@@ -9,6 +9,7 @@ import { writeToHistory } from "@/app/utils/memory";
 import { currentUser } from "@clerk/nextjs";
 
 dotenv.config({ path: `.env.local` });
+const COMPANION_FILE_NAME = "Rosie.txt";
 let history: Record<string, string[]> = {};
 
 export async function POST(request: Request) {
@@ -20,6 +21,7 @@ export async function POST(request: Request) {
 
   const { stream, handlers } = LangChainStream();
   writeToHistory(history, clerkUserId, "### Human: " + prompt);
+
   // Query Pinecone
   const client = new PineconeClient();
   await client.init({
@@ -34,7 +36,8 @@ export async function POST(request: Request) {
   );
 
   // TODO - this should be loaded from a seed file or most recent convo store
-  const seededChatHistory = `### Human:
+  const seededChatHistory = `
+  ### Human:
   I hope you're in a good mood.
 
   ### Rosie:
@@ -46,7 +49,7 @@ export async function POST(request: Request) {
   console.log("current chat history: ", currentChatHistory);
 
   const similarDocs = await vectorStore
-    .similaritySearch(currentChatHistory, 3)
+    .similaritySearch(currentChatHistory, 3, { fileName: COMPANION_FILE_NAME })
     .catch((err) => {
       console.log("WARNING: failed to get vector search results.", err);
     });
