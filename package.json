@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "generate-embeddings-pinecone": "node src/scripts/indexBlogs.mjs",
-    "generate-embeddings-supabase": "node src/scripts/indexBlogPGVector.mjs"
+    "generate-embeddings-pinecone": "node src/scripts/indexPinecone.mjs",
+    "generate-embeddings-supabase": "node src/scripts/indexPGVector.mjs"
   },
   "dependencies": {
     "@clerk/clerk-sdk-node": "^4.10.12",

@@ -46,9 +46,9 @@ export async function POST(req: Request) {
 
   console.log("****userName*****: ", clerkUserName);
   console.log("****userId*****: ", clerkUserId);
-  console.log("/api/qa-pg-vector", prompt, isText);
   writeToHistory(clerkUserId, "You: " + prompt + "\n");
 
+  //*******
   const privateKey = process.env.SUPABASE_PRIVATE_KEY;
   if (!privateKey) throw new Error(`Expected env var SUPABASE_PRIVATE_KEY`);
 
@@ -72,6 +72,8 @@ export async function POST(req: Request) {
       queryName: "match_documents",
     }
   );
+
+  //*******
 
   // TODO -  Hardcoded for now, but this should be seeded from a file at the beginning
   const chatHistory =
@@ -113,7 +115,6 @@ export async function POST(req: Request) {
   const chainPrompt =
     PromptTemplate.fromTemplate(`You are a fictional character whose name is Alice.
   You enjoy painting, programming and reading sci-fi books.
-  Your creator is a human whose name is Yoko. Yoko is a software engineer and your friend. 
   You are currently talking to ${clerkUserName}.
 
   You reply with answers that range from one sentence to one paragraph and with some details. ${replyWithTwilioLimit}
