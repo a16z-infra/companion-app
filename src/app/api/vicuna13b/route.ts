@@ -104,14 +104,19 @@ export async function POST(request: Request) {
   // the dialog.
 
   const cleaned = resp.replaceAll(",", "");
-  const first = cleaned.split("###")[1];
-  console.log("first", first);
-  await memoryManager.writeToHistory(clerkUserId, "### " + first.trim());
+  const chunks = cleaned.split("###");
+  const response = chunks.length > 1 ? chunks[1] : chunks[0];
+
+  console.log("response", response);
+
   var Readable = require("stream").Readable;
 
   let s = new Readable();
-  s.push(first);
+  s.push(response);
   s.push(null);
+  if (response !== undefined && response.length > 1) {
+    await memoryManager.writeToHistory(clerkUserId, "### " + response.trim());
+  }
 
   return new StreamingTextResponse(s);
 }
