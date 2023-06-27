@@ -25,6 +25,7 @@
 2. Under "Redis" on the top nav, click on "Create Database"
 3. Give it a name, and then select regions and other options based on your preference. Click on "Create"
 <img width="524" alt="Screen Shot 2023-06-27 at 3 46 48 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/14905d22-7689-410b-a9a7-9f1a59d380a2">
+
 4. Scroll down to "REST API" section and click on ".env". Now you can copy paste both environment variables to your `.env.local`
 <img width="879" alt="Screen Shot 2023-06-27 at 3 48 32 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/2793177d-c197-428a-95d5-0f66a5b1f6c4">
 
