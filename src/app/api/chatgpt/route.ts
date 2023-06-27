@@ -59,7 +59,6 @@ export async function POST(req: Request) {
     { pineconeIndex }
   );
 
-  // TODO -  Upstash Hardcoded for now, but this should be seeded from a file at the beginning
   let recentChatHistory = await memoryManager.readLatestHistory(clerkUserId!);
 
   const similarDocs = await vectorStore

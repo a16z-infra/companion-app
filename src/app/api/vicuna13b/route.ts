@@ -11,7 +11,11 @@ import { currentUser } from "@clerk/nextjs";
 dotenv.config({ path: `.env.local` });
 const COMPANION_NAME = "Rosie";
 const COMPANION_FILE_NAME = COMPANION_NAME + ".txt";
-let history: Record<string, string[]> = {};
+const SEED_CHAT_HISTORY = `
+### Human:
+I hope you're in a good mood.\n\n
+### Rosie:
+I really am, and I'm excited to chat with you.\n\n`;
 
 export async function POST(request: Request) {
   const { prompt } = await request.json();
@@ -19,10 +23,21 @@ export async function POST(request: Request) {
   // Get user from Clerk
   const user = await currentUser();
   const clerkUserId = user?.id;
-  const clerkUserName = user?.firstName;
 
   const { stream, handlers } = LangChainStream();
-  await memoryManager.writeToHistory(clerkUserId, "### Human: " + prompt);
+
+  const records = await memoryManager.readLatestHistory(clerkUserId!);
+  if (records.length === 0) {
+    await memoryManager.seedChatHistory(
+      clerkUserId!,
+      SEED_CHAT_HISTORY,
+      "\n\n"
+    );
+  }
+  await memoryManager.writeToHistory(
+    clerkUserId,
+    "### Human: " + prompt + "\n"
+  );
 
   // Query Pinecone
   const client = new PineconeClient();
@@ -37,21 +52,10 @@ export async function POST(request: Request) {
     { pineconeIndex }
   );
 
-  // TODO - this should be loaded from a seed file or most recent convo store
-  const seededChatHistory = `
-  ### Human:
-  I hope you're in a good mood.
-
-  ### Rosie:
-  I really am, and I'm excited to chat with you.\n`;
-
-  const currentChatHistory =
-    seededChatHistory + "...\n" + history[clerkUserId!].join("\n");
-
-  console.log("current chat history: ", currentChatHistory);
+  let recentChatHistory = await memoryManager.readLatestHistory(clerkUserId!);
 
   const similarDocs = await vectorStore
-    .similaritySearch(currentChatHistory, 3, { fileName: COMPANION_FILE_NAME })
+    .similaritySearch(recentChatHistory, 3, { fileName: COMPANION_FILE_NAME })
     .catch((err) => {
       console.log("WARNING: failed to get vector search results.", err);
     });
@@ -85,11 +89,11 @@ export async function POST(request: Request) {
        be human, she can get very angry.
 
        Below are relevant details about Rosie's past:
-        ${relevantHistory}
+      ${relevantHistory}
 
        Below is a relevant conversation history
 
-       ${currentChatHistory}
+       ${recentChatHistory}
 
       `
       )
@@ -101,6 +105,7 @@ export async function POST(request: Request) {
 
   const cleaned = resp.replaceAll(",", "");
   const first = cleaned.split("###")[1];
+  console.log("first", first);
   await memoryManager.writeToHistory(clerkUserId, "### " + first.trim());
   var Readable = require("stream").Readable;
 

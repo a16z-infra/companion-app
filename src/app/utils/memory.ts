@@ -48,14 +48,18 @@ class MemoryManager {
     return recentChats;
   }
 
-  public async seedChatHistory(userId: string, seedContent: String) {
+  public async seedChatHistory(
+    userId: string,
+    seedContent: String,
+    delimiter: string = "\n"
+  ) {
     const key = userId + "-" + this.companionName;
     if (await this.history.exists(key)) {
       console.log("User already has chat history");
       return;
     }
 
-    const content = seedContent.split("\n");
+    const content = seedContent.split(delimiter);
     let counter = 0;
     for (const line of content) {
       await this.history.zadd(key, { score: counter, member: line });
