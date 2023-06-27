@@ -45,7 +45,7 @@ export async function POST(req: Request) {
     { pineconeIndex }
   );
 
-  // TODO -  Hardcoded for now, but this should be seeded from a file at the beginning
+  // TODO -  Upstash Hardcoded for now, but this should be seeded from a file at the beginning
   const chatHistory =
     ` You: Hi Alice, how are you today?
   Alice: I’m doing great. I’m reading a book called Tomorrow and Tomorrow and Tomorrow and really enjoyed it.

@@ -63,6 +63,9 @@ export async function POST(request: Request) {
   const model = new Replicate({
     model:
       "replicate/vicuna-13b:6282abe6a492de4145d7bb601023762212f9ddbbe78278bd6771c8b3b2f2a13b",
+    input: {
+      max_length: 2048,
+    },
     apiKey: process.env.REPLICATE_API_TOKEN,
     callbackManager: CallbackManager.fromHandlers(handlers),
   });
@@ -96,7 +99,7 @@ export async function POST(request: Request) {
 
   const cleaned = resp.replaceAll(",", "");
   const first = cleaned.split("###")[1];
-  writeToHistory(history, clerkUserId, "### " + first);
+  writeToHistory(history, clerkUserId, "### " + first.trim());
   var Readable = require("stream").Readable;
 
   let s = new Readable();
