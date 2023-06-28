@@ -21,7 +21,7 @@ export async function POST(request: Request) {
 
   // check if the user has verified phone #
   const users = await clerk.users.getUserList({ phoneNumber });
-  console.log("users: ", users);
+
   if (!users || users.length == 0) {
     return new NextResponse(
       JSON.stringify({ Message: "User not authorized" }),
@@ -49,6 +49,7 @@ export async function POST(request: Request) {
 
   const to = queryMap["From"];
   const from = queryMap["To"];
+  console.log("responseText: ", responseText);
   await twilioClient.messages
     .create({
       body: responseText,
