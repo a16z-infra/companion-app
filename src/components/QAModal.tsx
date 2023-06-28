@@ -4,29 +4,22 @@ import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useCompletion } from "ai/react";
 
-import { getLLMServerAction } from "./actions";
-
 let llmstr: string = String("");
 
 export default function QAModal({
   open,
   setOpen,
+  example,
 }: {
   open: boolean;
   setOpen: any;
+  example: any;
 }) {
-  // This is a hack to call the async server function so we know what LLM directory to use. The server function
-  // returns the LLM variable specified in .env.local
-  if (llmstr === "") {
-    const llm = getLLMServerAction();
-    llm
-      .then((res) => {
-        llmstr = String(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
+  if (example) {
+    console.log("Chose companion" + example.name);
+    console.log("With LLM"        + example.llm);
+    llmstr = example.llm;
+  } else{ return;}
 
   const { completion, input, isLoading, handleInputChange, handleSubmit } =
     useCompletion({
@@ -72,7 +65,7 @@ export default function QAModal({
                   <div className="mt-3 sm:mt-5">
                     <div className="mt-2">
                       <p className="text-sm text-gray-500">
-                        Chat with your AI companion
+                        Chat with {example.name}
                       </p>
                     </div>
                     {completion && (
