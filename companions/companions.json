@@ -9,7 +9,7 @@
     "name": "Alice",
     "title": "I am Yoko's creation",
     "imageUrl": "/alice.png",
-    "llm": "vicuna13b"
+    "llm": "chatgpt"
   },
   {
     "name": "Lucky",

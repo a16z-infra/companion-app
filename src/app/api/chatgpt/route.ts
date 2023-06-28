@@ -12,8 +12,6 @@ import { currentUser } from "@clerk/nextjs";
 import MemoryManager from "@/app/utils/memory";
 
 dotenv.config({ path: `.env.local` });
-const COMPANION_NAME = "Alice";
-const COMPANION_FILE_NAME = COMPANION_NAME + ".txt";
 const SEED_CHAT_HISTORY = `You: Hi Alice, how are you today?
 Alice: I’m doing great. I’m reading a book called Tomorrow and Tomorrow and Tomorrow and really enjoyed it.
 You: what is the book about?
@@ -30,6 +28,11 @@ export async function POST(req: Request) {
   let user;
   let clerkUserName;
   const { prompt, isText, userId, userName } = await req.json();
+
+  // XXX Companion name passed here. Can use as a key to get backstory, chat history etc.
+  const name = req.headers.get("name");
+  const companion_file_name = name + ".txt";
+
   console.log("prompt: ", prompt);
   if (isText) {
     clerkUserId = userId;
@@ -53,7 +56,7 @@ export async function POST(req: Request) {
   }
 
   const memoryManager = MemoryManager.getInstance(
-    COMPANION_NAME,
+    name,
     "chatgpt",
     clerkUserId
   );
@@ -80,7 +83,7 @@ export async function POST(req: Request) {
   let recentChatHistory = await memoryManager.readLatestHistory();
 
   const similarDocs = await vectorStore
-    .similaritySearch(recentChatHistory, 3, { fileName: COMPANION_FILE_NAME })
+    .similaritySearch(recentChatHistory, 3, { fileName: companion_file_name })
     .catch((err) => {
       console.log("WARNING: failed to get vector search results.", err);
     });
