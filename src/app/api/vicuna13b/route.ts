@@ -5,7 +5,7 @@ import { CallbackManager } from "langchain/callbacks";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { PineconeClient } from "@pinecone-database/pinecone";
 import { PineconeStore } from "langchain/vectorstores/pinecone";
-//import MemoryManager from "@/app/utils/memory";
+import MemoryManager from "@/app/utils/memory";
 import { currentUser } from "@clerk/nextjs";
 
 dotenv.config({ path: `.env.local` });
@@ -22,29 +22,27 @@ export async function POST(request: Request) {
   const name = request.headers.get("name"); 
   const companion_file_name = name + ".txt";
 
-  // const memoryManager = MemoryManager.getInstance(COMPANION_NAME);
-
   console.log("Companion name: "+name);
+  const memoryManager = MemoryManager.getInstance(name);
 
-  //const memoryManager = MemoryManager.getInstance(COMPANION_NAME);
   // Get user from Clerk
   const user = await currentUser();
   const clerkUserId = user?.id;
 
   const { stream, handlers } = LangChainStream();
 
-  // const records = await memoryManager.readLatestHistory(clerkUserId!);
-  // if (records.length === 0) {
-  //   await memoryManager.seedChatHistory(
-  //     clerkUserId!,
-  //     SEED_CHAT_HISTORY,
-  //     "\n\n"
-  //   );
-  // }
-  // await memoryManager.writeToHistory(
-  //   clerkUserId,
-  //   "### Human: " + prompt + "\n"
-  // );
+  const records = await memoryManager.readLatestHistory(clerkUserId!);
+  if (records.length === 0) {
+    await memoryManager.seedChatHistory(
+      clerkUserId!,
+      SEED_CHAT_HISTORY,
+      "\n\n"
+    );
+  }
+  await memoryManager.writeToHistory(
+    clerkUserId,
+    "### Human: " + prompt + "\n"
+  );
 
   // Query Pinecone
   const client = new PineconeClient();
@@ -60,18 +58,18 @@ export async function POST(request: Request) {
   );
 
   let recentChatHistory = ""; 
-  //let recentChatHistory = await memoryManager.readLatestHistory(clerkUserId!);
+  recentChatHistory = await memoryManager.readLatestHistory(clerkUserId!);
 
-  // const similarDocs = await vectorStore
-  //   .similaritySearch(recentChatHistory, 3, { fileName: COMPANION_FILE_NAME })
-  //   .catch((err) => {
-  //     console.log("WARNING: failed to get vector search results.", err);
-  //   });
+   const similarDocs = await vectorStore
+     .similaritySearch(recentChatHistory, 3, { fileName: companion_file_name })
+     .catch((err) => {
+       console.log("WARNING: failed to get vector search results.", err);
+     });
 
   let relevantHistory = "";
-  // if (!!similarDocs && similarDocs.length !== 0) {
-  //   relevantHistory = similarDocs.map((doc) => doc.pageContent).join("\n");
-  // }
+  if (!!similarDocs && similarDocs.length !== 0) {
+    relevantHistory = similarDocs.map((doc) => doc.pageContent).join("\n");
+  }
 
   // Call Replicate for inference
   const model = new Replicate({
@@ -113,15 +111,15 @@ export async function POST(request: Request) {
   const chunks = cleaned.split("###");
   const response = (chunks.length > 1)? chunks[1] : chunks[0];
   
-  //await memoryManager.writeToHistory(clerkUserId, "### " + response.trim());
+  await memoryManager.writeToHistory(clerkUserId, "### " + response.trim());
   var Readable = require("stream").Readable;
 
   let s = new Readable();
   s.push(response);
   s.push(null);
-  //if (response !== undefined && response.length > 1) {
-  //  await memoryManager.writeToHistory(clerkUserId, "### " + response.trim());
-  //}
+  if (response !== undefined && response.length > 1) {
+    await memoryManager.writeToHistory(clerkUserId, "### " + response.trim());
+  }
 
   return new StreamingTextResponse(s);
 }
