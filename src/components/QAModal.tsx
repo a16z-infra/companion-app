@@ -4,6 +4,8 @@ import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useCompletion } from "ai/react";
 
+var last_name = "";
+
 export default function QAModal({
   open,
   setOpen,
@@ -13,16 +15,35 @@ export default function QAModal({
   setOpen: any;
   example: any;
 }) {
-  if (example) {
-    console.log("Chose companion" + example.name);
-    console.log("With LLM"        + example.llm);
-  } else{ return;}
 
-  const { completion, input, isLoading, handleInputChange, handleSubmit } =
+  if(!example){
+    // create a dummy so the completion doesn't croak during init.
+    example = new Object();
+    example.llm = "";
+    example.name = "";
+  }
+
+  var { completion, input, isLoading, handleInputChange, handleSubmit } =
     useCompletion({
-      api: "/api/" + example.llm,
-      headers: {"name": example.name},
+        api: "/api/" + example.llm,
+        headers: { "name": example.name },
     });
+
+  if (!example) { return; }
+
+  console.log("Chose companion" + example.name);
+  console.log("With LLM"        + example.llm);
+  console.log("Completion: "+completion);
+
+  if (last_name === "") {
+    last_name = example.name;
+  }
+
+  if (last_name != example.name) {
+    // dialog box switched companions so clear field
+    last_name = example.name;
+    completion = "";
+  } 
 
   return (
     <Transition.Root show={open} as={Fragment}>

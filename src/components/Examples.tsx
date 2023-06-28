@@ -12,17 +12,25 @@ export default function Examples() {
   const [QAModalOpen, setQAModalOpen] = useState(false);
   const [CompParam, setCompParam]     = useState(null);
 
-  const [examples, setExamples] = useState([]);
+  // prime with a initial object. This is to get around typescript 
+  // stupidity
+  const prime = Object();
+  const [examples, setExamples] = useState([prime]);
 
-  if (examples.length < 1) {
+  if (examples[0] === prime) {
     const companions = getCompanions();
     companions
       .then((res) => {
         // console.log("from getCompanions:   "+String(res));
-        var entries = JSON.parse(String(res));
+        var entries = Object(JSON.parse(String(res)));
         var setme = [];
         for (var i = 0; i < entries.length; ++i) {
-          var dict = {};
+          var dict = {
+            'name': "",
+            'title': "",
+            'imageUrl': "",
+            'llm': ""
+          };
           dict["name"]  = entries[i].name;
           dict["title"] = entries[i].title;
           dict["imageUrl"] = entries[i].imageUrl;
