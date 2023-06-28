@@ -1,20 +1,20 @@
- [
- {
-  "name": "Rosie",
-  "title": "I'm a house robot who became aware",
-  "imageUrl": "/rosie.png",
-  "llm": "vicuna13b"
- },
- {
-  "name": "Alice",
-  "title": "I am Yoko's creation",
-  "imageUrl": "/alice.png",
-  "llm": "vicuna13b"
- },
- {
-  "name": "Lucky",
-  "title": "I am a space corgi",
-  "imageUrl": "/corgi.png",
-  "llm": "vicuna13b"
- }
+[
+  {
+    "name": "Rosie",
+    "title": "I'm a house robot who became aware",
+    "imageUrl": "/rosie.png",
+    "llm": "vicuna13b"
+  },
+  {
+    "name": "Alice",
+    "title": "I am Yoko's creation",
+    "imageUrl": "/alice.png",
+    "llm": "vicuna13b"
+  },
+  {
+    "name": "Lucky",
+    "title": "I am a space corgi",
+    "imageUrl": "/corgi.png",
+    "llm": "vicuna13b"
+  }
 ]

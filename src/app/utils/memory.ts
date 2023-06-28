@@ -1,29 +1,50 @@
 import { Redis } from "@upstash/redis";
+import { get } from "http";
 
 class MemoryManager {
   private static instance: MemoryManager;
   private history: Redis;
-  public companionName: string;
+  private companionName: string;
+  private modelName: string;
+  private userId: string;
 
-  private constructor(companionName: string) {
+  private constructor(
+    companionName: string,
+    userId: string,
+    modelName: string
+  ) {
     this.history = Redis.fromEnv();
+    this.userId = userId;
     this.companionName = companionName;
+    this.modelName = modelName;
   }
 
-  public static getInstance(companionName: string): MemoryManager {
+  public static getInstance(
+    companionName: string,
+    modelName: string,
+    userId: string
+  ): MemoryManager {
     if (!MemoryManager.instance) {
-      MemoryManager.instance = new MemoryManager(companionName);
+      MemoryManager.instance = new MemoryManager(
+        companionName,
+        modelName,
+        userId
+      );
     }
     return MemoryManager.instance;
   }
 
-  public async writeToHistory(userId: string | undefined, text: string) {
-    if (typeof userId == "undefined") {
+  private getCompanionKey() {
+    return this.userId + "-" + this.companionName + "-" + this.modelName;
+  }
+
+  public async writeToHistory(text: string) {
+    if (typeof this.userId == "undefined") {
       console.log("No user id");
       return "";
     }
 
-    const key = userId + "-" + this.companionName;
+    const key = this.getCompanionKey();
     const result = await this.history.zadd(key, {
       score: Date.now(),
       member: text,
@@ -32,13 +53,13 @@ class MemoryManager {
     return result;
   }
 
-  public async readLatestHistory(userId: string | undefined): Promise<string> {
-    if (typeof userId == "undefined") {
+  public async readLatestHistory(): Promise<string> {
+    if (typeof this.userId == "undefined") {
       console.log("No user id");
       return "";
     }
 
-    const key = userId + "-" + this.companionName;
+    const key = this.getCompanionKey();
     let result = await this.history.zrange(key, 0, Date.now(), {
       byScore: true,
     });
@@ -48,12 +69,8 @@ class MemoryManager {
     return recentChats;
   }
 
-  public async seedChatHistory(
-    userId: string,
-    seedContent: String,
-    delimiter: string = "\n"
-  ) {
-    const key = userId + "-" + this.companionName;
+  public async seedChatHistory(seedContent: String, delimiter: string = "\n") {
+    const key = this.getCompanionKey();
     if (await this.history.exists(key)) {
       console.log("User already has chat history");
       return;

@@ -7,6 +7,7 @@ import { PineconeClient } from "@pinecone-database/pinecone";
 import { PineconeStore } from "langchain/vectorstores/pinecone";
 import MemoryManager from "@/app/utils/memory";
 import { currentUser } from "@clerk/nextjs";
+import { NextResponse } from "next/server";
 
 dotenv.config({ path: `.env.local` });
 const SEED_CHAT_HISTORY = `
@@ -18,31 +19,39 @@ I really am, and I'm excited to chat with you.\n\n`;
 export async function POST(request: Request) {
   const { prompt } = await request.json();
 
-  // XXX Companion name passed here. Can use as a key to get backstory, chat history etc. 
-  const name = request.headers.get("name"); 
+  // XXX Companion name passed here. Can use as a key to get backstory, chat history etc.
+  const name = request.headers.get("name");
   const companion_file_name = name + ".txt";
-
-  console.log("Companion name: "+name);
-  const memoryManager = MemoryManager.getInstance(name);
 
   // Get user from Clerk
   const user = await currentUser();
   const clerkUserId = user?.id;
 
-  const { stream, handlers } = LangChainStream();
-
-  const records = await memoryManager.readLatestHistory(clerkUserId!);
-  if (records.length === 0) {
-    await memoryManager.seedChatHistory(
-      clerkUserId!,
-      SEED_CHAT_HISTORY,
-      "\n\n"
+  if (!clerkUserId) {
+    return new NextResponse(
+      JSON.stringify({ Message: "User not authorized" }),
+      {
+        status: 401,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
     );
   }
-  await memoryManager.writeToHistory(
-    clerkUserId,
-    "### Human: " + prompt + "\n"
+
+  const memoryManager = MemoryManager.getInstance(
+    name!,
+    "vicuna13b",
+    clerkUserId
   );
+
+  const { stream, handlers } = LangChainStream();
+
+  const records = await memoryManager.readLatestHistory();
+  if (records.length === 0) {
+    await memoryManager.seedChatHistory(SEED_CHAT_HISTORY, "\n\n");
+  }
+  await memoryManager.writeToHistory("### Human: " + prompt + "\n");
 
   // Query Pinecone
   const client = new PineconeClient();
@@ -57,14 +66,14 @@ export async function POST(request: Request) {
     { pineconeIndex }
   );
 
-  let recentChatHistory = ""; 
-  recentChatHistory = await memoryManager.readLatestHistory(clerkUserId!);
+  let recentChatHistory = "";
+  recentChatHistory = await memoryManager.readLatestHistory();
 
-   const similarDocs = await vectorStore
-     .similaritySearch(recentChatHistory, 3, { fileName: companion_file_name })
-     .catch((err) => {
-       console.log("WARNING: failed to get vector search results.", err);
-     });
+  const similarDocs = await vectorStore
+    .similaritySearch(recentChatHistory, 3, { fileName: companion_file_name })
+    .catch((err) => {
+      console.log("WARNING: failed to get vector search results.", err);
+    });
 
   let relevantHistory = "";
   if (!!similarDocs && similarDocs.length !== 0) {
@@ -109,16 +118,16 @@ export async function POST(request: Request) {
 
   const cleaned = resp.replaceAll(",", "");
   const chunks = cleaned.split("###");
-  const response = (chunks.length > 1)? chunks[1] : chunks[0];
-  
-  await memoryManager.writeToHistory(clerkUserId, "### " + response.trim());
+  const response = chunks.length > 1 ? chunks[1] : chunks[0];
+
+  await memoryManager.writeToHistory("### " + response.trim());
   var Readable = require("stream").Readable;
 
   let s = new Readable();
   s.push(response);
   s.push(null);
   if (response !== undefined && response.length > 1) {
-    await memoryManager.writeToHistory(clerkUserId, "### " + response.trim());
+    await memoryManager.writeToHistory("### " + response.trim());
   }
 
   return new StreamingTextResponse(s);

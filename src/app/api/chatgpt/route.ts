@@ -25,7 +25,7 @@ Alice: Exploring the vast open world and discovering hidden treasures.`;
 
 export async function POST(req: Request) {
   console.log("chatgpt was called");
-  const memoryManager = MemoryManager.getInstance(COMPANION_NAME);
+
   let clerkUserId;
   let user;
   let clerkUserName;
@@ -39,12 +39,30 @@ export async function POST(req: Request) {
     clerkUserId = user?.id;
     clerkUserName = user?.firstName;
   }
-  const records = await memoryManager.readLatestHistory(clerkUserId!);
+
+  if (!clerkUserId) {
+    return new NextResponse(
+      JSON.stringify({ Message: "User not authorized" }),
+      {
+        status: 401,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  }
+
+  const memoryManager = MemoryManager.getInstance(
+    COMPANION_NAME,
+    "chatgpt",
+    clerkUserId
+  );
+  const records = await memoryManager.readLatestHistory();
   if (records.length === 0) {
     await memoryManager.seedChatHistory(clerkUserId!, SEED_CHAT_HISTORY);
   }
 
-  await memoryManager.writeToHistory(clerkUserId, "You: " + prompt + "\n");
+  await memoryManager.writeToHistory("You: " + prompt + "\n");
 
   // query Pinecone
   const client = new PineconeClient();
@@ -59,7 +77,7 @@ export async function POST(req: Request) {
     { pineconeIndex }
   );
 
-  let recentChatHistory = await memoryManager.readLatestHistory(clerkUserId!);
+  let recentChatHistory = await memoryManager.readLatestHistory();
 
   const similarDocs = await vectorStore
     .similaritySearch(recentChatHistory, 3, { fileName: COMPANION_FILE_NAME })
@@ -80,7 +98,7 @@ export async function POST(req: Request) {
     openAIApiKey: process.env.OPENAI_API_KEY,
     callbackManager: CallbackManager.fromHandlers(handlers),
   });
-  //model.verbose = true;
+  model.verbose = true;
 
   const replyWithTwilioLimit = isText
     ? "You reply within 1000 characters."
@@ -114,7 +132,6 @@ export async function POST(req: Request) {
 
   console.log("result", result);
   const chatHistoryRecord = await memoryManager.writeToHistory(
-    clerkUserId,
     result!.text + "\n"
   );
   console.log("chatHistoryRecord", chatHistoryRecord);
