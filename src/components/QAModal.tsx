@@ -4,8 +4,6 @@ import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useCompletion } from "ai/react";
 
-let llmstr: string = String("");
-
 export default function QAModal({
   open,
   setOpen,
@@ -18,12 +16,12 @@ export default function QAModal({
   if (example) {
     console.log("Chose companion" + example.name);
     console.log("With LLM"        + example.llm);
-    llmstr = example.llm;
   } else{ return;}
 
   const { completion, input, isLoading, handleInputChange, handleSubmit } =
     useCompletion({
-      api: "/api/" + llmstr,
+      api: "/api/" + example.llm,
+      headers: {"name": example.name},
     });
 
   return (

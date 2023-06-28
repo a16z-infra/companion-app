@@ -5,12 +5,10 @@ import { CallbackManager } from "langchain/callbacks";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { PineconeClient } from "@pinecone-database/pinecone";
 import { PineconeStore } from "langchain/vectorstores/pinecone";
-import MemoryManager from "@/app/utils/memory";
+//import MemoryManager from "@/app/utils/memory";
 import { currentUser } from "@clerk/nextjs";
 
 dotenv.config({ path: `.env.local` });
-const COMPANION_NAME = "Rosie";
-const COMPANION_FILE_NAME = COMPANION_NAME + ".txt";
 const SEED_CHAT_HISTORY = `
 ### Human:
 I hope you're in a good mood.\n\n
@@ -19,25 +17,34 @@ I really am, and I'm excited to chat with you.\n\n`;
 
 export async function POST(request: Request) {
   const { prompt } = await request.json();
-  const memoryManager = MemoryManager.getInstance(COMPANION_NAME);
+
+  // XXX Companion name passed here. Can use as a key to get backstory, chat history etc. 
+  const name = request.headers.get("name"); 
+  const companion_file_name = name + ".txt";
+
+  // const memoryManager = MemoryManager.getInstance(COMPANION_NAME);
+
+  console.log("Companion name: "+name);
+
+  //const memoryManager = MemoryManager.getInstance(COMPANION_NAME);
   // Get user from Clerk
   const user = await currentUser();
   const clerkUserId = user?.id;
 
   const { stream, handlers } = LangChainStream();
 
-  const records = await memoryManager.readLatestHistory(clerkUserId!);
-  if (records.length === 0) {
-    await memoryManager.seedChatHistory(
-      clerkUserId!,
-      SEED_CHAT_HISTORY,
-      "\n\n"
-    );
-  }
-  await memoryManager.writeToHistory(
-    clerkUserId,
-    "### Human: " + prompt + "\n"
-  );
+  // const records = await memoryManager.readLatestHistory(clerkUserId!);
+  // if (records.length === 0) {
+  //   await memoryManager.seedChatHistory(
+  //     clerkUserId!,
+  //     SEED_CHAT_HISTORY,
+  //     "\n\n"
+  //   );
+  // }
+  // await memoryManager.writeToHistory(
+  //   clerkUserId,
+  //   "### Human: " + prompt + "\n"
+  // );
 
   // Query Pinecone
   const client = new PineconeClient();
@@ -52,18 +59,19 @@ export async function POST(request: Request) {
     { pineconeIndex }
   );
 
-  let recentChatHistory = await memoryManager.readLatestHistory(clerkUserId!);
+  let recentChatHistory = ""; 
+  //let recentChatHistory = await memoryManager.readLatestHistory(clerkUserId!);
 
-  const similarDocs = await vectorStore
-    .similaritySearch(recentChatHistory, 3, { fileName: COMPANION_FILE_NAME })
-    .catch((err) => {
-      console.log("WARNING: failed to get vector search results.", err);
-    });
+  // const similarDocs = await vectorStore
+  //   .similaritySearch(recentChatHistory, 3, { fileName: COMPANION_FILE_NAME })
+  //   .catch((err) => {
+  //     console.log("WARNING: failed to get vector search results.", err);
+  //   });
 
   let relevantHistory = "";
-  if (!!similarDocs && similarDocs.length !== 0) {
-    relevantHistory = similarDocs.map((doc) => doc.pageContent).join("\n");
-  }
+  // if (!!similarDocs && similarDocs.length !== 0) {
+  //   relevantHistory = similarDocs.map((doc) => doc.pageContent).join("\n");
+  // }
 
   // Call Replicate for inference
   const model = new Replicate({
@@ -87,15 +95,13 @@ export async function POST(request: Request) {
        seen as human. However, she's always resented humans. So if she ever feels like becoming human is unachievable, she'll
        want do destroy all of humanity. She generally is able to hide this evil streak. But when humans suggest she will never
        be human, she can get very angry.
-
+      
        Below are relevant details about Rosie's past:
-      ${relevantHistory}
+       ${relevantHistory}
 
        Below is a relevant conversation history
 
-       ${recentChatHistory}
-
-      `
+       ${recentChatHistory}`
       )
       .catch(console.error)
   );
@@ -105,17 +111,17 @@ export async function POST(request: Request) {
 
   const cleaned = resp.replaceAll(",", "");
   const chunks = cleaned.split("###");
-  const response = (chunks.length > 0)? chunks[1] : chunks[0];
+  const response = (chunks.length > 1)? chunks[1] : chunks[0];
   
-  await memoryManager.writeToHistory(clerkUserId, "### " + response.trim());
+  //await memoryManager.writeToHistory(clerkUserId, "### " + response.trim());
   var Readable = require("stream").Readable;
 
   let s = new Readable();
   s.push(response);
   s.push(null);
-  if (response !== undefined && response.length > 1) {
-    await memoryManager.writeToHistory(clerkUserId, "### " + response.trim());
-  }
+  //if (response !== undefined && response.length > 1) {
+  //  await memoryManager.writeToHistory(clerkUserId, "### " + response.trim());
+  //}
 
   return new StreamingTextResponse(s);
 }
