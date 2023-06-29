@@ -65,7 +65,7 @@ export async function POST(req: Request) {
   // console.log("Seedchat: "+seedchat);
 
   const memoryManager = MemoryManager.getInstance(
-    name,
+    name!,
     "chatgpt",
     clerkUserId
   );
