@@ -33,7 +33,7 @@ export default function QAModal({
 
   console.log("Chose companion" + example.name);
   console.log("With LLM"        + example.llm);
-  console.log("Completion: "+completion);
+  // console.log("Completion: "+completion);
 
   if (last_name === "") {
     last_name = example.name;
