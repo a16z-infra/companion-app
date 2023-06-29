@@ -66,7 +66,7 @@ export async function POST(request: Request) {
 
   const records = await memoryManager.readLatestHistory();
   if (records.length === 0) {
-    await memoryManager.seedChatHistory(SEED_CHAT_HISTORY, "\n\n");
+    await memoryManager.seedChatHistory(seedchat, "\n\n");
   }
   await memoryManager.writeToHistory("### Human: " + prompt + "\n");
 
@@ -123,8 +123,6 @@ export async function POST(request: Request) {
        ${relevantHistory}
 
        Below is a relevant conversation history
-
-       ${seedchat}
 
        ${recentChatHistory}`
       )
