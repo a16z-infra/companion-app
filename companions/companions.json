@@ -22,6 +22,6 @@
     "name": "Sebastian",
     "title": "I'm a travel blogger and a mystery novel writer",
     "imageUrl": "/Sebastian.png",
-    "llm": "vicuna13b"
+    "llm": "chatgpt"
   }
 ]
