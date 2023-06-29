@@ -10,11 +10,6 @@ import { currentUser } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
 dotenv.config({ path: `.env.local` });
-const SEED_CHAT_HISTORY = `
-### Human:
-I hope you're in a good mood.\n\n
-### Rosie:
-I really am, and I'm excited to chat with you.\n\n`;
 
 export async function POST(request: Request) {
   const { prompt, isText, userId, userName } = await request.json();
