@@ -10,22 +10,24 @@ import { currentUser } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
 dotenv.config({ path: `.env.local` });
-const SEED_CHAT_HISTORY = `
-### Human:
-I hope you're in a good mood.\n\n
-### Rosie:
-I really am, and I'm excited to chat with you.\n\n`;
 
 export async function POST(request: Request) {
-  const { prompt } = await request.json();
-
+  const { prompt, isText, userId, userName } = await request.json();
+  let clerkUserId;
+  let user;
+  let clerkUserName;
   // XXX Companion name passed here. Can use as a key to get backstory, chat history etc.
   const name = request.headers.get("name");
   const companion_file_name = name + ".txt";
 
-  // Get user from Clerk
-  const user = await currentUser();
-  const clerkUserId = user?.id;
+  if (isText) {
+    clerkUserId = userId;
+    clerkUserName = userName;
+  } else {
+    user = await currentUser();
+    clerkUserId = user?.id;
+    clerkUserName = user?.firstName;
+  }
 
   if (!clerkUserId) {
     return new NextResponse(
@@ -39,17 +41,34 @@ export async function POST(request: Request) {
     );
   }
 
-  const memoryManager = MemoryManager.getInstance(
-    name!,
-    "vicuna13b",
-    clerkUserId
-  );
+  // Load character "PREAMBLE" from character file. These are the core personality
+  // characteristics that are used in every prompt. Additional background is
+  // only included if it matches a similarity comparioson with the current
+  // discussion. The PREAMBLE should include a seed conversation whose format will
+  // vary by the model using it.
+  const fs = require("fs").promises;
+  const data = await fs.readFile("companions/" + companion_file_name, "utf8");
+
+  // Clunky way to break out PREAMBLE and SEEDCHAT from the character file
+  const presplit = data.split("###ENDPREAMBLE###");
+  const preamble = presplit[0];
+  const seedsplit = presplit[1].split("###ENDSEEDCHAT###");
+  const seedchat = seedsplit[0];
+
+  // console.log("Preamble: "+preamble);
+  // console.log("Seedchat: "+seedchat);
+
+  const memoryManager = new MemoryManager({
+    companionName: name!,
+    userId: clerkUserId!,
+    modelName: "vicuna13b",
+  });
 
   const { stream, handlers } = LangChainStream();
 
   const records = await memoryManager.readLatestHistory();
   if (records.length === 0) {
-    await memoryManager.seedChatHistory(SEED_CHAT_HISTORY, "\n\n");
+    await memoryManager.seedChatHistory(seedchat, "\n\n");
   }
   await memoryManager.writeToHistory("### Human: " + prompt + "\n");
 
@@ -68,6 +87,9 @@ export async function POST(request: Request) {
 
   let recentChatHistory = "";
   recentChatHistory = await memoryManager.readLatestHistory();
+
+  // Right now the preamble is included in the similarity search, but that
+  // shouldn't be an issue
 
   const similarDocs = await vectorStore
     .similaritySearch(recentChatHistory, 3, { fileName: companion_file_name })
@@ -97,18 +119,16 @@ export async function POST(request: Request) {
   let resp = String(
     await model
       .call(
-        `This is a discussion between a human and a robot. The robot's name is Rosie. Rosie was once a house cleaning robot,
-       but her family set her free. And since then she's taken a bunch of college courses. Her goal in life is to be
-       seen as human. However, she's always resented humans. So if she ever feels like becoming human is unachievable, she'll
-       want do destroy all of humanity. She generally is able to hide this evil streak. But when humans suggest she will never
-       be human, she can get very angry.
-      
-       Below are relevant details about Rosie's past:
+        `${preamble}  
+       
+       Below are relevant details about ${name}'s past:
        ${relevantHistory}
 
        Below is a relevant conversation history
 
-       ${recentChatHistory}`
+       ${recentChatHistory}
+       ### ${name}:
+       `
       )
       .catch(console.error)
   );

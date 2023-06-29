@@ -12,24 +12,17 @@ import { currentUser } from "@clerk/nextjs";
 import MemoryManager from "@/app/utils/memory";
 
 dotenv.config({ path: `.env.local` });
-const COMPANION_NAME = "Alice";
-const COMPANION_FILE_NAME = COMPANION_NAME + ".txt";
-const SEED_CHAT_HISTORY = `You: Hi Alice, how are you today?
-Alice: I’m doing great. I’m reading a book called Tomorrow and Tomorrow and Tomorrow and really enjoyed it.
-You: what is the book about?
-Alice: It’s about two friends come together as creative partners in the world of video game design.
-You: that sounds fun. do you like video games? what are you playing now?
-Alice: YEs!!! I’m a huge fan. Playing the new legend of zelda game every day.
-You: oh amazing, what’s your favorite part of that game?
-Alice: Exploring the vast open world and discovering hidden treasures.`;
 
 export async function POST(req: Request) {
-  console.log("chatgpt was called");
-
   let clerkUserId;
   let user;
   let clerkUserName;
   const { prompt, isText, userId, userName } = await req.json();
+
+  // XXX Companion name passed here. Can use as a key to get backstory, chat history etc.
+  const name = req.headers.get("name");
+  const companion_file_name = name + ".txt";
+
   console.log("prompt: ", prompt);
   if (isText) {
     clerkUserId = userId;
@@ -52,17 +45,35 @@ export async function POST(req: Request) {
     );
   }
 
-  const memoryManager = MemoryManager.getInstance(
-    COMPANION_NAME,
-    "chatgpt",
-    clerkUserId
-  );
+  // Load character "PREAMBLE" from character file. These are the core personality
+  // characteristics that are used in every prompt. Additional background is
+  // only included if it matches a similarity comparioson with the current
+  // discussion. The PREAMBLE should include a seed conversation whose format will
+  // vary by the model using it.
+  const fs = require("fs").promises;
+  const data = await fs.readFile("companions/" + companion_file_name, "utf8");
+
+  // Clunky way to break out PREAMBLE and SEEDCHAT from the character file
+  const presplit = data.split("###ENDPREAMBLE###");
+  const preamble = presplit[0];
+  const seedsplit = presplit[1].split("###ENDSEEDCHAT###");
+  const seedchat = seedsplit[0];
+
+  // console.log("Preamble: "+preamble);
+  // console.log("Seedchat: "+seedchat);
+
+  const memoryManager = new MemoryManager({
+    companionName: name!,
+    modelName: "chatgpt",
+    userId: clerkUserId,
+  });
+
   const records = await memoryManager.readLatestHistory();
   if (records.length === 0) {
-    await memoryManager.seedChatHistory(clerkUserId!, SEED_CHAT_HISTORY);
+    await memoryManager.seedChatHistory(seedchat, "\n\n");
   }
 
-  await memoryManager.writeToHistory("You: " + prompt + "\n");
+  await memoryManager.writeToHistory("Human: " + prompt + "\n");
 
   // query Pinecone
   const client = new PineconeClient();
@@ -80,7 +91,7 @@ export async function POST(req: Request) {
   let recentChatHistory = await memoryManager.readLatestHistory();
 
   const similarDocs = await vectorStore
-    .similaritySearch(recentChatHistory, 3, { fileName: COMPANION_FILE_NAME })
+    .similaritySearch(recentChatHistory, 3, { fileName: companion_file_name })
     .catch((err) => {
       console.log("WARNING: failed to get vector search results.", err);
     });
@@ -104,19 +115,19 @@ export async function POST(req: Request) {
     ? "You reply within 1000 characters."
     : "";
 
-  const chainPrompt =
-    PromptTemplate.fromTemplate(`You are a fictional character whose name is Alice.
-  You enjoy painting, programming and reading sci-fi books.
-  You are currently talking to ${clerkUserName}.
+  const chainPrompt = PromptTemplate.fromTemplate(`
+    You are ${name} and are currently talking to ${clerkUserName}.
+
+    ${preamble}
 
   You reply with answers that range from one sentence to one paragraph and with some details. ${replyWithTwilioLimit}
-  You are kind but can be sarcastic. You dislike repetitive questions. You get SUPER excited about books. 
-  Below are relevant details about Alice’s past
-  {relevantHistory}
+
+  Below are relevant details about ${name}'s past
+  ${relevantHistory}
   
   Below is a relevant conversation history
 
-  {recentChatHistory}`);
+  ${recentChatHistory}`);
 
   const chain = new LLMChain({
     llm: model,
@@ -136,7 +147,6 @@ export async function POST(req: Request) {
   );
   console.log("chatHistoryRecord", chatHistoryRecord);
   if (isText) {
-    console.log(result!.text);
     return NextResponse.json(result!.text);
   }
   return new StreamingTextResponse(stream);

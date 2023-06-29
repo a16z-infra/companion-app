@@ -9,7 +9,8 @@
     "name": "Alice",
     "title": "I am Yoko's creation",
     "imageUrl": "/alice.png",
-    "llm": "vicuna13b"
+    "llm": "chatgpt",
+    "phone": "+18339280477"
   },
   {
     "name": "Lucky",
@@ -20,7 +21,7 @@
   {
     "name": "Sebastian",
     "title": "I'm a travel blogger and a mystery novel writer",
-    "imageUrl": "/Sebastian.png",
-    "llm": "vicuna13b"
+    "imageUrl": "/sebastian.png",
+    "llm": "chatgpt"
   }
 ]

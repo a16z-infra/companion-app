@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import twilio from "twilio";
 import clerk from "@clerk/clerk-sdk-node";
 import dotenv from "dotenv";
+import ConfigManager from "@/app/utils/config";
 
 dotenv.config({ path: `.env.local` });
 const twilioAuthToken = process.env.TWILIO_AUTH_TOKEN;
@@ -18,6 +19,7 @@ export async function POST(request: Request) {
   const prompt = queryMap["Body"];
   const serverUrl = request.url.split("/api/")[0];
   const phoneNumber = queryMap["From"];
+  const companionPhoneNumber = queryMap["To"];
 
   // check if the user has verified phone #
   const users = await clerk.users.getUserList({ phoneNumber });
@@ -34,7 +36,29 @@ export async function POST(request: Request) {
     );
   }
 
-  const response = await fetch(`${serverUrl}/api/chatgpt`, {
+  const configManager = ConfigManager.getInstance();
+  console.log(phoneNumber);
+  const companionConfig = configManager.getConfig(
+    "phone",
+    companionPhoneNumber
+  );
+  console.log("companionConfig: ", companionConfig);
+  if (!companionConfig || companionConfig.length == 0) {
+    return new NextResponse(
+      JSON.stringify({ Message: "User not authorized" }),
+      {
+        status: 401,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  }
+
+  const companionName = companionConfig.name;
+  const companionModel = companionConfig.llm;
+
+  const response = await fetch(`${serverUrl}/api/${companionModel}`, {
     body: JSON.stringify({
       prompt,
       isText: true,
@@ -42,7 +66,7 @@ export async function POST(request: Request) {
       userName: users[0].firstName,
     }),
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", name: companionName },
   });
 
   const responseText = await response.text();

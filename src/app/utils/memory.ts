@@ -1,46 +1,36 @@
 import { Redis } from "@upstash/redis";
 import { get } from "http";
 
+export type CompanionKey = {
+  companionName: string;
+  modelName: string;
+  userId: string;
+};
+
 class MemoryManager {
   private static instance: MemoryManager;
   private history: Redis;
-  private companionName: string;
-  private modelName: string;
-  private userId: string;
+  private companionKey: CompanionKey;
 
-  private constructor(
-    companionName: string,
-    userId: string,
-    modelName: string
-  ) {
+  public constructor(companionKey: CompanionKey) {
     this.history = Redis.fromEnv();
-    this.userId = userId;
-    this.companionName = companionName;
-    this.modelName = modelName;
+    this.companionKey = companionKey;
   }
 
-  public static getInstance(
-    companionName: string,
-    modelName: string,
-    userId: string
-  ): MemoryManager {
+  public static getInstance(companionKey: CompanionKey): MemoryManager {
     if (!MemoryManager.instance) {
-      MemoryManager.instance = new MemoryManager(
-        companionName,
-        modelName,
-        userId
-      );
+      MemoryManager.instance = new MemoryManager(companionKey);
     }
     return MemoryManager.instance;
   }
 
-  private getCompanionKey() {
-    return this.userId + "-" + this.companionName + "-" + this.modelName;
+  public getCompanionKey(): string {
+    return `${this.companionKey.companionName}-${this.companionKey.modelName}-${this.companionKey.userId}`;
   }
 
   public async writeToHistory(text: string) {
-    if (typeof this.userId == "undefined") {
-      console.log("No user id");
+    if (!this.companionKey || typeof this.companionKey.userId == "undefined") {
+      console.log("Companion key set incorrectly");
       return "";
     }
 
@@ -54,8 +44,8 @@ class MemoryManager {
   }
 
   public async readLatestHistory(): Promise<string> {
-    if (typeof this.userId == "undefined") {
-      console.log("No user id");
+    if (!this.companionKey || typeof this.companionKey.userId == "undefined") {
+      console.log("Companion key set incorrectly");
       return "";
     }
 
