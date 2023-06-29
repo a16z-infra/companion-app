@@ -39,6 +39,23 @@ export async function POST(request: Request) {
     );
   }
 
+  // Load character "PREAMBLE" from character file. These are the core personality
+  // characteristics that are used in every prompt. Additional background is
+  // only included if it matches a similarity comparioson with the current
+  // discussion. The PREAMBLE should include a seed conversation whose format will 
+  // vary by the model using it. 
+  const fs = require('fs').promises;
+  const data = await fs.readFile("companions/"+companion_file_name, "utf8")
+
+  // Clunky way to break out PREAMBLE and SEEDCHAT from the character file
+  const presplit = data.split("###ENDPREAMBLE###");
+  const preamble = presplit[0]; 
+  const seedsplit = presplit[1].split('###ENDSEEDCHAT###');
+  const seedchat = seedsplit[0];
+
+  // console.log("Preamble: "+preamble);
+  // console.log("Seedchat: "+seedchat);
+
   const memoryManager = MemoryManager.getInstance(
     name!,
     "vicuna13b",
@@ -69,6 +86,9 @@ export async function POST(request: Request) {
   let recentChatHistory = "";
   recentChatHistory = await memoryManager.readLatestHistory();
 
+  // Right now the preamble is included in the similarity search, but that
+  // shouldn't be an issue
+
   const similarDocs = await vectorStore
     .similaritySearch(recentChatHistory, 3, { fileName: companion_file_name })
     .catch((err) => {
@@ -97,16 +117,14 @@ export async function POST(request: Request) {
   let resp = String(
     await model
       .call(
-        `This is a discussion between a human and a robot. The robot's name is Rosie. Rosie was once a house cleaning robot,
-       but her family set her free. And since then she's taken a bunch of college courses. Her goal in life is to be
-       seen as human. However, she's always resented humans. So if she ever feels like becoming human is unachievable, she'll
-       want do destroy all of humanity. She generally is able to hide this evil streak. But when humans suggest she will never
-       be human, she can get very angry.
-      
-       Below are relevant details about Rosie's past:
+       `${preamble}  
+       
+       Below are relevant details about ${name}'s past:
        ${relevantHistory}
 
        Below is a relevant conversation history
+
+       ${seedchat}
 
        ${recentChatHistory}`
       )
