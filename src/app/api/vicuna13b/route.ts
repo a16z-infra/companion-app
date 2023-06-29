@@ -17,15 +17,22 @@ I hope you're in a good mood.\n\n
 I really am, and I'm excited to chat with you.\n\n`;
 
 export async function POST(request: Request) {
-  const { prompt } = await request.json();
-
+  const { prompt, isText, userId, userName } = await request.json();
+  let clerkUserId;
+  let user;
+  let clerkUserName;
   // XXX Companion name passed here. Can use as a key to get backstory, chat history etc.
   const name = request.headers.get("name");
   const companion_file_name = name + ".txt";
 
-  // Get user from Clerk
-  const user = await currentUser();
-  const clerkUserId = user?.id;
+  if (isText) {
+    clerkUserId = userId;
+    clerkUserName = userName;
+  } else {
+    user = await currentUser();
+    clerkUserId = user?.id;
+    clerkUserName = user?.firstName;
+  }
 
   if (!clerkUserId) {
     return new NextResponse(
@@ -42,15 +49,15 @@ export async function POST(request: Request) {
   // Load character "PREAMBLE" from character file. These are the core personality
   // characteristics that are used in every prompt. Additional background is
   // only included if it matches a similarity comparioson with the current
-  // discussion. The PREAMBLE should include a seed conversation whose format will 
-  // vary by the model using it. 
-  const fs = require('fs').promises;
-  const data = await fs.readFile("companions/"+companion_file_name, "utf8")
+  // discussion. The PREAMBLE should include a seed conversation whose format will
+  // vary by the model using it.
+  const fs = require("fs").promises;
+  const data = await fs.readFile("companions/" + companion_file_name, "utf8");
 
   // Clunky way to break out PREAMBLE and SEEDCHAT from the character file
   const presplit = data.split("###ENDPREAMBLE###");
-  const preamble = presplit[0]; 
-  const seedsplit = presplit[1].split('###ENDSEEDCHAT###');
+  const preamble = presplit[0];
+  const seedsplit = presplit[1].split("###ENDSEEDCHAT###");
   const seedchat = seedsplit[0];
 
   // console.log("Preamble: "+preamble);
@@ -117,7 +124,7 @@ export async function POST(request: Request) {
   let resp = String(
     await model
       .call(
-       `${preamble}  
+        `${preamble}  
        
        Below are relevant details about ${name}'s past:
        ${relevantHistory}
