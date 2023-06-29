@@ -14,8 +14,6 @@ import MemoryManager from "@/app/utils/memory";
 dotenv.config({ path: `.env.local` });
 
 export async function POST(req: Request) {
-  console.log("chatgpt was called");
-
   let clerkUserId;
   let user;
   let clerkUserName;
@@ -64,17 +62,18 @@ export async function POST(req: Request) {
   // console.log("Preamble: "+preamble);
   // console.log("Seedchat: "+seedchat);
 
-  const memoryManager = MemoryManager.getInstance(
-    name!,
-    "chatgpt",
-    clerkUserId
-  );
+  const memoryManager = new MemoryManager({
+    companionName: name!,
+    modelName: "chatgpt",
+    userId: clerkUserId,
+  });
+
   const records = await memoryManager.readLatestHistory();
   if (records.length === 0) {
     await memoryManager.seedChatHistory(seedchat, "\n\n");
   }
-    
-  await memoryManager.writeToHistory("You: " + prompt + "\n");
+
+  await memoryManager.writeToHistory("Human: " + prompt + "\n");
 
   // query Pinecone
   const client = new PineconeClient();
@@ -116,8 +115,7 @@ export async function POST(req: Request) {
     ? "You reply within 1000 characters."
     : "";
 
-  const chainPrompt =
-    PromptTemplate.fromTemplate(`
+  const chainPrompt = PromptTemplate.fromTemplate(`
     You are ${name} and are currently talking to ${clerkUserName}.
 
     ${preamble}
@@ -149,7 +147,6 @@ export async function POST(req: Request) {
   );
   console.log("chatHistoryRecord", chatHistoryRecord);
   if (isText) {
-    console.log(result!.text);
     return NextResponse.json(result!.text);
   }
   return new StreamingTextResponse(stream);

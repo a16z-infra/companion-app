@@ -58,11 +58,11 @@ export async function POST(request: Request) {
   // console.log("Preamble: "+preamble);
   // console.log("Seedchat: "+seedchat);
 
-  const memoryManager = MemoryManager.getInstance(
-    name!,
-    "vicuna13b",
-    clerkUserId
-  );
+  const memoryManager = new MemoryManager({
+    companionName: name!,
+    userId: clerkUserId!,
+    modelName: "vicuna13b",
+  });
 
   const { stream, handlers } = LangChainStream();
 
@@ -126,7 +126,9 @@ export async function POST(request: Request) {
 
        Below is a relevant conversation history
 
-       ${recentChatHistory}`
+       ${recentChatHistory}
+       ### ${name}:
+       `
       )
       .catch(console.error)
   );
