@@ -1,47 +1,44 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import QAModal from "./QAModal";
-import TextToImgModal from "./TextToImgModal";
 import Image from "next/image";
 
 import { getCompanions } from "./actions";
-import { setClerkApiKey } from "@clerk/clerk-sdk-node";
 
 export default function Examples() {
   const [QAModalOpen, setQAModalOpen] = useState(false);
-  const [CompParam, setCompParam] = useState(null);
+  const [CompParam, setCompParam] = useState({
+    name: "",
+    title: "",
+    imageUrl: "",
+  });
+  const [examples, setExamples] = useState([
+    {
+      name: "",
+      title: "",
+      imageUrl: "",
+    },
+  ]);
 
-  // prime with a initial object. This is to get around typescript
-  // stupidity
-  const prime = Object();
-  const [examples, setExamples] = useState([prime]);
-
-  if (examples[0] === prime) {
-    const companions = getCompanions();
-    companions
-      .then((res) => {
-        // console.log("from getCompanions:   "+String(res));
-        let entries = Object(JSON.parse(String(res)));
-        let setme = [];
-        for (let i = 0; i < entries.length; ++i) {
-          let dict = {
-            name: "",
-            title: "",
-            imageUrl: "",
-            llm: "",
-          };
-          dict["name"] = entries[i].name;
-          dict["title"] = entries[i].title;
-          dict["imageUrl"] = entries[i].imageUrl;
-          dict["llm"] = entries[i].llm;
-          setme.push(dict);
-        }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const companions = await getCompanions();
+        let entries = JSON.parse(companions);
+        let setme = entries.map((entry: any) => ({
+          name: entry.name,
+          title: entry.title,
+          imageUrl: entry.imageUrl,
+          llm: entry.llm,
+        }));
         setExamples(setme);
-      })
-      .catch((err) => {
+      } catch (err) {
         console.log(err);
-      });
-  }
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div id="ExampleDiv">
@@ -57,7 +54,7 @@ export default function Examples() {
         {examples.map((example, i) => (
           <li
             key={example.name}
-            onClick={function () {
+            onClick={() => {
               setCompParam(example);
               setQAModalOpen(true);
             }}

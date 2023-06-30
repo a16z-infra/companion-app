@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useCompletion } from "ai/react";
 
@@ -30,6 +30,7 @@ export default function QAModal({
     handleSubmit,
     stop,
     setInput,
+    setCompletion,
   } = useCompletion({
     api: "/api/" + example.llm,
     headers: { name: example.name },
@@ -40,24 +41,11 @@ export default function QAModal({
     return null;
   }
 
-  // console.log("Chose companion" + example.name);
-  // console.log("With LLM"        + example.llm);
-  // console.log("Completion: "+completion);
-
-  if (last_name === "") {
-    last_name = example.name;
-  }
-
-  if (last_name != example.name) {
-    // dialog box switched companions so clear field
-    last_name = example.name;
-    completion = "";
-    return null;
-  }
   const handleClose = () => {
-    setOpen(false);
-    stop();
     setInput("");
+    setCompletion("");
+    stop();
+    setOpen(false);
   };
 
   return (
