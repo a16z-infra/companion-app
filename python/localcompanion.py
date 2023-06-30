@@ -42,14 +42,18 @@ def main():
     print('')
     print(f'Connecting you to {companion.name}...')
 
-    # load the companion's backstory, this should come from the vectorDB
-    l = companion.load_backstory(os.path.join(companion_dir, f'{companion.name}.txt'))
+    # load the companion's backstory, initialize prompts
+    l = companion.load_prompt(os.path.join(companion_dir, f'{companion.name}.txt'))
     print(f'Loaded {l} characters of backstory.')
 
-    # Initialize memory, embeddings and llm
+    # Initialize memory. Initialize if empty.
     companion.memory = MemoryManager(companion.name, user_id, companion.llm_name)
     h = asyncio.run(companion.memory.read_latest_history())
-    print(f'Loaded {len(h)} characters of chat history.')
+    if not h:
+        print(f'Chat history empty, initializing.')
+        self.memory.seed_chat_history(self.seed_chat, '\n\n')
+    else:
+        print(f'Loaded {len(h)} characters of chat history.')
 
     # Initialize LLM
     companion.llm = LlmManager()

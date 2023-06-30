@@ -38,4 +38,4 @@ next-env.d.ts
 /fly.toml
 
 # python
-__pychache__
+__pycache__/
