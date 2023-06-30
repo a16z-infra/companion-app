@@ -18,7 +18,7 @@ class MemoryManager:
         self.model_name = model_name
 
     def get_companion_key(self):
-        return f"{self.model_name}-{self.companion_name}-{self.user_id}"
+        return f"{self.companion_name}-{self.model_name}-{self.user_id}"
 
     async def write_to_history(self, text):
         if self.user_id is None:
@@ -27,7 +27,7 @@ class MemoryManager:
 
         key = self.get_companion_key()
         async with self.history:
-            result = await self.history.zadd(key, {text: int(time.time())})
+            result = await self.history.zadd(key, {text: int(time.time()*1000)})
 
         return result
 
