@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useCompletion } from "ai/react";
 
@@ -15,39 +15,42 @@ export default function QAModal({
   setOpen: any;
   example: any;
 }) {
-
-  if(!example){
+  if (!example) {
     // create a dummy so the completion doesn't croak during init.
     example = new Object();
     example.llm = "";
     example.name = "";
   }
 
-  var { completion, input, isLoading, handleInputChange, handleSubmit } =
-    useCompletion({
-        api: "/api/" + example.llm,
-        headers: { "name": example.name },
-    });
+  let {
+    completion,
+    input,
+    isLoading,
+    handleInputChange,
+    handleSubmit,
+    stop,
+    setInput,
+    setCompletion,
+  } = useCompletion({
+    api: "/api/" + example.llm,
+    headers: { name: example.name },
+  });
 
-  if (!example) { return; }
-
-  // console.log("Chose companion" + example.name);
-  // console.log("With LLM"        + example.llm);
-  // console.log("Completion: "+completion);
-
-  if (last_name === "") {
-    last_name = example.name;
+  if (!example) {
+    console.log("ERROR: no companion selected");
+    return null;
   }
 
-  if (last_name != example.name) {
-    // dialog box switched companions so clear field
-    last_name = example.name;
-    completion = "";
-  } 
+  const handleClose = () => {
+    setInput("");
+    setCompletion("");
+    stop();
+    setOpen(false);
+  };
 
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={setOpen}>
+      <Dialog as="div" className="relative z-10" onClose={handleClose}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"

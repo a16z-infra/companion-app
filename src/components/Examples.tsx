@@ -1,54 +1,52 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import QAModal from "./QAModal";
-import TextToImgModal from "./TextToImgModal";
 import Image from "next/image";
 
 import { getCompanions } from "./actions";
-import { setClerkApiKey } from "@clerk/clerk-sdk-node";
 
 export default function Examples() {
-
   const [QAModalOpen, setQAModalOpen] = useState(false);
-  const [CompParam, setCompParam]     = useState(null);
+  const [CompParam, setCompParam] = useState({
+    name: "",
+    title: "",
+    imageUrl: "",
+  });
+  const [examples, setExamples] = useState([
+    {
+      name: "",
+      title: "",
+      imageUrl: "",
+    },
+  ]);
 
-  // prime with a initial object. This is to get around typescript 
-  // stupidity
-  const prime = Object();
-  const [examples, setExamples] = useState([prime]);
-
-  if (examples[0] === prime) {
-    const companions = getCompanions();
-    companions
-      .then((res) => {
-        // console.log("from getCompanions:   "+String(res));
-        var entries = Object(JSON.parse(String(res)));
-        var setme = [];
-        for (var i = 0; i < entries.length; ++i) {
-          var dict = {
-            'name': "",
-            'title': "",
-            'imageUrl': "",
-            'llm': ""
-          };
-          dict["name"]  = entries[i].name;
-          dict["title"] = entries[i].title;
-          dict["imageUrl"] = entries[i].imageUrl;
-          dict["llm"]      = entries[i].llm;
-          setme.push(dict);
-        }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const companions = await getCompanions();
+        let entries = JSON.parse(companions);
+        let setme = entries.map((entry: any) => ({
+          name: entry.name,
+          title: entry.title,
+          imageUrl: entry.imageUrl,
+          llm: entry.llm,
+        }));
         setExamples(setme);
-      })
-      .catch((err) => {
+      } catch (err) {
         console.log(err);
-      });
-  }
+      }
+    };
 
-  var clickfunc = (function(){ setQAModalOpen(true); })
+    fetchData();
+  }, []);
 
   return (
     <div id="ExampleDiv">
-      <QAModal open={QAModalOpen} setOpen={setQAModalOpen} example={CompParam} />
+      <QAModal
+        open={QAModalOpen}
+        setOpen={setQAModalOpen}
+        example={CompParam}
+      />
       <ul
         role="list"
         className="mt-14 m-auto max-w-3xl grid grid-cols-1 gap-6 lg:grid-cols-2"
@@ -56,7 +54,10 @@ export default function Examples() {
         {examples.map((example, i) => (
           <li
             key={example.name}
-            onClick={(function(){ setCompParam(example); setQAModalOpen(true); })}
+            onClick={() => {
+              setCompParam(example);
+              setQAModalOpen(true);
+            }}
             className="col-span-2 flex flex-col rounded-lg bg-slate-800  text-center shadow relative ring-1 ring-white/10 cursor-pointer hover:ring-sky-300/70 transition"
           >
             <div className="absolute -bottom-px left-10 right-10 h-px bg-gradient-to-r from-sky-300/0 via-sky-300/70 to-sky-300/0"></div>
