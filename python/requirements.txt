@@ -1,0 +1,2 @@
+python-dotenv==1.0.0
+upstash-redis==0.12.0
