@@ -27,7 +27,7 @@ class MemoryManager:
 
         key = self.get_companion_key()
         async with self.history:
-            result = self.history.zadd(key, {text: int(time.time())})
+            result = await self.history.zadd(key, {text: int(time.time())})
 
         return result
 
@@ -41,16 +41,17 @@ class MemoryManager:
             now = int(time.time()*1000)
             result = await self.history.zrange(key, 1, now, range_method="byscore")
             print(f'Found {len(result)} chat messages in history.')
-        result = list(reversed(result[-30:]))
+        result = list(result[-30:])
         recent_chats = "\n".join(result)
         return recent_chats
 
     async def seed_chat_history(self, seed_content, delimiter="\n"):
         key = self.get_companion_key()
-        if self.history.exists(key):
-            print("User already has chat history")
-            return
+        async with self.history:
+            if await self.history.exists(key):
+                print("User already has chat history")
+                return
 
-        content = seed_content.split(delimiter)
-        for index, line in enumerate(content):
-            self.history.zadd(key, {line: index})
+            content = seed_content.split(delimiter)
+            for index, line in enumerate(content):
+                await self.history.zadd(key, {line: index})

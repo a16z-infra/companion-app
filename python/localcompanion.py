@@ -17,12 +17,17 @@ companion_dir = "../companions"
 companions_file = "companions.json"
 
 # This is the Clerk user ID. We don't use Clerk for the local client, but it is needed for the Redis key
-user_id = "user_2Rr1oYMS2KUX93esKB5ZAEGDWWi"
+user_id = "local"
+user_name = "Human"
 
 # load environment variables from the JavaScript .env file
 config = load_dotenv(env_file)
 
-def main():
+async def main():
+
+    # For compatibility with the TS implementation, user needs to specify the Clerk user ID
+    if os.getenv('CLERK_USER_ID'):
+        user_id = os.getenv('CLERK_USER_ID')
 
     # Read list of companions from JSON file
     i = 0
@@ -48,15 +53,26 @@ def main():
 
     # Initialize memory. Initialize if empty.
     companion.memory = MemoryManager(companion.name, user_id, companion.llm_name)
-    h = asyncio.run(companion.memory.read_latest_history())
+    h = await companion.memory.read_latest_history()
     if not h:
         print(f'Chat history empty, initializing.')
-        self.memory.seed_chat_history(self.seed_chat, '\n\n')
+        await companion.memory.seed_chat_history(companion.seed_chat, '\n\n')
     else:
         print(f'Loaded {len(h)} characters of chat history.')
 
     # Initialize LLM
-    companion.llm = LlmManager()
+    companion.llm = LlmManager(companion.prompt_template)
+
+    # Start chatting
+    print('')
+    print(f'You are now chatting with {companion.name}. Type "quit" to exit.')
+    while True:
+        user_input = input("Human> ")
+        if user_input == "quit":
+            break
+        reply = await companion.chat(user_input, user_name)
+        print(f'{companion.name}: {reply}')    
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
+

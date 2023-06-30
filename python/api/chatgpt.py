@@ -2,12 +2,12 @@
 #  API to OpenAI's ChatGPT via LangChain
 #
 
-import os
-import json
-import openai
-import asyncio
+from langchain import LLMChain
+from langchain.chat_models import ChatOpenAI
 
 class LlmManager:
 
-    async def post(user_str):
+    def __init__(self, prompt_template):
+        self.model = ChatOpenAI(model="gpt-3.5-turbo-16k")
+        self.chain = LLMChain(llm=self.model, prompt=prompt_template, verbose=True)
         return
