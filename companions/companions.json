@@ -3,7 +3,7 @@
     "name": "Rosie",
     "title": "I'm a house robot who became aware",
     "imageUrl": "/rosie.png",
-    "llm": "vicuna13b"
+    "llm": "chatgpt"
   },
   {
     "name": "Alice",
@@ -16,7 +16,7 @@
     "name": "Lucky",
     "title": "I am a space corgi",
     "imageUrl": "/corgi.png",
-    "llm": "vicuna13b"
+    "llm": "chatgpt"
   },
   {
     "name": "Sebastian",
