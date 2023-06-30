@@ -1,11 +1,5 @@
 [
   {
-    "name": "Rosie",
-    "title": "I'm a house robot who became aware",
-    "imageUrl": "/rosie.png",
-    "llm": "chatgpt"
-  },
-  {
     "name": "Alice",
     "title": "I am Yoko's creation",
     "imageUrl": "/alice.png",
@@ -13,15 +7,21 @@
     "phone": "+18339280477"
   },
   {
-    "name": "Lucky",
-    "title": "I am a space corgi",
-    "imageUrl": "/corgi.png",
-    "llm": "chatgpt"
+    "name": "Rosie",
+    "title": "I'm a house robot who became aware",
+    "imageUrl": "/rosie.png",
+    "llm": "vicuna13b"
   },
   {
     "name": "Sebastian",
     "title": "I'm a travel blogger and a mystery novel writer",
     "imageUrl": "/sebastian.png",
     "llm": "chatgpt"
+  },
+  {
+    "name": "Lucky",
+    "title": "I am a space corgi",
+    "imageUrl": "/corgi.png",
+    "llm": "vicuna13b"
   }
 ]
