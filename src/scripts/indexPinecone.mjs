@@ -19,17 +19,22 @@ const splitter = new CharacterTextSplitter({
 
 const langchainDocs = await Promise.all(
   fileNames.map(async (fileName) => {
-    const filePath = path.join("companions", fileName);
-    const fileContent = fs.readFileSync(filePath, "utf8");
-    const splitDocs = await splitter.createDocuments([fileContent]);
-    return splitDocs.map((doc) => {
-      return new Document({
-        metadata: { fileName },
-        pageContent: doc.pageContent,
+    if (fileName.endsWith(".txt")) {
+      const filePath = path.join("companions", fileName);
+      const fileContent = fs.readFileSync(filePath, "utf8");
+      // get the last section in the doc for background info
+      const lastSection = fileContent.split("###ENDSEEDCHAT###").slice(-1)[0];
+      const splitDocs = await splitter.createDocuments([lastSection]);
+      return splitDocs.map((doc) => {
+        return new Document({
+          metadata: { fileName },
+          pageContent: doc.pageContent,
+        });
       });
-    });
+    }
   })
 );
+
 const client = new PineconeClient();
 await client.init({
   apiKey: process.env.PINECONE_API_KEY,
@@ -38,7 +43,7 @@ await client.init({
 const pineconeIndex = client.Index(process.env.PINECONE_INDEX);
 
 await PineconeStore.fromDocuments(
-  langchainDocs.flat(),
+  langchainDocs.flat().filter((doc) => doc !== undefined),
   new OpenAIEmbeddings({ openAIApiKey: process.env.OPENAI_API_KEY }),
   {
     pineconeIndex,
