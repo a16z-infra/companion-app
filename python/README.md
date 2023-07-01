@@ -10,8 +10,9 @@ Specifically:
 - Conversation history is stored in Upstash/Redis
 - It uses OpenAI ChatGPT-turbo-3.5 to generate the chat messages
 
-Right now, Vicuña (the OSS LLM) and Pinecone (for retrieving longer chat history and 
-backstory), are not supported yet but will be added shortly.
+Right now, Vicuña (the OSS LLM) is not supported. It also doesn't use Pinecone for the
+backstory but unless you have a very long (> 4000 word) backstory there should be no
+difference.
 
 ## Installation
 
@@ -22,23 +23,24 @@ $ pip3 install -r requirements.txt
 ```
 
 Next, get the necessary API keys as described in the Readme.md file for the main TS project.
-You will need at least Upstash, OpenAI and Pinecone. You do not need Clerk (as we are local).
+You will need at least Upstash and OpenAI. You do not need Clerk, Pinecone/Supabase.
 Add them to the .env.local file in the root directory as described in the top level README.
-The python code will reads the API keys from the same .env.local file as the TS app.
+The python code will read the API keys from the same .env.local file as the TS app.
 
 Run the local client:
-
 ```
-$ python3 localcompanion.py
+$ python3 companion_app.py
 ```
 
 This should bring up the list of companions, allow you to select a companion, and start chatting.
 
 ## Sharing a companion with the web app
 
-Right now, if you want to share chat history with the web app, you need to specify the Clerk user
-ID as it is used as part of the Upstash Redis key. Find it via the Clerk console,  add the following
-to the .env.local in the root directory:
+If you want to chat with the same companion using both the TypeScript web server and the local 
+app, the local app needs your Clerk User ID. It will try to discover this automatically by looking
+for a specific Redis key. If for any reason this doesn't work, you may need to go to the Clerk
+console, find your Clerk User ID and add it to the .env.local file. It should look something
+like this:
 
 ```
 CLERK_USER_ID="user_***"
