@@ -45,7 +45,7 @@ The stack is based on the [AI Getting Started Stack](https://github.com/a16z-inf
 - Text streaming: [ai sdk](https://github.com/vercel-labs/ai)
 - Conversation history: [Upstash](https://upstash.com/)
 - Deployment: [Fly](https://fly.io/)
-- Text with companion: [Twilio] (https://twilio.com/)
+- Text with companion: [Twilio](https://twilio.com/)
 
 ## Quickstart
 
