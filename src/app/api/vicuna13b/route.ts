@@ -5,6 +5,7 @@ import { CallbackManager } from "langchain/callbacks";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { PineconeClient } from "@pinecone-database/pinecone";
 import { PineconeStore } from "langchain/vectorstores/pinecone";
+import clerk from "@clerk/clerk-sdk-node";
 import MemoryManager from "@/app/utils/memory";
 import { currentUser } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
@@ -29,7 +30,7 @@ export async function POST(request: Request) {
     clerkUserName = user?.firstName;
   }
 
-  if (!clerkUserId) {
+  if (!clerkUserId || !!!(await clerk.users.getUser(clerkUserId))) {
     return new NextResponse(
       JSON.stringify({ Message: "User not authorized" }),
       {

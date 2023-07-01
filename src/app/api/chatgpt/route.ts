@@ -5,6 +5,7 @@ import { OpenAI } from "langchain/llms/openai";
 import dotenv from "dotenv";
 import { LLMChain } from "langchain/chains";
 import { StreamingTextResponse, LangChainStream } from "ai";
+import clerk from "@clerk/clerk-sdk-node";
 import { CallbackManager } from "langchain/callbacks";
 import { PromptTemplate } from "langchain/prompts";
 import { NextResponse } from "next/server";
@@ -33,7 +34,7 @@ export async function POST(req: Request) {
     clerkUserName = user?.firstName;
   }
 
-  if (!clerkUserId) {
+  if (!clerkUserId || !!!(await clerk.users.getUser(clerkUserId))) {
     return new NextResponse(
       JSON.stringify({ Message: "User not authorized" }),
       {
