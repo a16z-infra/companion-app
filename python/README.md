@@ -5,6 +5,8 @@ the TypeScript implementation and uses the same config files, data files and dat
 This means if you use a supported LLM you can start a conversation via the TS web app 
 and continue it via the local python client (or vice versa).
 
+![image](https://github.com/a16z-infra/companion-app/assets/286029/f7382ef9-4948-40f8-acc1-27396b864037)
+
 Specifically:
 - Companion information is loaded from the companion directory
 - Conversation history is stored in Upstash/Redis
