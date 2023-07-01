@@ -40,7 +40,7 @@ class MemoryManager:
         async with self.history:
             now = int(time.time()*1000)
             result = await self.history.zrange(key, 1, now, range_method="byscore")
-            print(f'Found {len(result)} chat messages in history.')
+            #print(f'Found {len(result)} chat messages in history.')
         result = list(result[-30:])
         recent_chats = "\n".join(result)
         return recent_chats
