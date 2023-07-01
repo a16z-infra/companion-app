@@ -2,6 +2,16 @@
 
 <img width="1018" alt="Screen Shot 2023-06-21 at 10 14 33 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/a7abe450-755d-477d-8df2-dd6b4ca62737">
 
+This is a starter project to demonstrate how to create a conversational AI using
+both chatgpt and the Vicuna 13b model on Replicate. It uses a vector database to
+store the character's backstory and it uses similarity search to retrieve and
+prompt so the conversations have more depth. It also provide some conversational
+memory by keeping the conversation in a queue and including it in the prompt.  
+
+**Note** This project is inteded to be instructive. If you're interested in
+what a production open source platform, check out Steamship.ai. Or what the leading
+AI chat platforms look like, check out Character.ai. 
+
 ## Stack
 
 - Auth: [Clerk](https://clerk.com/)
@@ -13,34 +23,6 @@
 - Conversation history: [Upstash](https://upstash.com/)
 - Deployment: [Fly](https://fly.io/)
 
-
-### How does this work? 
-1. You describe the character's background story, name, etc in a README.md file
-2. Create embeddings based on content in the [companion name].md file
-3. Ask questions!
-
-#### Set up Upstash 
-1. Sign in to [Upstash](https://upstash.com/)
-2. Under "Redis" on the top nav, click on "Create Database"
-3. Give it a name, and then select regions and other options based on your preference. Click on "Create"
-<img width="524" alt="Screen Shot 2023-06-27 at 3 46 48 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/14905d22-7689-410b-a9a7-9f1a59d380a2">
-
-4. Scroll down to "REST API" section and click on ".env". Now you can copy paste both environment variables to your `.env.local`
-<img width="879" alt="Screen Shot 2023-06-27 at 3 48 32 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/2793177d-c197-428a-95d5-0f66a5b1f6c4">
-
-
-
-
-
-
-Below are README from the AI Getting Started template. 
-_______
-
-
-## Overview
-- 🚀 [Quickstart](#quickstart)
-- 💻 [Contribute to this repo](#how-to-contribute-to-this-repo)
-
 ## Quickstart 
 The simplest way to try out this stack is to test it out locally and traverse through code files to understand how each component work. Here are the steps to get started. 
 
@@ -48,13 +30,13 @@ The simplest way to try out this stack is to test it out locally and traverse th
 
 Fork the repo to your Github account, then run the following command to clone the repo: 
 ```
-git clone git@github.com:[YOUR_GITHUB_ACCOUNT_NAME]/ai-getting-started.git
+git clone git@github.com:[YOUR_GITHUB_ACCOUNT_NAME]/companion-app.git
 ```
 
 ### 2. Install dependencies 
 
 ```
-cd ai-getting-started
+cd companion-app
 npm install 
 ```
 
@@ -87,7 +69,16 @@ d. **Pinecone API key**
 - Fill in Dimension as `1536`
 - Once the index is successfully created, click on "API Keys" on the left side nav and create an API key: copy "Environment" value to `PINECONE_ENVIRONMENT` variable, and "Value" to `PINECONE_API_KEY`
 
-e. **Supabase API key**
+e. **Upstash API key**
+- Sign in to [Upstash](https://upstash.com/)
+- Under "Redis" on the top nav, click on "Create Database"
+- Give it a name, and then select regions and other options based on your preference. Click on "Create"
+<img width="524" alt="Screen Shot 2023-06-27 at 3 46 48 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/14905d22-7689-410b-a9a7-9f1a59d380a2">
+
+- Scroll down to "REST API" section and click on ".env". Now you can copy paste both environment variables to your `.env.local`
+<img width="879" alt="Screen Shot 2023-06-27 at 3 48 32 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/2793177d-c197-428a-95d5-0f66a5b1f6c4">
+
+e. **Supabase API key** (optional)
 - Create a Supabase instance [here](https://supabase.com/dashboard/projects); then go to Project Settings -> API 
 - `SUPABASE_URL` is the URL value under "Project URL"
 - `SUPABASE_PRIVATE_KEY` is the key starts with `ey` under Project API Keys
@@ -95,7 +86,7 @@ e. **Supabase API key**
 
 ### 4. Generate embeddings 
 
-There are a few markdown files under `/blogs` directory as examples so you can do Q&A on them. To generate embeddings and store them in the vector database for future queries, you can run the following command: 
+The `companions/` directory contains the "personalities" of the AIs in .txt files. To generate inbeddings and load them into the vector database to draw from during the chat, run the following command:
 
 #### If using Pinecone
 Run the following command to generate embeddings and store them in Pinecone: 
@@ -109,10 +100,11 @@ In `QAModel.tsx`, replace `/api/qa-pinecone` with `/api/qa-pg-vector`. Then run 
 npm run generate-embeddings-supabase
 ```
 
-
 ### 5. Run app locally
 
 Now you are ready to test out the app locally! To do this, simply run `npm run dev` under the project root.
+
+You can connect to the project with your browser typically at http://localhost:3000/. 
 
 ### 6. Deploy the app
 
@@ -129,6 +121,46 @@ Now you are ready to test out the app locally! To do this, simply run `npm run d
 - [Netlify](https://www.netlify.com/)
 - [Vercel](https://vercel.com/)
 
+
+## Adding/modifying characters
+
+All character data is stored in the `companions/` directory. To add a companion,
+simply add a description to the list in `companions.json`. Put image files in
+`public/` in the root directory. Each character should have its own text file
+name `charactername.txt`. The format of the text file is as follows:
+
+
+```
+The character's core description that is included with every prompt. Should only
+be a few sentances
+
+###ENDPREAMBLE###
+
+Human: Say something here  
+Character name: Write a response in their voice 
+Human: Maybe another exchange 
+Character:  More character dialog
+
+###ENDSEEDCHAT###
+
+Paragraphs of character backstory.
+
+You can add as many as you want
+
+They'll be stored in the vectordb
+
+```
+
+The **preamble** is used with every prompt so should be relatively short. The **seedchat** allows you to provide examples of the characters voice that the model can learn from. And the rest of the file is whatever additional background you want to provide which will be retrieved if relevant to the current discussion. 
+
+## Shortcomings
+
+Oh, there are so many. 
+- Currently the UI only shows the current chat and response, loosing the history. 
+- Vicuna has a cold start problem so can take a couple of minutes to get a
+response for the initial chat
+- Error reporting is total crap. Particularly when deployed. So if you have a timeout, or other back end isue, it typically dails silently. 
+- The Upstash message history is never cleared. To clear it, you have to go to Upstash and manually delete
 
 ## How to contribute to this repo
 
@@ -147,6 +179,12 @@ If you are new to contributing on github, here is a step-by-step guide:
 
 ### Other contributions
 Feel free to open feature requests, bug reports etc under Issues.
+
+### How does this work? 
+1. You describe the character's background story, name, etc in a README.md file
+2. Create embeddings based on content in the [companion name].md file
+3. Ask questions!
+
 
 ## Refs
 - https://js.langchain.com/docs/modules/indexes/vector_stores/integrations/pinecone
