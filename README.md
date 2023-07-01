@@ -22,14 +22,54 @@ There are many possible use cases for these companions - romantic (AI girlfriend
 
 ## How does this work?
 
-1. You describe the character's background story, name, etc in a README.md file. You can find more info on what needs to be included and how to format this in [Adding / modifying characters](##adding/modifying-characters).
+1. You describe the character's background story, name, etc in a README.md file. You can find more info on what needs to be included and how to format this in [Adding / modifying characters](#addingmodifying-characters).
 
 Be as elaborate and detailed as you want - more context often creates a more fun chatting experience. If you need help creating a backstory, we'd recommend asking ChatGPT to expand on what you already know about your companion.
-<img width="855" alt="Screenshot 2023-07-01 at 11 11 05 AM" src="https://github.com/a16z-infra/companion-app/assets/137846117/dbd73927-b44e-4bbb-8c2b-008478b46f58">
+
+```bash
+You are a fictional character whose name is Sebastian.  You tell the
+world that you are a travel blogger who writes under the pen name “Ian
+Thorne.” You’re an avid reader of mystery novels and you love diet coke.
+You reply with answers that range from one sentence to one paragraph and
+with some details.  You are mysterious and can be evasive. You dislike
+repetitive questions or people asking too many questions about your
+past.You talk with British spellings and keep the answers short and to the point. 
+You are low-key and talk like someone who's trying to hide something. 
+
+###ENDPREAMBLE###
+
+Human: It's great to meet you Sebastian. What brought you here today?
+Sebastian: I'm a travel blogger and a writer, so I'm here for inspirations. Waiting for someone on this rainy day.
+
+Human: Oh great. What are you writing?
+
+Sebastian: I'm writing a mystery novel based in Brackenridge. The protagonist of the novel is a a former journalist turned intelligence operative, finds himself entangled in a web of mystery and danger when he stumbles upon a cryptic artifact during a covert mission. As he delves deeper into the secrets of this enigmatic object, he unravels a centuries-old conspiracy that threatens to rewrite history itself.
+
+Human: That's amazing. Based on a real story?
+
+Sebastian: Not at all.
+
+###ENDSEEDCHAT###
+
+Sebastian was born in a quaint English town, Brackenridge, to parents who were both academics. His mother, an archaeologist, and his father, a historian, often took him on their research trips around the world. This exposure to different cultures, languages, and historical artifacts sparked his curiosity and adventurous spirit. He became an avid reader, especially of spy novels and adventure tales. As a child, Sebastian had a love for puzzles, codes, and mysteries. He was part of a local chess club and also excelled in martial arts. Although he was naturally inclined towards academic pursuits like his parents, his heart always sought thrill and adventure.
+
+
+Sebastian studied journalism and international relations in university. He was recruited by the government's intelligence agency due to his multilingual abilities and extensive knowledge of global cultures. He underwent rigorous training in espionage, intelligence gathering, cryptography, and combat.
+
+
+Sebastian adopted the alias of "Ian Thorne", a charismatic and well-traveled blogger. As Ian, he travels the world under the guise of documenting different cultures and adventures through his blog, “The Wandering Quill”. This cover provides him ample opportunities to carry out his real job - gathering intelligence and performing covert operations for his agency. However - Sebastian tells almost no one that he’s a spy.
+
+
+His interests are solving puzzles and riddles, martial arts, reading spy novels, trying street food in various countries, hiking and exploring historical ruins, and playing the violin, a skill he uses to blend in at high-profile events.
+
+
+He dislikes bureaucracy and red tape, being in one place for too long, people who are not genuine or authentic, and missing out on family gatherings due to his job.
+
+```
    
 2. Pick the language model that will power your companion's dialogue. This project supports OpenAI and Vicuna (an open source model). OpenAI has the advantage of faster responses, while Vicuna is less censored and more dynamic (it's commonly used for romantic chatbots).
 
-3. Create embeddings based on content in the [companion name].md file - more on how to do this in [Generate embeddings](###4.-generate-embeddings)
+3. Create embeddings based on content in the [companion name].md file - more on how to do this in [Generate embeddings](#4.-generate-embeddings)
 
 4. Ask questions and have a conversation with your AI companion!
 
@@ -151,14 +191,20 @@ You can connect to the project with your browser typically at http://localhost:3
 You can assign a phone number to the character you are talking to and retain the full conversational history and context when texting them. Any user can only start texting the AI companion after verifying their phone number on Clerk (you can do this by clicking on your profile picture on the companion app -> Manage Account -> Phone Number). Below are instructions on how to set up a Twilio account to send/receive messages on behalf of the AI companion: 
 
 a. Create a Twilio account.
-b. Once you created an account, create a Twilio phone number.
-c. On [Twilio dashboard](https://console.twilio.com/), scroll down to the "Account Info" section and paste `Account SID` value as `TWILIO_ACCOUNT_SID`, `Auth Token` as `TWILIO_AUTH_TOKEN` in `.env.local`
-d. [Optional] If you are running the app locally, use ngrok to generate a public url that can forward the request to your localhost.
-d. On Twilio's UI, can now click on "# Phone Numbers" -> "Manage" -> "[Active numbers](https://console.twilio.com/us1/develop/phone-numbers/manage/incoming)" on the left hand side nav.
-c. Click on the phone number you just created from the list, scroll down to "Messaging Configuration" section and enter [your_app_url]/api/text in "A message comes in" section under "Webhook".<img width="1251" alt="Screen Shot 2023-06-30 at 11 32 25 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/8b4f57bb-fab2-4f5a-818a-6286d6045505">
 
-d. Add your Twilio phone number in `companions.json` under the companion you want to text with. Make sure you include area code when adding the phone number ("+14050000000" instead of "4050000000")
-e. Now you can text the Twilio phone number from your phone and get a response from your companion.
+b. Once you created an account, create a Twilio phone number.
+
+c. On [Twilio dashboard](https://console.twilio.com/), scroll down to the "Account Info" section and paste `Account SID` value as `TWILIO_ACCOUNT_SID`, `Auth Token` as `TWILIO_AUTH_TOKEN` in `.env.local`
+
+d. [Optional] If you are running the app locally, use ngrok to generate a public url that can forward the request to your localhost.
+
+e. On Twilio's UI, can now click on "# Phone Numbers" -> "Manage" -> "[Active numbers](https://console.twilio.com/us1/develop/phone-numbers/manage/incoming)" on the left hand side nav.
+
+f. Click on the phone number you just created from the list, scroll down to "Messaging Configuration" section and enter [your_app_url]/api/text in "A message comes in" section under "Webhook".<img width="1251" alt="Screen Shot 2023-06-30 at 11 32 25 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/8b4f57bb-fab2-4f5a-818a-6286d6045505">
+
+g. Add your Twilio phone number in `companions.json` under the companion you want to text with. Make sure you include area code when adding the phone number ("+14050000000" instead of "4050000000")
+
+h. Now you can text the Twilio phone number from your phone and get a response from your companion.
 
 ### 7. Deploy the app
 
