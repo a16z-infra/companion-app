@@ -1,9 +1,11 @@
 # Companion App (based on AI Getting Started template)
 
 [Live Demo](TODO)
+
 [Join our community Discord: AI Stack Devs](https://discord.gg/PQUmTBTGmT)
 
-<img width="1018" alt="Screen Shot 2023-06-21 at 10 14 33 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/a7abe450-755d-477d-8df2-dd6b4ca62737">
+<img width="1279" alt="Screen Shot 2023-06-30 at 11 26 01 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/d5bf7fb2-f83a-47fa-8762-3d54425b864e">
+
 
 This is a starter project to demonstrate how to create a conversational AI using
 both chatgpt and the Vicuna 13b model on Replicate. It uses a vector database to
@@ -18,6 +20,7 @@ memory by keeping the conversation in a queue and including it in the prompt.
 - 🧠 [Quickstart](#quickstart)
 - 👤 [Adding/modifying characters](#addingmodifying-characters)
 - 👩‍💻 [How to contribute to this repo](#how-to-contribute-to-this-repo)
+- 🐍 [Python support](#python-support)
 
 ## How does this work?
 
@@ -142,7 +145,8 @@ b. Once you created an account, go ahead and create a Twilio phone number.
 c. On [Twilio dashboard](https://console.twilio.com/), scroll down to the "Account Info" section and paste `Account SID` value as `TWILIO_ACCOUNT_SID`, `Auth Token` as `TWILIO_AUTH_TOKEN` in `.env.local`
 d. [Optional] If you are running the app locally, use ngrok to generate a public url that can forward the request to your localhost.
 d. On Twilio's UI, can now click on "# Phone Numbers" -> "Manage" -> "[Active numbers](https://console.twilio.com/us1/develop/phone-numbers/manage/incoming)" on the left hand side nav.
-c. Clcik on the phone number you just created from the list, scroll down to "Messaging Configuration" section and enter [your_app_url]/api/text in "A message comes in" section under "Webhook".
+c. Clcik on the phone number you just created from the list, scroll down to "Messaging Configuration" section and enter [your_app_url]/api/text in "A message comes in" section under "Webhook".<img width="1251" alt="Screen Shot 2023-06-30 at 11 32 25 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/8b4f57bb-fab2-4f5a-818a-6286d6045505">
+
 d. Add your Twilio phone number in `companions.json` under the companion you want to text with. Make sure you include area code when adding the phone number ("+14050000000" instead of "4050000000")
 e. Now you can text the Twilio phone number from your phone and get a response from your companion.
 
@@ -220,6 +224,9 @@ If you are new to contributing on github, here is a step-by-step guide:
 ### Other contributions
 
 Feel free to open feature requests, bug reports etc under Issues.
+
+## Python Support 
+[appenz](https://github.com/appenz) has contributed to a Python implementation for the companion app [here](https://github.com/a16z-infra/companion-app/tree/python-local/python), so you also have the option to run a local Python app and talk to your AI companions on the command line. We will also be iterating on the Python side over time and have feature parity with the typescript implementation. 
 
 ## Refs
 
