@@ -7,11 +7,9 @@
 <img width="1279" alt="Screen Shot 2023-06-30 at 11 26 01 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/d5bf7fb2-f83a-47fa-8762-3d54425b864e">
 
 
-This is a starter project to demonstrate how to create a conversational AI using
-both chatgpt and the Vicuna 13b model on Replicate. It uses a vector database to
-store the character's backstory and it uses similarity search to retrieve and
-prompt so the conversations have more depth. It also provide some conversational
-memory by keeping the conversation in a queue and including it in the prompt.
+This is a stack to create and host AI companions that you can chat with and/or text. It allows you to determine the personality and backstory of your companion, and uses a vector database with similarity search to retrieve and prompt so the conversations have more depth. It also provides some conversational memory by keeping the conversation in a queue and including it in the prompt. 
+
+There are many possible use cases for these companions - romantic (AI girlfriends / boyfriends), friendship, entertainment, coaching, etc. You can guide your companion towards your ideal use case with the backstory you write and the model you choose. 
 
 ## Overview
 
@@ -24,9 +22,16 @@ memory by keeping the conversation in a queue and including it in the prompt.
 
 ## How does this work?
 
-1. You describe the character's background story, name, etc in a README.md file. Be as elaborate and detailed as you want.
-2. Create embeddings based on content in the [companion name].md file
-3. Ask questions and have a conversation with your AI companion!
+1. You describe the character's background story, name, etc in a README.md file. You can find more info on what needs to be included and how to format this in [Adding / modifying characters](##adding/modifying-characters).
+
+Be as elaborate and detailed as you want - more context often creates a more fun chatting experience. If you need help creating a backstory, we'd recommend asking ChatGPT to expand on what you already know about your companion.
+<img width="855" alt="Screenshot 2023-07-01 at 11 11 05 AM" src="https://github.com/a16z-infra/companion-app/assets/137846117/dbd73927-b44e-4bbb-8c2b-008478b46f58">
+   
+2. Pick the language model that will power your companion's dialogue. This project supports OpenAI and Vicuna (an open source model). OpenAI has the advantage of faster responses, while Vicuna is less censored and more dynamic (it's commonly used for romantic chatbots).
+
+3. Create embeddings based on content in the [companion name].md file - more on how to do this in [Generate embeddings](###4.-generate-embeddings)
+
+4. Ask questions and have a conversation with your AI companion!
 
 **Note** This project is purely inteded to be instructive. If you're interested in
 what a production open source platform looks like, check out
@@ -40,8 +45,8 @@ The stack is based on the [AI Getting Started Stack](https://github.com/a16z-inf
 - Auth: [Clerk](https://clerk.com/)
 - App logic: [Next.js](https://nextjs.org/)
 - VectorDB: [Pinecone](https://www.pinecone.io/) / [Supabase pgvector](https://supabase.com/docs/guides/database/extensions/pgvector)
-- LLM Orchestration: [Langchain.js](https://js.langchain.com/docs/)
-- Text Model: [OpenAI](https://platform.openai.com/docs/models), [Replicate (Vicuna13b)](https://replicate.com/replicate/vicuna-13b)
+- LLM orchestration: [Langchain.js](https://js.langchain.com/docs/)
+- Text model: [OpenAI](https://platform.openai.com/docs/models), [Replicate (Vicuna13b)](https://replicate.com/replicate/vicuna-13b)
 - Text streaming: [ai sdk](https://github.com/vercel-labs/ai)
 - Conversation history: [Upstash](https://upstash.com/)
 - Deployment: [Fly](https://fly.io/)
@@ -50,7 +55,7 @@ The stack is based on the [AI Getting Started Stack](https://github.com/a16z-inf
 ## Quickstart
 
 The following instructions should get you up and running with a fully
-functional, local deployment of 4 AIs to chat with.
+functional, local deployment of four AIs to chat with.
 
 ### 1. Fork and Clone repo
 
@@ -79,18 +84,18 @@ Go to https://dashboard.clerk.com/ -> "Add Application" -> Fill in Application n
 Now you should see both `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY` on the screen
 <img width="1011" alt="clerk" src="https://github.com/a16z-infra/ai-getting-started/assets/3489963/6ce72263-4e83-406d-838e-08a95ea79023">
 
-If you want to text your AI companion in later steps, you should also enable "phone number" under "User & Authenicatiom" -> "Email, Phone, Username" on the left hand side nav: 
+If you want to text your AI companion in later steps, you should also enable "phone number" under "User & Authentication" -> "Email, Phone, Username" on the left hand side nav: 
 
 <img width="1371" alt="Screen Shot 2023-07-01 at 12 49 39 AM" src="https://github.com/a16z-infra/companion-app/assets/3489963/c83c3ed6-bcc0-4938-8784-85ffd764f279">
 
 
 b. **OpenAI API key**
 
-Visit https://platform.openai.com/account/api-keys to get your OpenAI API key
+Visit https://platform.openai.com/account/api-keys to get your OpenAI API key if you're using OpenAI for your language model.
 
 c. **Replicate API key**
 
-Visit https://replicate.com/account/api-tokens to get your Replicate API key
+Visit https://replicate.com/account/api-tokens to get your Replicate API key if you're using Vicuna for your language model.
 
 > **_NOTE:_** By default, this template uses Pinecone as vector store, but you can turn on Supabase pgvector easily. This means you only need to fill out either Pinecone API key _or_ Supabase API key.
 
@@ -117,11 +122,11 @@ If you prefer to use Supabsae, you will need to make a few simple code changes a
 - Create a Supabase instance [here](https://supabase.com/dashboard/projects); then go to Project Settings -> API
 - `SUPABASE_URL` is the URL value under "Project URL"
 - `SUPABASE_PRIVATE_KEY` is the key starts with `ey` under Project API Keys
-- Now, you should enable pgvector on Supabase and create a schema. You can do this easily by clicking on "SQL editor" on the left hand side on supabase UI and then clicking on "+New Query". Copy paste [this code snippet](https://github.com/a16z-infra/ai-getting-started/blob/main/pgvector.sql) in the SQL editor and click "Run".
+- Now, you should enable pgvector on Supabase and create a schema. You can do this easily by clicking on "SQL editor" on the left hand side on Supabase UI and then clicking on "+New Query". Copy paste [this code snippet](https://github.com/a16z-infra/ai-getting-started/blob/main/pgvector.sql) in the SQL editor and click "Run".
 
 ### 4. Generate embeddings
 
-The `companions/` directory contains the "personalities" of the AIs in .txt files. To generate inbeddings and load them into the vector database to draw from during the chat, run the following command:
+The `companions/` directory contains the "personalities" of the AIs in .txt files. To generate embeddings and load them into the vector database to draw from during the chat, run the following command:
 
 #### If using Pinecone
 
@@ -145,12 +150,12 @@ You can connect to the project with your browser typically at http://localhost:3
 
 You can assign a phone number to the character you are talking to and retain the full conversational history and context when texting them. Any user can only start texting the AI companion after verifying their phone number on Clerk (you can do this by clicking on your profile picture on the companion app -> Manage Account -> Phone Number). Below are instructions on how to set up a Twilio account to send/receive messages on behalf of the AI companion: 
 
-a. Create a Twilio account
-b. Once you created an account, go ahead and create a Twilio phone number.
+a. Create a Twilio account.
+b. Once you created an account, create a Twilio phone number.
 c. On [Twilio dashboard](https://console.twilio.com/), scroll down to the "Account Info" section and paste `Account SID` value as `TWILIO_ACCOUNT_SID`, `Auth Token` as `TWILIO_AUTH_TOKEN` in `.env.local`
 d. [Optional] If you are running the app locally, use ngrok to generate a public url that can forward the request to your localhost.
 d. On Twilio's UI, can now click on "# Phone Numbers" -> "Manage" -> "[Active numbers](https://console.twilio.com/us1/develop/phone-numbers/manage/incoming)" on the left hand side nav.
-c. Clcik on the phone number you just created from the list, scroll down to "Messaging Configuration" section and enter [your_app_url]/api/text in "A message comes in" section under "Webhook".<img width="1251" alt="Screen Shot 2023-06-30 at 11 32 25 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/8b4f57bb-fab2-4f5a-818a-6286d6045505">
+c. Click on the phone number you just created from the list, scroll down to "Messaging Configuration" section and enter [your_app_url]/api/text in "A message comes in" section under "Webhook".<img width="1251" alt="Screen Shot 2023-06-30 at 11 32 25 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/8b4f57bb-fab2-4f5a-818a-6286d6045505">
 
 d. Add your Twilio phone number in `companions.json` under the companion you want to text with. Make sure you include area code when adding the phone number ("+14050000000" instead of "4050000000")
 e. Now you can text the Twilio phone number from your phone and get a response from your companion.
@@ -179,8 +184,8 @@ simply add a description to the list in `companions.json`. Put image files in
 name `charactername.txt`. The format of the text file is as follows:
 
 ```
-The character's core description that is included with every prompt. Should only
-be a few sentances
+The character's core description that is included with every prompt, and it should only
+be a few sentences.
 
 ###ENDPREAMBLE###
 
@@ -193,23 +198,20 @@ Character:  More character dialog
 
 Paragraphs of character backstory.
 
-You can add as many as you want
-
-They'll be stored in the vectordb
+You can add as many as you want - they'll be stored in the vectordb
 
 ```
 
-The **preamble** is used with every prompt so should be relatively short. The **seedchat** allows you to provide examples of the characters voice that the model can learn from. And the rest of the file is whatever additional background you want to provide which will be retrieved if relevant to the current discussion.
+The **preamble** is used with every prompt so it should be relatively short. The **seedchat** allows you to provide examples of the characters voice that the model can learn from. And the rest of the file is whatever additional background you want to provide which will be retrieved if relevant to the current discussion.
 
 ## Shortcomings
 
 Oh, there are so many.
 
-- Currently the UI only shows the current chat and response, loosing the history.
-- Vicuna has a cold start problem so can take a couple of minutes to get a
-  response for the initial chat
-- Error reporting is total crap. Particularly when deployed. So if you have a timeout, or other back end isue, it typically dails silently.
-- The Upstash message history is never cleared. To clear it, you have to go to Upstash and manually delete
+- Currently the UI only shows the current chat and response, losing the history.
+- Vicuna has a cold start problem so can take a couple of minutes to get a response for the initial chat.
+- Error reporting is total crap. Particularly when deployed. So if you have a timeout, or other back end isue, it typically fails silently.
+- The Upstash message history is never cleared. To clear it, you have to go to Upstash and manually delete.
 
 ## How to contribute to this repo
 
@@ -219,7 +221,7 @@ You can fork this repo, make changes, and create a PR. Add **@ykhli or @timqian*
 
 If you are new to contributing on github, here is a step-by-step guide:
 
-1. Clcik on `Fork` on the top right of this page
+1. Click on `Fork` on the top right of this page
 2. Work on your change and push it to your forked repo. Now when you navigate to the forked repo's UI, you should see something like the following:
    <img width="904" alt="pr-preview" src="https://github.com/a16z-infra/ai-getting-started/assets/3489963/631e5f45-39ec-4b54-b9d1-b963e279dcc6">
 
