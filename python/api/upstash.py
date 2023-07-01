@@ -11,9 +11,9 @@ from upstash_redis.client import Redis
 class MemoryManager:
     instance = None
 
-    def __init__(self, companion_name, user_id, model_name):
+    def __init__(self, companion_name, model_name):
         self.history = Redis.from_env()
-        self.user_id = user_id
+        self.user_id = None
         self.companion_name = companion_name
         self.model_name = model_name
 
@@ -55,3 +55,17 @@ class MemoryManager:
             content = seed_content.split(delimiter)
             for index, line in enumerate(content):
                 await self.history.zadd(key, {line: index})
+
+    # This is a hack to try to discover the Clerk user ID
+    # It's the last part of the key name in Redis
+
+    async def find_clerk_user_id(self):
+        async with self.history:
+            pattern = f"{self.companion_name}-{self.model_name}-*"
+            result = await self.history.keys(pattern)
+            if(len(result) > 0):
+                if len(result) > 1:
+                    print(f'** WARNING: Found {len(result)} potential user chats in Redis that match, using first one.')
+                    print(f'** You may want to specify a specific Clerk user ID in .env.local')
+                return result[0].split('-')[-1]
+        return None

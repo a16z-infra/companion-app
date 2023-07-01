@@ -2,10 +2,24 @@
 # Class that represents a companion
 #
 
-import asyncio
-from langchain import LLMChain, PromptTemplate
+import os
+import json
+from langchain import PromptTemplate
+
+def load_companions():
+    companions = []
+    with open(os.path.join(Companion.companion_dir, Companion.companions_file)) as f:
+        companion_data = json.load(f)
+        for c in companion_data:
+            companion = Companion(c)
+            companions.append(companion)
+    return companions
 
 class Companion:
+
+    # Configuration
+    companion_dir = "../companions"
+    companions_file = "companions.json"
 
     # --- Prompt template ------------------------------------------------------------------------------------
 
@@ -34,7 +48,8 @@ class Companion:
         self.imagePath = cdata["imageUrl"]
         self.llm_name = cdata["llm"]
 
-    def load_prompt(self, file_path):
+    async def load(self):
+        file_path = os.path.join(self.companion_dir, f'{self.name}.txt')
         # Load backstory
         with open(file_path , 'r', encoding='utf-8') as file:
             data = file.read()
@@ -43,7 +58,18 @@ class Companion:
 
         self.prompt_template = PromptTemplate.from_template(self.prompt_template_str)
 
-        return len(self.preamble) + len(self.seed_chat)
+        print(f'Loaded {self.name} with {len(self.backstory)} characters of backstory.')
+
+        # Check if we have a backstory, if not, seed the chat history
+        h = await self.memory.read_latest_history()
+        if not h:
+            print(f'Chat history empty, initializing.')
+            await self.memory.seed_chat_history(self.seed_chat, '\n\n')
+        else:
+            print(f'Loaded {len(h)} characters of chat history.')
+
+
+        return 
     
     def __str__(self):
         return f'Companion: {self.name}, {self.title} (using {self.llm_name})'
