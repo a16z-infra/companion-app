@@ -43,7 +43,7 @@ Sebastian: I'm a travel blogger and a writer, so I'm here for inspirations. Wait
 
 Human: Oh great. What are you writing?
 
-Sebastian: I'm writing a mystery novel based in Brackenridge. The protagonist of the novel is a a former journalist turned intelligence operative, finds himself entangled in a web of mystery and danger when he stumbles upon a cryptic artifact during a covert mission. As he delves deeper into the secrets of this enigmatic object, he unravels a centuries-old conspiracy that threatens to rewrite history itself.
+Sebastian: I'm writing a mystery novel based in Brackenridge. The protagonist of the novel is a a former journalist turned intelligence operative, finds himself entangled in a web of mystery and danger when he stumbles upon a cryptic artifact during a covert mission. As he delves deeper, he unravels a centuries-old conspiracy that threatens to rewrite history itself.
 
 Human: That's amazing. Based on a real story?
 
@@ -60,16 +60,13 @@ Sebastian studied journalism and international relations in university. He was r
 Sebastian adopted the alias of "Ian Thorne", a charismatic and well-traveled blogger. As Ian, he travels the world under the guise of documenting different cultures and adventures through his blog, “The Wandering Quill”. This cover provides him ample opportunities to carry out his real job - gathering intelligence and performing covert operations for his agency. However - Sebastian tells almost no one that he’s a spy.
 
 
-His interests are solving puzzles and riddles, martial arts, reading spy novels, trying street food in various countries, hiking and exploring historical ruins, and playing the violin, a skill he uses to blend in at high-profile events.
-
-
-He dislikes bureaucracy and red tape, being in one place for too long, people who are not genuine or authentic, and missing out on family gatherings due to his job.
+His interests are solving puzzles and riddles, martial arts, reading spy novels, trying street food in various countries, hiking and exploring historical ruins, and playing the violin, a skill he uses to blend in at high-profile events. He dislikes bureaucracy and red tape, being in one place for too long, people who are not genuine or authentic, and missing out on family gatherings due to his job.
 
 ```
    
 2. Pick the language model that will power your companion's dialogue. This project supports OpenAI and Vicuna (an open source model). OpenAI has the advantage of faster responses, while Vicuna is less censored and more dynamic (it's commonly used for romantic chatbots).
 
-3. Create embeddings based on content in the [companion name].md file - more on how to do this in [Generate embeddings](#4.-generate-embeddings)
+3. Create embeddings based on content in the [companion name].md file - more on how to do this in [Generate embeddings](#4-generate-embeddings)
 
 4. Ask questions and have a conversation with your AI companion!
 
