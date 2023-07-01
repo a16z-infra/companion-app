@@ -8,9 +8,11 @@ store the character's backstory and it uses similarity search to retrieve and
 prompt so the conversations have more depth. It also provide some conversational
 memory by keeping the conversation in a queue and including it in the prompt.  
 
-**Note** This project is inteded to be instructive. If you're interested in
-what a production open source platform, check out Steamship.ai. Or what the leading
-AI chat platforms look like, check out Character.ai. 
+**Note** This project is purely inteded to be instructive. If you're interested
+*in
+what a production open source platform, check out
+[https://www.steamship.com/](Steamship.ai). Or what the leading AI chat
+platforms look like, check out [https://beta.character.ai/](Character.ai). 
 
 ## Stack
 
@@ -24,7 +26,9 @@ AI chat platforms look like, check out Character.ai.
 - Deployment: [Fly](https://fly.io/)
 
 ## Quickstart 
-The simplest way to try out this stack is to test it out locally and traverse through code files to understand how each component work. Here are the steps to get started. 
+
+The following instructions should get you up and running with a fully
+functional, local deployment of 4 AIs to chat with. 
 
 ### 1. Fork and Clone repo
 
