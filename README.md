@@ -79,6 +79,11 @@ Go to https://dashboard.clerk.com/ -> "Add Application" -> Fill in Application n
 Now you should see both `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY` on the screen
 <img width="1011" alt="clerk" src="https://github.com/a16z-infra/ai-getting-started/assets/3489963/6ce72263-4e83-406d-838e-08a95ea79023">
 
+If you want to text your AI companion in later steps, you should also enable "phone number" under "User & Authenicatiom" -> "Email, Phone, Username" on the left hand side nav: 
+
+<img width="1371" alt="Screen Shot 2023-07-01 at 12 49 39 AM" src="https://github.com/a16z-infra/companion-app/assets/3489963/c83c3ed6-bcc0-4938-8784-85ffd764f279">
+
+
 b. **OpenAI API key**
 
 Visit https://platform.openai.com/account/api-keys to get your OpenAI API key
@@ -138,7 +143,7 @@ You can connect to the project with your browser typically at http://localhost:3
 
 ### 6. Additional feature: Text your companions
 
-You can assign a phone number to the character you are talking to and retain the full conversational history and context when texting them. Below are instructions on how to set this up:
+You can assign a phone number to the character you are talking to and retain the full conversational history and context when texting them. Any user can only start texting the AI companion after verifying their phone number on Clerk (you can do this by clicking on your profile picture on the companion app -> Manage Account -> Phone Number). Below are instructions on how to set up a Twilio account to send/receive messages on behalf of the AI companion: 
 
 a. Create a Twilio account
 b. Once you created an account, go ahead and create a Twilio phone number.
