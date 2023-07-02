@@ -18,7 +18,6 @@ export default function Examples() {
       title: "",
       imageUrl: "",
       llm: "",
-      phone: "",
     },
   ]);
 
