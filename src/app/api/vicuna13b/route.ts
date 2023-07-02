@@ -139,7 +139,8 @@ export async function POST(request: Request) {
 
   const cleaned = resp.replaceAll(",", "");
   const chunks = cleaned.split("###");
-  const response = chunks.length > 1 ? chunks[1] : chunks[0];
+  const response = chunks[0];
+  // const response = chunks.length > 1 ? chunks[0] : chunks[0];
 
   await memoryManager.writeToHistory("### " + response.trim());
   var Readable = require("stream").Readable;
