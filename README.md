@@ -283,7 +283,7 @@ Feel free to open feature requests, bug reports etc under Issues.
 
 ## Export to Character.ai
 
-If you have tried out the Quickstart above, you probably know that we have only scratched the service of what's possible in terms of companion creation and customization. So we added an option for you to easily export your companion to Character.ai.
+If you have tried out the Quickstart above, you probably know that we have only scratched the surface of what's possible in the realm of companion creation and customization. So we added an option for you to easily export your companion to Character.ai.
 
 To get started, run the following command:
 
