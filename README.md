@@ -293,7 +293,7 @@ If you have tried out the Quickstart above, you probably know that we have only 
 
 To get started, run the following command:
 
-`bash
+`
 npm run export-to-character [COMPANION_NAME] [MODEL_NAME] [USER_ID]
 `
 
