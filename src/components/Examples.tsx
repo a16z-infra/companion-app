@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import QAModal from "./QAModal";
 import Image from "next/image";
+import { Tooltip } from "react-tooltip";
 
 import { getCompanions } from "./actions";
 
@@ -17,6 +18,8 @@ export default function Examples() {
       name: "",
       title: "",
       imageUrl: "",
+      llm: "",
+      phone: "",
     },
   ]);
 
@@ -30,6 +33,7 @@ export default function Examples() {
           title: entry.title,
           imageUrl: entry.imageUrl,
           llm: entry.llm,
+          phone: entry.phone,
         }));
         setExamples(setme);
       } catch (err) {
@@ -75,7 +79,38 @@ export default function Examples() {
               </h3>
               <dl className="mt-1 flex flex-grow flex-col justify-between">
                 <dt className="sr-only"></dt>
-                <dd className="text-sm text-slate-400">{example.title}</dd>
+                <dd className="text-sm text-slate-400">
+                  {example.title}. Running on <b>{example.llm}</b>
+                </dd>
+              </dl>
+              <dl className="mt-1 flex flex-grow flex-col justify-between">
+                <dt className="sr-only"></dt>
+                {isPhoneNumber(example.phone) && (
+                  <>
+                    <dd
+                      data-tip="Helpful tip goes here"
+                      className="text-sm text-slate-400 inline-block"
+                    >
+                      📱Text me at: <b>{example.phone}</b>
+                      &nbsp;
+                      <svg
+                        data-tooltip-id="help-tooltip"
+                        data-tooltip-content="Unlock this freature by clicking on 
+                        your profile picture on the top right 
+                        -> Manage Account -> Add a phone number."
+                        data-tooltip-target="tooltip-default"
+                        data-tip="Helpful tip goes here"
+                        className="w-[15px] h-[15px] text-slate-400 inline-block cursor-pointer"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                      </svg>
+                      <Tooltip id="help-tooltip" />
+                    </dd>
+                  </>
+                )}
               </dl>
             </div>
           </li>
@@ -83,4 +118,9 @@ export default function Examples() {
       </ul>
     </div>
   );
+}
+
+function isPhoneNumber(input: string): boolean {
+  const phoneNumberRegex = /^\+\d{1,11}$/;
+  return phoneNumberRegex.test(input);
 }
