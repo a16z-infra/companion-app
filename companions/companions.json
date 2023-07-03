@@ -1,8 +1,8 @@
 [
   {
-    "name": "Alice",
+    "name": "Alex",
     "title": "I love talking about books and games",
-    "imageUrl": "/alice.png",
+    "imageUrl": "/alex.png",
     "llm": "chatgpt",
     "phone": "+18339280477"
   },
