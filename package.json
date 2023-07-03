@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "generate-embeddings-pinecone": "node src/scripts/indexPinecone.mjs",
-    "generate-embeddings-supabase": "node src/scripts/indexPGVector.mjs"
+    "generate-embeddings-supabase": "node src/scripts/indexPGVector.mjs",
+    "export-to-character": "node src/scripts/exportToCharacter.mjs"
   },
   "dependencies": {
     "@clerk/clerk-sdk-node": "^4.10.12",

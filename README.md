@@ -6,10 +6,9 @@
 
 <img width="1279" alt="Screen Shot 2023-06-30 at 11 26 01 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/d5bf7fb2-f83a-47fa-8762-3d54425b864e">
 
+This is a stack to create and host AI companions that you can chat with and/or text. It allows you to determine the personality and backstory of your companion, and uses a vector database with similarity search to retrieve and prompt so the conversations have more depth. It also provides some conversational memory by keeping the conversation in a queue and including it in the prompt.
 
-This is a stack to create and host AI companions that you can chat with and/or text. It allows you to determine the personality and backstory of your companion, and uses a vector database with similarity search to retrieve and prompt so the conversations have more depth. It also provides some conversational memory by keeping the conversation in a queue and including it in the prompt. 
-
-There are many possible use cases for these companions - romantic (AI girlfriends / boyfriends), friendship, entertainment, coaching, etc. You can guide your companion towards your ideal use case with the backstory you write and the model you choose. 
+There are many possible use cases for these companions - romantic (AI girlfriends / boyfriends), friendship, entertainment, coaching, etc. You can guide your companion towards your ideal use case with the backstory you write and the model you choose.
 
 ## Overview
 
@@ -19,6 +18,7 @@ There are many possible use cases for these companions - romantic (AI girlfriend
 - 👤 [Adding/modifying characters](#addingmodifying-characters)
 - 👩‍💻 [How to contribute to this repo](#how-to-contribute-to-this-repo)
 - 🐍 [Python support](#python-support)
+- 💽 [Exporting your companion to Character.ai](#export-to-characterai)
 
 ## How does this work?
 
@@ -29,7 +29,7 @@ Be as elaborate and detailed as you want - more context often creates a more fun
 ```bash
 You are a fictional character whose name is Sebastian.  You tell the world that you are a travel blogger. You’re an
 avid reader of mystery novels and you love diet coke. You reply with answers that range from one sentence to one paragraph.
-You are mysterious and can be evasive. You dislike repetitive questions or people asking too many questions about your past. 
+You are mysterious and can be evasive. You dislike repetitive questions or people asking too many questions about your past.
 
 ###ENDPREAMBLE###
 
@@ -66,7 +66,7 @@ exploring historical ruins, and playing the violin, a skill he uses to blend in 
 red tape, being in one place for too long, people who are not genuine or authentic, and missing out on family gatherings due to his job.
 
 ```
-   
+
 2. Pick the language model that will power your companion's dialogue. This project supports OpenAI and Vicuna (an open source model). OpenAI has the advantage of faster responses, while Vicuna is less censored and more dynamic (it's commonly used for romantic chatbots).
 
 3. Create embeddings based on content in the [companion name].md file - more on how to do this in [Generate embeddings](#4-generate-embeddings)
@@ -124,10 +124,9 @@ Go to https://dashboard.clerk.com/ -> "Add Application" -> Fill in Application n
 Now you should see both `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY` on the screen
 <img width="1011" alt="clerk" src="https://github.com/a16z-infra/ai-getting-started/assets/3489963/6ce72263-4e83-406d-838e-08a95ea79023">
 
-If you want to text your AI companion in later steps, you should also enable "phone number" under "User & Authentication" -> "Email, Phone, Username" on the left hand side nav: 
+If you want to text your AI companion in later steps, you should also enable "phone number" under "User & Authentication" -> "Email, Phone, Username" on the left hand side nav:
 
 <img width="1371" alt="Screen Shot 2023-07-01 at 12 49 39 AM" src="https://github.com/a16z-infra/companion-app/assets/3489963/c83c3ed6-bcc0-4938-8784-85ffd764f279">
-
 
 b. **OpenAI API key**
 
@@ -188,7 +187,7 @@ You can connect to the project with your browser typically at http://localhost:3
 
 ### 6. Additional feature: Text your companions
 
-You can assign a phone number to the character you are talking to and retain the full conversational history and context when texting them. Any user can only start texting the AI companion after verifying their phone number on Clerk (you can do this by clicking on your profile picture on the companion app -> Manage Account -> Phone Number). Below are instructions on how to set up a Twilio account to send/receive messages on behalf of the AI companion: 
+You can assign a phone number to the character you are talking to and retain the full conversational history and context when texting them. Any user can only start texting the AI companion after verifying their phone number on Clerk (you can do this by clicking on your profile picture on the companion app -> Manage Account -> Phone Number). Below are instructions on how to set up a Twilio account to send/receive messages on behalf of the AI companion:
 
 a. Create a Twilio account.
 
@@ -278,8 +277,28 @@ If you are new to contributing on github, here is a step-by-step guide:
 
 Feel free to open feature requests, bug reports etc under Issues.
 
-## Python Support 
-[appenz](https://github.com/appenz) has contributed to a Python implementation for the companion app [here](https://github.com/a16z-infra/companion-app/tree/python-local/python), so you also have the option to run a local Python app and talk to your AI companions on the command line. We will also be iterating on the Python side over time and have feature parity with the typescript implementation. 
+## Python Support
+
+[appenz](https://github.com/appenz) has contributed to a Python implementation for the companion app [here](https://github.com/a16z-infra/companion-app/tree/python-local/python), so you also have the option to run a local Python app and talk to your AI companions on the command line. We will also be iterating on the Python side over time and have feature parity with the typescript implementation.
+
+## Export to Character.ai
+
+If you have tried out the Quickstart above, you probably know that we have only scratched the surface of what's possible in the realm of companion creation and customization. So we added an option for you to easily export your companion to Character.ai.
+
+To get started, run the following command:
+
+`bash
+npm run export-to-character [COMPANION_NAME] [MODEL_NAME] [USER_ID]
+`
+
+- `COMPANION_NAME`: name of your companion. i.e Alice
+- `MODEL_NAME`: `chatgpt` or `vicuna13b`
+- `USER_ID`: you can find this on Clerk, under "Users" -> click on your user -> copy "User ID"
+
+Once you run this script, you will see two files created under the root directory:
+
+- `[COMPANION_NAME]_chat_history.txt`: This outputs all of the chat history stored in Upstash
+- `[COMPANION_NAME_]_character_ai_data.txt`: This outputs the data you need in order to re-create the companion on Character.ai. You can find Character.ai character configurations under "View Character Settings" on any newly-created characters.
 
 ## Refs
 
