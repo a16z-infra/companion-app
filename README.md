@@ -105,6 +105,10 @@ Fork the repo to your Github account, then run the following command to clone th
 git clone git@github.com:[YOUR_GITHUB_ACCOUNT_NAME]/companion-app.git
 ```
 
+**Alternatively**, you can launch the app quickly through Github Codespaces by clicking on "Code" -> "Codespaces" -> "+"
+<img width="1297" alt="Screen Shot 2023-07-02 at 8 17 44 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/abb9533c-088a-42fa-90ff-7e9dc429529c">
+If you choose to use Codespaces, npm dependencies will be installed automatically and you can proceed to step 3. 
+
 ### 2. Install dependencies
 
 ```
@@ -210,6 +214,7 @@ h. Now you can text the Twilio phone number from your phone and get a response f
 #### Deploy to fly.io
 
 - Register an account on fly.io and then [install flyctl](https://fly.io/docs/hands-on/install-flyctl/)
+- **If you are using Github Codespaces**: You will need to [install flyctl](https://fly.io/docs/hands-on/install-flyctl/) and authenticate from your codespaces cli by running `fly auth login`.
 - Run `fly launch` under project root -- this will generate a `fly.toml` that includes all the configurations you will need
 - Run `fly deploy -ha=false` to deploy the app -- the -ha flag makes sure fly only spins up one instance, which is included in the free plan. You also want to run `fly scale memory 512` to scale up the fly vm memory for this app.
 - For any other non-localhost environment, the existing Clerk development instance should continue to work. You can upload the secrets to Fly by running `cat .env.local | fly secrets import`
