@@ -17,6 +17,7 @@ export default function Examples() {
       name: "",
       title: "",
       imageUrl: "",
+      llm: "",
     },
   ]);
 
@@ -75,7 +76,9 @@ export default function Examples() {
               </h3>
               <dl className="mt-1 flex flex-grow flex-col justify-between">
                 <dt className="sr-only"></dt>
-                <dd className="text-sm text-slate-400">{example.title}</dd>
+                <dd className="text-sm text-slate-400">
+                  {example.title}. Running on <b>{example.llm}</b>
+                </dd>
               </dl>
             </div>
           </li>
