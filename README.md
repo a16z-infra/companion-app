@@ -122,6 +122,7 @@ npm install
 cp .env.local.example .env.local
 ```
 
+Secrets mentioned below will need to be copied to `.env.local`
 a. **Clerk Secrets**
 
 Go to https://dashboard.clerk.com/ -> "Add Application" -> Fill in Application name/select how your users should sign in -> Create Application
