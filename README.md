@@ -1,6 +1,6 @@
 # Companion App (based on AI Getting Started template)
 
-[Live Demo](TODO)
+[Live Demo](https://ai-companion-stack-demo.fly.dev/)
 
 [Join our community Discord: AI Stack Devs](https://discord.gg/PQUmTBTGmT)
 
