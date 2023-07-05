@@ -79,9 +79,10 @@ export default function QAModal({
                   <form onSubmit={handleSubmit}>
                     <input
                       placeholder="How's your day?"
-                      className="w-full flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm focus:outline-none  sm:text-sm sm:leading-6"
+                      className={"w-full flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 shadow-sm focus:outline-none sm:text-sm sm:leading-6 " + (isLoading && !completion ? "text-gray-600 cursor-not-allowed" : "text-white")}                      
                       value={input}
                       onChange={handleInputChange}
+                      disabled={isLoading && !completion}
                     />
                   </form>
                   <div className="mt-3 sm:mt-5">
