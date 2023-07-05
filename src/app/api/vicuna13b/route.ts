@@ -2,9 +2,6 @@ import dotenv from "dotenv";
 import { StreamingTextResponse, LangChainStream } from "ai";
 import { Replicate } from "langchain/llms/replicate";
 import { CallbackManager } from "langchain/callbacks";
-import { OpenAIEmbeddings } from "langchain/embeddings/openai";
-import { PineconeClient } from "@pinecone-database/pinecone";
-import { PineconeStore } from "langchain/vectorstores/pinecone";
 import clerk from "@clerk/clerk-sdk-node";
 import MemoryManager from "@/app/utils/memory";
 import { currentUser } from "@clerk/nextjs";
@@ -73,9 +70,6 @@ export async function POST(request: Request) {
   const seedsplit = presplit[1].split("###ENDSEEDCHAT###");
   const seedchat = seedsplit[0];
 
-  // console.log("Preamble: "+preamble);
-  // console.log("Seedchat: "+seedchat);
-
   const memoryManager = new MemoryManager({
     companionName: name!,
     userId: clerkUserId!,
@@ -91,29 +85,16 @@ export async function POST(request: Request) {
   await memoryManager.writeToHistory("### Human: " + prompt + "\n");
 
   // Query Pinecone
-  const client = new PineconeClient();
-  await client.init({
-    apiKey: process.env.PINECONE_API_KEY || "",
-    environment: process.env.PINECONE_ENVIRONMENT || "",
-  });
-  const pineconeIndex = client.Index(process.env.PINECONE_INDEX || "");
 
-  const vectorStore = await PineconeStore.fromExistingIndex(
-    new OpenAIEmbeddings({ openAIApiKey: process.env.OPENAI_API_KEY }),
-    { pineconeIndex }
-  );
-
-  let recentChatHistory = "";
-  recentChatHistory = await memoryManager.readLatestHistory();
+  let recentChatHistory = await memoryManager.readLatestHistory();
 
   // Right now the preamble is included in the similarity search, but that
   // shouldn't be an issue
 
-  const similarDocs = await vectorStore
-    .similaritySearch(recentChatHistory, 3, { fileName: companion_file_name })
-    .catch((err) => {
-      console.log("WARNING: failed to get vector search results.", err);
-    });
+  const similarDocs = await memoryManager.vectorSearch(
+    recentChatHistory,
+    companion_file_name
+  );
 
   let relevantHistory = "";
   if (!!similarDocs && similarDocs.length !== 0) {
