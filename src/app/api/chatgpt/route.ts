@@ -11,6 +11,8 @@ import { PromptTemplate } from "langchain/prompts";
 import { NextResponse } from "next/server";
 import { currentUser } from "@clerk/nextjs";
 import MemoryManager from "@/app/utils/memory";
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
 
 dotenv.config({ path: `.env.local` });
 
@@ -19,6 +21,20 @@ export async function POST(req: Request) {
   let user;
   let clerkUserName;
   const { prompt, isText, userId, userName } = await req.json();
+
+  // Rate limit through Upstash
+  const ratelimit = new Ratelimit({
+    redis: Redis.fromEnv(),
+    limiter: Ratelimit.slidingWindow(10, "10 s"),
+    analytics: true,
+    prefix: "@upstash/ratelimit",
+  });
+  const identifier = userId || "anonymous";
+  const { success } = await ratelimit.limit(identifier);
+  if (!success) {
+    console.log("INFO: rate limit exceeded");
+    return "Unable to process at this time";
+  }
 
   // XXX Companion name passed here. Can use as a key to get backstory, chat history etc.
   const name = req.headers.get("name");
@@ -35,6 +51,7 @@ export async function POST(req: Request) {
   }
 
   if (!clerkUserId || !!!(await clerk.users.getUser(clerkUserId))) {
+    console.log("user not authorized");
     return new NextResponse(
       JSON.stringify({ Message: "User not authorized" }),
       {
