@@ -3,11 +3,11 @@ import twilio from "twilio";
 import clerk from "@clerk/clerk-sdk-node";
 import dotenv from "dotenv";
 import ConfigManager from "@/app/utils/config";
+import { rateLimit } from "@/app/utils/rateLimit";
 
 dotenv.config({ path: `.env.local` });
 const twilioAuthToken = process.env.TWILIO_AUTH_TOKEN;
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const publishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
 export async function POST(request: Request) {
   let queryMap: any = {};
@@ -20,6 +20,21 @@ export async function POST(request: Request) {
   const serverUrl = request.url.split("/api/")[0];
   const phoneNumber = queryMap["From"];
   const companionPhoneNumber = queryMap["To"];
+
+  const identifier = request.url + "-" + (phoneNumber || "anonymous");
+  const { success } = await rateLimit(identifier);
+  if (!success) {
+    console.log("INFO: rate limit exceeded");
+    return new NextResponse(
+      JSON.stringify({ Message: "Hi, the companions can't talk this fast." }),
+      {
+        status: 429,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  }
 
   // check if the user has verified phone #
   const users = await clerk.users.getUserList({ phoneNumber });
@@ -37,7 +52,6 @@ export async function POST(request: Request) {
   }
 
   const configManager = ConfigManager.getInstance();
-  console.log(phoneNumber);
   const companionConfig = configManager.getConfig(
     "phone",
     companionPhoneNumber

@@ -11,8 +11,7 @@ import { PromptTemplate } from "langchain/prompts";
 import { NextResponse } from "next/server";
 import { currentUser } from "@clerk/nextjs";
 import MemoryManager from "@/app/utils/memory";
-import { Ratelimit } from "@upstash/ratelimit";
-import { Redis } from "@upstash/redis";
+import { rateLimit } from "@/app/utils/rateLimit";
 
 dotenv.config({ path: `.env.local` });
 
@@ -22,18 +21,19 @@ export async function POST(req: Request) {
   let clerkUserName;
   const { prompt, isText, userId, userName } = await req.json();
 
-  // Rate limit through Upstash
-  const ratelimit = new Ratelimit({
-    redis: Redis.fromEnv(),
-    limiter: Ratelimit.slidingWindow(10, "10 s"),
-    analytics: true,
-    prefix: "@upstash/ratelimit",
-  });
-  const identifier = userId || "anonymous";
-  const { success } = await ratelimit.limit(identifier);
+  const identifier = req.url + "-" + (userId || "anonymous");
+  const { success } = await rateLimit(identifier);
   if (!success) {
     console.log("INFO: rate limit exceeded");
-    return "Unable to process at this time";
+    return new NextResponse(
+      JSON.stringify({ Message: "Hi, the companions can't talk this fast." }),
+      {
+        status: 429,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
   }
 
   // XXX Companion name passed here. Can use as a key to get backstory, chat history etc.
