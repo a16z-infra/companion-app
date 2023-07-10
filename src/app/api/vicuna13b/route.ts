@@ -9,6 +9,7 @@ import clerk from "@clerk/clerk-sdk-node";
 import MemoryManager from "@/app/utils/memory";
 import { currentUser } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
+import { rateLimit } from "@/app/utils/rateLimit";
 
 dotenv.config({ path: `.env.local` });
 
@@ -17,6 +18,22 @@ export async function POST(request: Request) {
   let clerkUserId;
   let user;
   let clerkUserName;
+
+  const identifier = request.url + "-" + (userId || "anonymous");
+  const { success } = await rateLimit(identifier);
+  if (!success) {
+    console.log("INFO: rate limit exceeded");
+    return new NextResponse(
+      JSON.stringify({ Message: "Hi, the companions can't talk this fast." }),
+      {
+        status: 429,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  }
+
   // XXX Companion name passed here. Can use as a key to get backstory, chat history etc.
   const name = request.headers.get("name");
   const companion_file_name = name + ".txt";
