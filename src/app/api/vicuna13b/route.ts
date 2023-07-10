@@ -70,23 +70,27 @@ export async function POST(request: Request) {
   const seedsplit = presplit[1].split("###ENDSEEDCHAT###");
   const seedchat = seedsplit[0];
 
-  const memoryManager = new MemoryManager({
+  const companionKey = {
     companionName: name!,
     userId: clerkUserId!,
     modelName: "vicuna13b",
-  });
+  };
+  const memoryManager = await MemoryManager.getInstance();
 
   const { stream, handlers } = LangChainStream();
 
-  const records = await memoryManager.readLatestHistory();
+  const records = await memoryManager.readLatestHistory(companionKey);
   if (records.length === 0) {
-    await memoryManager.seedChatHistory(seedchat, "\n\n");
+    await memoryManager.seedChatHistory(seedchat, "\n\n", companionKey);
   }
-  await memoryManager.writeToHistory("### Human: " + prompt + "\n");
+  await memoryManager.writeToHistory(
+    "### Human: " + prompt + "\n",
+    companionKey
+  );
 
   // Query Pinecone
 
-  let recentChatHistory = await memoryManager.readLatestHistory();
+  let recentChatHistory = await memoryManager.readLatestHistory(companionKey);
 
   // Right now the preamble is included in the similarity search, but that
   // shouldn't be an issue
@@ -140,14 +144,14 @@ export async function POST(request: Request) {
   const response = chunks[0];
   // const response = chunks.length > 1 ? chunks[0] : chunks[0];
 
-  await memoryManager.writeToHistory("### " + response.trim());
+  await memoryManager.writeToHistory("### " + response.trim(), companionKey);
   var Readable = require("stream").Readable;
 
   let s = new Readable();
   s.push(response);
   s.push(null);
   if (response !== undefined && response.length > 1) {
-    await memoryManager.writeToHistory("### " + response.trim());
+    await memoryManager.writeToHistory("### " + response.trim(), companionKey);
   }
 
   return new StreamingTextResponse(s);

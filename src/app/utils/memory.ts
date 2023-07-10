@@ -14,18 +14,12 @@ export type CompanionKey = {
 class MemoryManager {
   private static instance: MemoryManager;
   private history: Redis;
-  private companionKey: CompanionKey;
   private vectorDBClient: PineconeClient | SupabaseClient;
 
-  public constructor(companionKey: CompanionKey) {
+  public constructor() {
     this.history = Redis.fromEnv();
-    this.companionKey = companionKey;
     if (process.env.VECTOR_DB === "pinecone") {
       this.vectorDBClient = new PineconeClient();
-      this.vectorDBClient.init({
-        apiKey: process.env.PINECONE_API_KEY!,
-        environment: process.env.PINECONE_ENVIRONMENT!,
-      });
     } else {
       const auth = {
         detectSessionInUrl: false,
@@ -38,6 +32,15 @@ class MemoryManager {
     }
   }
 
+  public async init() {
+    if (this.vectorDBClient instanceof PineconeClient) {
+      await this.vectorDBClient.init({
+        apiKey: process.env.PINECONE_API_KEY!,
+        environment: process.env.PINECONE_ENVIRONMENT!,
+      });
+    }
+  }
+
   public async vectorSearch(
     recentChatHistory: string,
     companionFileName: string
@@ -47,7 +50,7 @@ class MemoryManager {
       const pineconeClient = <PineconeClient>this.vectorDBClient;
 
       const pineconeIndex = pineconeClient.Index(
-        process.env.PINECONE_INDEX || ""
+        process.env.PINECONE_INDEX! || ""
       );
 
       const vectorStore = await PineconeStore.fromExistingIndex(
@@ -81,24 +84,25 @@ class MemoryManager {
     }
   }
 
-  public static getInstance(companionKey: CompanionKey): MemoryManager {
+  public static async getInstance(): Promise<MemoryManager> {
     if (!MemoryManager.instance) {
-      MemoryManager.instance = new MemoryManager(companionKey);
+      MemoryManager.instance = new MemoryManager();
+      await MemoryManager.instance.init();
     }
     return MemoryManager.instance;
   }
 
-  public getCompanionKey(): string {
-    return `${this.companionKey.companionName}-${this.companionKey.modelName}-${this.companionKey.userId}`;
+  private generateRedisCompanionKey(companionKey: CompanionKey): string {
+    return `${companionKey.companionName}-${companionKey.modelName}-${companionKey.userId}`;
   }
 
-  public async writeToHistory(text: string) {
-    if (!this.companionKey || typeof this.companionKey.userId == "undefined") {
+  public async writeToHistory(text: string, companionKey: CompanionKey) {
+    if (!companionKey || typeof companionKey.userId == "undefined") {
       console.log("Companion key set incorrectly");
       return "";
     }
 
-    const key = this.getCompanionKey();
+    const key = this.generateRedisCompanionKey(companionKey);
     const result = await this.history.zadd(key, {
       score: Date.now(),
       member: text,
@@ -107,13 +111,13 @@ class MemoryManager {
     return result;
   }
 
-  public async readLatestHistory(): Promise<string> {
-    if (!this.companionKey || typeof this.companionKey.userId == "undefined") {
+  public async readLatestHistory(companionKey: CompanionKey): Promise<string> {
+    if (!companionKey || typeof companionKey.userId == "undefined") {
       console.log("Companion key set incorrectly");
       return "";
     }
 
-    const key = this.getCompanionKey();
+    const key = this.generateRedisCompanionKey(companionKey);
     let result = await this.history.zrange(key, 0, Date.now(), {
       byScore: true,
     });
@@ -123,8 +127,12 @@ class MemoryManager {
     return recentChats;
   }
 
-  public async seedChatHistory(seedContent: String, delimiter: string = "\n") {
-    const key = this.getCompanionKey();
+  public async seedChatHistory(
+    seedContent: String,
+    delimiter: string = "\n",
+    companionKey: CompanionKey
+  ) {
+    const key = this.generateRedisCompanionKey(companionKey);
     if (await this.history.exists(key)) {
       console.log("User already has chat history");
       return;

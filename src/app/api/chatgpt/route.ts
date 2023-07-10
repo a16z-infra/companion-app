@@ -74,19 +74,20 @@ export async function POST(req: Request) {
   const seedsplit = presplit[1].split("###ENDSEEDCHAT###");
   const seedchat = seedsplit[0];
 
-  const memoryManager = new MemoryManager({
+  const companionKey = {
     companionName: name!,
     modelName: "chatgpt",
     userId: clerkUserId,
-  });
+  };
+  const memoryManager = await MemoryManager.getInstance();
 
-  const records = await memoryManager.readLatestHistory();
+  const records = await memoryManager.readLatestHistory(companionKey);
   if (records.length === 0) {
-    await memoryManager.seedChatHistory(seedchat, "\n\n");
+    await memoryManager.seedChatHistory(seedchat, "\n\n", companionKey);
   }
 
-  await memoryManager.writeToHistory("Human: " + prompt + "\n");
-  let recentChatHistory = await memoryManager.readLatestHistory();
+  await memoryManager.writeToHistory("Human: " + prompt + "\n", companionKey);
+  let recentChatHistory = await memoryManager.readLatestHistory(companionKey);
 
   // query Pinecone
   const similarDocs = await memoryManager.vectorSearch(
@@ -141,7 +142,8 @@ export async function POST(req: Request) {
 
   console.log("result", result);
   const chatHistoryRecord = await memoryManager.writeToHistory(
-    result!.text + "\n"
+    result!.text + "\n",
+    companionKey
   );
   console.log("chatHistoryRecord", chatHistoryRecord);
   if (isText) {
