@@ -104,7 +104,7 @@ The stack is based on the [AI Getting Started Stack](https://github.com/a16z-inf
 
 The following instructions should get you up and running with a fully
 functional, local deployment of four AIs to chat with. Note that the companions
-running on Vicuna (Rosie and LuckY) will take more time to respond as we've not
+running on Vicuna (Rosie and Lucky) will take more time to respond as we've not
 dealt with the cold start problem. So you may have to wait around a bit :)
 
 ### 1. Fork and Clone repo
@@ -133,6 +133,7 @@ cp .env.local.example .env.local
 ```
 
 Secrets mentioned below will need to be copied to `.env.local`
+
 a. **Clerk Secrets**
 
 Go to https://dashboard.clerk.com/ -> "Add Application" -> Fill in Application name/select how your users should sign in -> Create Application
@@ -152,7 +153,7 @@ c. **Replicate API key**
 Visit https://replicate.com/account/api-tokens to get your Replicate API key if you're using Vicuna for your language model.
 
 
-❗ **_NOTE:_** By default, this template uses Pinecone as vector store, but you can turn on Supabase pgvector easily by uncommenting `VECTOR_DB=supabase` in `env.local`. This means you only need to fill out either Pinecone API key _or_ Supabase API key.
+❗ **_NOTE:_** By default, this template uses Pinecone as vector store, but you can turn on Supabase pgvector easily by uncommenting `VECTOR_DB=supabase` in `.env.local`. This means you only need to fill out either Pinecone API key _or_ Supabase API key.
 
 d. **Pinecone API key**
 
@@ -211,9 +212,9 @@ b. Once you created an account, create a Twilio phone number.
 
 c. On [Twilio dashboard](https://console.twilio.com/), scroll down to the "Account Info" section and paste `Account SID` value as `TWILIO_ACCOUNT_SID`, `Auth Token` as `TWILIO_AUTH_TOKEN` in `.env.local`
 
-d. [Optional] If you are running the app locally, use ngrok to generate a public url that can forward the request to your localhost.
+d. [Optional] If you are running the app locally, use [ngrok](https://ngrok.com/docs/getting-started/#step-2-install-the-ngrok-agent) to generate a public url that can forward the request to your localhost.
 
-e. On Twilio's UI, can now click on "# Phone Numbers" -> "Manage" -> "[Active numbers](https://console.twilio.com/us1/develop/phone-numbers/manage/incoming)" on the left hand side nav.
+e. On Twilio's UI, you can now click on "# Phone Numbers" -> "Manage" -> "[Active numbers](https://console.twilio.com/us1/develop/phone-numbers/manage/incoming)" on the left hand side nav.
 
 f. Click on the phone number you just created from the list, scroll down to "Messaging Configuration" section and enter [your_app_url]/api/text in "A message comes in" section under "Webhook".<img width="1251" alt="Screen Shot 2023-06-30 at 11 32 25 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/8b4f57bb-fab2-4f5a-818a-6286d6045505">
 
