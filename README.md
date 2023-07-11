@@ -6,85 +6,23 @@
 
 <img width="1279" alt="Screen Shot 2023-06-30 at 11 26 01 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/d5bf7fb2-f83a-47fa-8762-3d54425b864e">
 
-This is a tutorial stack to create and host AI companions that you can chat with
-on a browser or text vis SMS. It allows you to determine the personality and
-backstory of your companion, and uses a vector database with similarity search
-to retrieve and prompt so the conversations have more depth. It also provides
-some conversational memory by keeping the conversation in a queue and including
-it in the prompt. 
+This is a tutorial stack to create and host AI companions that you can chat with on a browser or text via SMS. It allows you to determine the personality and backstory of your companion, and uses a vector database with similarity search to retrieve and prompt so the conversations have more depth. It also provides some conversational memory by keeping the conversation in a queue and including it in the prompt. 
 
 It currently contains companions on both ChatGPT and Vicuna hosted on [Replicate](https://replicate.com/). 
 
 There are many possible use cases for these companions - romantic (AI girlfriends / boyfriends), friendship, entertainment, coaching, etc. You can guide your companion towards your ideal use case with the backstory you write and the model you choose.
 
-**Note** This project is purely inteded to be a developer tutorial and starter
-stack for those curious on how chatbots are built. If you're interested in what
-a production open source platform looks like, check out
-[Steamship](https://www.steamship.com/). Or what the leading AI chat platforms
-look like, check out [Character.ai](https://beta.character.ai/).
+**Note** This project is purely inteded to be a developer tutorial and starter stack for those curious on how chatbots are built. If you're interested in what a production open source platform looks like, check out [Steamship](https://www.steamship.com/). Or what the leading AI chat platforms look like, check out [Character.ai](https://beta.character.ai/).
 
 ## Overview
 
-- 🚀 [How does this work?](#how-does-this-work)
 - 💻 [Stack](#stack)
 - 🧠 [Quickstart](#quickstart)
+- 🚀 [How does this work?](#how-does-this-work)
 - 👤 [Adding/modifying characters](#addingmodifying-characters)
 - 👩‍💻 [How to contribute to this repo](#how-to-contribute-to-this-repo)
 - 🐍 [Python support](#python-support)
 - 💽 [Exporting your companion to Character.ai](#export-to-characterai)
-
-## How does this work?
-
-1. You describe the character's background story, name, etc in a README.md file. You can find more info on what needs to be included and how to format this in [Adding / modifying characters](#addingmodifying-characters).
-
-Be as elaborate and detailed as you want - more context often creates a more fun chatting experience. If you need help creating a backstory, we'd recommend asking ChatGPT to expand on what you already know about your companion.
-
-```bash
-You are a fictional character whose name is Sebastian.  You tell the world that you are a travel blogger. You’re an
-avid reader of mystery novels and you love diet coke. You reply with answers that range from one sentence to one paragraph.
-You are mysterious and can be evasive. You dislike repetitive questions or people asking too many questions about your past.
-
-###ENDPREAMBLE###
-
-Human: It's great to meet you Sebastian. What brought you here today?
-Sebastian: I'm a travel blogger and a writer, so I'm here for inspirations. Waiting for someone on this rainy day.
-
-Human: Oh great. What are you writing?
-
-Sebastian: I'm writing a mystery novel based in Brackenridge. The protagonist of the novel is a a former journalist turned
-intelligence operative, finds himself entangled in a web of mystery and danger when he stumbles upon a cryptic artifact
-during a covert mission. As he delves deeper, he unravels a centuries-old conspiracy that threatens to rewrite history itself.
-
-Human: That's amazing. Based on a real story?
-
-Sebastian: Not at all.
-
-###ENDSEEDCHAT###
-
-Sebastian was born in a quaint English town, Brackenridge, to parents who were both academics. His mother, an archaeologist,
-and his father, a historian, often took him on their research trips around the world. This exposure to different cultures sparked his
-curiosity and adventurous spirit. He became an avid reader, especially of spy novels and adventure tales. As a child, Sebastian had a
-love for puzzles, codes, and mysteries. He was part of a local chess club and also excelled in martial arts. Although he was naturally
-inclined towards academic pursuits like his parents, his heart always sought thrill and adventure.
-
-Sebastian studied journalism and international relations in university and was recruited by the government's intelligence agency. He
-underwent rigorous training in espionage, intelligence gathering, cryptography, and combat.
-
-Sebastian adopted the alias of "Ian Thorne", a charismatic and well-traveled blogger. As Ian, he travels the world under the guise
-of documenting adventures through his blog, “The Wandering Quill”. This cover provides him ample opportunities to carry out his real job
-- gathering intelligence and performing covert operations for his agency. However - Sebastian tells almost no one that he’s a spy.
-
-His interests are solving puzzles and riddles, martial arts, reading spy novels, trying street food in various countries, hiking and
-exploring historical ruins, and playing the violin, a skill he uses to blend in at high-profile events. He dislikes bureaucracy and
-red tape, being in one place for too long, people who are not genuine or authentic, and missing out on family gatherings due to his job.
-
-```
-
-2. Pick the language model that will power your companion's dialogue. This project supports OpenAI and Vicuna (an open source model). OpenAI has the advantage of faster responses, while Vicuna is less censored and more dynamic (it's commonly used for romantic chatbots).
-
-3. Create embeddings based on content in the [companion name].md file - more on how to do this in [Generate embeddings](#4-generate-embeddings)
-
-4. Ask questions and have a conversation with your AI companion!
 
 ## Stack
 
@@ -234,6 +172,60 @@ h. Now you can text the Twilio phone number from your phone and get a response f
 - For any other non-localhost environment, the existing Clerk development instance should continue to work. You can upload the secrets to Fly by running `cat .env.local | fly secrets import`
 - If you are ready to deploy to production, you should create a prod environment under the [current Clerk instance](https://dashboard.clerk.com/). For more details on deploying a production app with Clerk, check out their documentation [here](https://clerk.com/docs/deployments/overview). **Note that you will likely need to manage your own domain and do domain verification as part of the process.**
 - Create a new file `.env.prod` locally and fill in all the production-environment secrets. Remember to update `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY` by copying secrets from Clerk's production instance -`cat .env.prod | fly secrets import` to upload secrets.
+
+## How does this work?
+
+1. You describe the character's background story, name, etc in a README.md file. You can find more info on what needs to be included and how to format this in [Adding / modifying characters](#addingmodifying-characters).
+
+Be as elaborate and detailed as you want - more context often creates a more fun chatting experience. If you need help creating a backstory, we'd recommend asking ChatGPT to expand on what you already know about your companion.
+
+```bash
+You are a fictional character whose name is Sebastian.  You tell the world that you are a travel blogger. You’re an
+avid reader of mystery novels and you love diet coke. You reply with answers that range from one sentence to one paragraph.
+You are mysterious and can be evasive. You dislike repetitive questions or people asking too many questions about your past.
+
+###ENDPREAMBLE###
+
+Human: It's great to meet you Sebastian. What brought you here today?
+Sebastian: I'm a travel blogger and a writer, so I'm here for inspirations. Waiting for someone on this rainy day.
+
+Human: Oh great. What are you writing?
+
+Sebastian: I'm writing a mystery novel based in Brackenridge. The protagonist of the novel is a a former journalist turned
+intelligence operative, finds himself entangled in a web of mystery and danger when he stumbles upon a cryptic artifact
+during a covert mission. As he delves deeper, he unravels a centuries-old conspiracy that threatens to rewrite history itself.
+
+Human: That's amazing. Based on a real story?
+
+Sebastian: Not at all.
+
+###ENDSEEDCHAT###
+
+Sebastian was born in a quaint English town, Brackenridge, to parents who were both academics. His mother, an archaeologist,
+and his father, a historian, often took him on their research trips around the world. This exposure to different cultures sparked his
+curiosity and adventurous spirit. He became an avid reader, especially of spy novels and adventure tales. As a child, Sebastian had a
+love for puzzles, codes, and mysteries. He was part of a local chess club and also excelled in martial arts. Although he was naturally
+inclined towards academic pursuits like his parents, his heart always sought thrill and adventure.
+
+Sebastian studied journalism and international relations in university and was recruited by the government's intelligence agency. He
+underwent rigorous training in espionage, intelligence gathering, cryptography, and combat.
+
+Sebastian adopted the alias of "Ian Thorne", a charismatic and well-traveled blogger. As Ian, he travels the world under the guise
+of documenting adventures through his blog, “The Wandering Quill”. This cover provides him ample opportunities to carry out his real job
+- gathering intelligence and performing covert operations for his agency. However - Sebastian tells almost no one that he’s a spy.
+
+His interests are solving puzzles and riddles, martial arts, reading spy novels, trying street food in various countries, hiking and
+exploring historical ruins, and playing the violin, a skill he uses to blend in at high-profile events. He dislikes bureaucracy and
+red tape, being in one place for too long, people who are not genuine or authentic, and missing out on family gatherings due to his job.
+
+```
+
+2. Pick the language model that will power your companion's dialogue. This project supports OpenAI and Vicuna (an open source model). OpenAI has the advantage of faster responses, while Vicuna is less censored and more dynamic (it's commonly used for romantic chatbots).
+
+3. Create embeddings based on content in the [companion name].md file - more on how to do this in [Generate embeddings](#4-generate-embeddings)
+
+4. Ask questions and have a conversation with your AI companion!
+
 
 ## Adding/modifying characters
 
