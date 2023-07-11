@@ -141,7 +141,8 @@ c. **Replicate API key**
 
 Visit https://replicate.com/account/api-tokens to get your Replicate API key if you're using Vicuna for your language model.
 
-> **_NOTE:_** By default, this template uses Pinecone as vector store, but you can turn on Supabase pgvector easily. This means you only need to fill out either Pinecone API key _or_ Supabase API key.
+
+❗ **_NOTE:_** By default, this template uses Pinecone as vector store, but you can turn on Supabase pgvector easily by uncommenting `VECTOR_DB=supabase` in `env.local`. This means you only need to fill out either Pinecone API key _or_ Supabase API key.
 
 d. **Pinecone API key**
 
@@ -161,7 +162,7 @@ e. **Upstash API key**
   <img width="879" alt="Screen Shot 2023-06-27 at 3 48 32 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/2793177d-c197-428a-95d5-0f66a5b1f6c4">
 
 e. **Supabase API key** (optional)
-If you prefer to use Supabsae, you will need to make a few simple code changes and fill out the Supabase credentials in .env.local. [Here](https://github.com/a16z-infra/ai-getting-started/blob/main/src/app/api/qa-pg-vector/route.ts) is an example from the[ AI Getting Started Stack](https://github.com/a16z-infra/ai-getting-started).
+If you prefer to use Supabsae, you will need to uncomment `VECTOR_DB=supabase` and fill out the Supabase credentials in `.env.local`.
 
 - Create a Supabase instance [here](https://supabase.com/dashboard/projects); then go to Project Settings -> API
 - `SUPABASE_URL` is the URL value under "Project URL"
