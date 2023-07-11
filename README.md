@@ -4,7 +4,8 @@
 
 [Join our community Discord: AI Stack Devs](https://discord.gg/PQUmTBTGmT)
 
-<img width="1279" alt="Screen Shot 2023-06-30 at 11 26 01 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/d5bf7fb2-f83a-47fa-8762-3d54425b864e">
+<img width="1312" alt="Screen Shot 2023-07-10 at 11 03 03 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/2ac7036c-5501-4158-91e1-562082aba023">
+
 
 This is a tutorial stack to create and host AI companions that you can chat with
 on a browser or text vis SMS. It allows you to determine the personality and
@@ -116,7 +117,8 @@ git clone git@github.com:[YOUR_GITHUB_ACCOUNT_NAME]/companion-app.git
 ```
 
 **Alternatively**, you can launch the app quickly through Github Codespaces by clicking on "Code" -> "Codespaces" -> "+"
-<img width="1297" alt="Screen Shot 2023-07-02 at 8 17 44 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/abb9533c-088a-42fa-90ff-7e9dc429529c">
+<img width="458" alt="Screen Shot 2023-07-10 at 11 04 04 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/eb954517-29f2-44b7-b9ca-4184dcf42806">
+
 If you choose to use Codespaces, npm dependencies will be installed automatically and you can proceed to step 3. 
 
 ### 2. Install dependencies
@@ -138,11 +140,12 @@ a. **Clerk Secrets**
 
 Go to https://dashboard.clerk.com/ -> "Add Application" -> Fill in Application name/select how your users should sign in -> Create Application
 Now you should see both `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY` on the screen
-<img width="1011" alt="clerk" src="https://github.com/a16z-infra/ai-getting-started/assets/3489963/6ce72263-4e83-406d-838e-08a95ea79023">
+<img width="1398" alt="Screen Shot 2023-07-10 at 11 04 57 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/449c40f1-2fc2-48bb-88e1-d2adf10a034e">
 
 If you want to text your AI companion in later steps, you should also enable "phone number" under "User & Authentication" -> "Email, Phone, Username" on the left hand side nav:
 
-<img width="1371" alt="Screen Shot 2023-07-01 at 12 49 39 AM" src="https://github.com/a16z-infra/companion-app/assets/3489963/c83c3ed6-bcc0-4938-8784-85ffd764f279">
+<img width="1013" alt="Screen Shot 2023-07-10 at 11 05 42 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/4435c759-f33e-4e38-a276-1be6d538df28">
+
 
 b. **OpenAI API key**
 
@@ -167,10 +170,11 @@ e. **Upstash API key**
 - Sign in to [Upstash](https://upstash.com/)
 - Under "Redis" on the top nav, click on "Create Database"
 - Give it a name, and then select regions and other options based on your preference. Click on "Create"
-  <img width="524" alt="Screen Shot 2023-06-27 at 3 46 48 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/14905d22-7689-410b-a9a7-9f1a59d380a2">
+<img width="507" alt="Screen Shot 2023-07-10 at 11 06 36 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/2b8647f3-7242-448b-8db1-ec76f2d59275">
 
 - Scroll down to "REST API" section and click on ".env". Now you can copy paste both environment variables to your `.env.local`
-  <img width="879" alt="Screen Shot 2023-06-27 at 3 48 32 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/2793177d-c197-428a-95d5-0f66a5b1f6c4">
+<img width="866" alt="Screen Shot 2023-07-10 at 11 07 21 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/f8e6c43f-8810-423e-86b4-9e8aa70598c9">
+
 
 e. **Supabase API key** (optional)
 If you prefer to use Supabsae, you will need to uncomment `VECTOR_DB=supabase` and fill out the Supabase credentials in `.env.local`.
@@ -216,7 +220,10 @@ d. [Optional] If you are running the app locally, use [ngrok](https://ngrok.com/
 
 e. On Twilio's UI, you can now click on "# Phone Numbers" -> "Manage" -> "[Active numbers](https://console.twilio.com/us1/develop/phone-numbers/manage/incoming)" on the left hand side nav.
 
-f. Click on the phone number you just created from the list, scroll down to "Messaging Configuration" section and enter [your_app_url]/api/text in "A message comes in" section under "Webhook".<img width="1251" alt="Screen Shot 2023-06-30 at 11 32 25 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/8b4f57bb-fab2-4f5a-818a-6286d6045505">
+f. Click on the phone number you just created from the list, scroll down to "Messaging Configuration" section and enter [your_app_url]/api/text in "A message comes in" section under "Webhook".
+
+<img width="1062" alt="Screen Shot 2023-07-10 at 11 08 55 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/d7905f13-a83a-47f8-ac74-b66698d4292b">
+
 
 g. Add your Twilio phone number in `companions.json` under the companion you want to text with. Make sure you include area code when adding the phone number ("+14050000000" instead of "4050000000")
 
