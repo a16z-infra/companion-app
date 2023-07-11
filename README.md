@@ -4,7 +4,7 @@
 
 [Join our community Discord: AI Stack Devs](https://discord.gg/PQUmTBTGmT)
 
-<img width="1312" alt="Screen Shot 2023-07-10 at 11 03 03 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/2ac7036c-5501-4158-91e1-562082aba023">
+<img width="1182" alt="Screen Shot 2023-07-10 at 11 27 03 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/e4cc8042-e091-4c8b-851f-e361ca5b5814">
 
 
 This is a tutorial stack to create and host AI companions that you can chat with
