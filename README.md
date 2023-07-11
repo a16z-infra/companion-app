@@ -6,9 +6,22 @@
 
 <img width="1279" alt="Screen Shot 2023-06-30 at 11 26 01 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/d5bf7fb2-f83a-47fa-8762-3d54425b864e">
 
-This is a stack to create and host AI companions that you can chat with and/or text. It allows you to determine the personality and backstory of your companion, and uses a vector database with similarity search to retrieve and prompt so the conversations have more depth. It also provides some conversational memory by keeping the conversation in a queue and including it in the prompt.
+This is a tutorial stack to create and host AI companions that you can chat with
+on a browser or text vis SMS. It allows you to determine the personality and
+backstory of your companion, and uses a vector database with similarity search
+to retrieve and prompt so the conversations have more depth. It also provides
+some conversational memory by keeping the conversation in a queue and including
+it in the prompt. 
+
+It currently contains companions on both ChatGPT and Vicuna hosted on [Replicate](https://replicate.com/). 
 
 There are many possible use cases for these companions - romantic (AI girlfriends / boyfriends), friendship, entertainment, coaching, etc. You can guide your companion towards your ideal use case with the backstory you write and the model you choose.
+
+**Note** This project is purely inteded to be a developer tutorial and starter
+stack for those curious on how chatbots are built. If you're interested in what
+a production open source platform looks like, check out
+[Steamship](https://www.steamship.com/). Or what the leading AI chat platforms
+look like, check out [Character.ai](https://beta.character.ai/).
 
 ## Overview
 
@@ -73,11 +86,6 @@ red tape, being in one place for too long, people who are not genuine or authent
 
 4. Ask questions and have a conversation with your AI companion!
 
-**Note** This project is purely inteded to be instructive. If you're interested in
-what a production open source platform looks like, check out
-[Steamship](https://www.steamship.com/). Or what the leading AI chat
-platforms look like, check out [Character.ai](https://beta.character.ai/).
-
 ## Stack
 
 The stack is based on the [AI Getting Started Stack](https://github.com/a16z-infra/ai-getting-started):
@@ -95,7 +103,9 @@ The stack is based on the [AI Getting Started Stack](https://github.com/a16z-inf
 ## Quickstart
 
 The following instructions should get you up and running with a fully
-functional, local deployment of four AIs to chat with.
+functional, local deployment of four AIs to chat with. Note that the companions
+running on Vicuna (Rosie and LuckY) will take more time to respond as we've not
+dealt with the cold start problem. So you may have to wait around a bit :)
 
 ### 1. Fork and Clone repo
 
@@ -224,11 +234,6 @@ h. Now you can text the Twilio phone number from your phone and get a response f
 - For any other non-localhost environment, the existing Clerk development instance should continue to work. You can upload the secrets to Fly by running `cat .env.local | fly secrets import`
 - If you are ready to deploy to production, you should create a prod environment under the [current Clerk instance](https://dashboard.clerk.com/). For more details on deploying a production app with Clerk, check out their documentation [here](https://clerk.com/docs/deployments/overview). **Note that you will likely need to manage your own domain and do domain verification as part of the process.**
 - Create a new file `.env.prod` locally and fill in all the production-environment secrets. Remember to update `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY` by copying secrets from Clerk's production instance -`cat .env.prod | fly secrets import` to upload secrets.
-
-#### Other deployment options
-
-- [Netlify](https://www.netlify.com/)
-- [Vercel](https://vercel.com/)
 
 ## Adding/modifying characters
 
