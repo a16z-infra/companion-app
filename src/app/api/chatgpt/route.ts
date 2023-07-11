@@ -1,6 +1,3 @@
-import { OpenAIEmbeddings } from "langchain/embeddings/openai";
-import { PineconeClient } from "@pinecone-database/pinecone";
-import { PineconeStore } from "langchain/vectorstores/pinecone";
 import { OpenAI } from "langchain/llms/openai";
 import dotenv from "dotenv";
 import { LLMChain } from "langchain/chains";
@@ -38,7 +35,7 @@ export async function POST(req: Request) {
 
   // XXX Companion name passed here. Can use as a key to get backstory, chat history etc.
   const name = req.headers.get("name");
-  const companion_file_name = name + ".txt";
+  const companionFileName = name + ".txt";
 
   console.log("prompt: ", prompt);
   if (isText) {
@@ -69,7 +66,7 @@ export async function POST(req: Request) {
   // discussion. The PREAMBLE should include a seed conversation whose format will
   // vary by the model using it.
   const fs = require("fs").promises;
-  const data = await fs.readFile("companions/" + companion_file_name, "utf8");
+  const data = await fs.readFile("companions/" + companionFileName, "utf8");
 
   // Clunky way to break out PREAMBLE and SEEDCHAT from the character file
   const presplit = data.split("###ENDPREAMBLE###");
@@ -77,42 +74,26 @@ export async function POST(req: Request) {
   const seedsplit = presplit[1].split("###ENDSEEDCHAT###");
   const seedchat = seedsplit[0];
 
-  // console.log("Preamble: "+preamble);
-  // console.log("Seedchat: "+seedchat);
-
-  const memoryManager = new MemoryManager({
+  const companionKey = {
     companionName: name!,
     modelName: "chatgpt",
     userId: clerkUserId,
-  });
+  };
+  const memoryManager = await MemoryManager.getInstance();
 
-  const records = await memoryManager.readLatestHistory();
+  const records = await memoryManager.readLatestHistory(companionKey);
   if (records.length === 0) {
-    await memoryManager.seedChatHistory(seedchat, "\n\n");
+    await memoryManager.seedChatHistory(seedchat, "\n\n", companionKey);
   }
 
-  await memoryManager.writeToHistory("Human: " + prompt + "\n");
+  await memoryManager.writeToHistory("Human: " + prompt + "\n", companionKey);
+  let recentChatHistory = await memoryManager.readLatestHistory(companionKey);
 
   // query Pinecone
-  const client = new PineconeClient();
-  await client.init({
-    apiKey: process.env.PINECONE_API_KEY || "",
-    environment: process.env.PINECONE_ENVIRONMENT || "",
-  });
-  const pineconeIndex = client.Index(process.env.PINECONE_INDEX || "");
-
-  const vectorStore = await PineconeStore.fromExistingIndex(
-    new OpenAIEmbeddings({ openAIApiKey: process.env.OPENAI_API_KEY }),
-    { pineconeIndex }
+  const similarDocs = await memoryManager.vectorSearch(
+    recentChatHistory,
+    companionFileName
   );
-
-  let recentChatHistory = await memoryManager.readLatestHistory();
-
-  const similarDocs = await vectorStore
-    .similaritySearch(recentChatHistory, 3, { fileName: companion_file_name })
-    .catch((err) => {
-      console.log("WARNING: failed to get vector search results.", err);
-    });
 
   let relevantHistory = "";
   if (!!similarDocs && similarDocs.length !== 0) {
@@ -161,7 +142,8 @@ export async function POST(req: Request) {
 
   console.log("result", result);
   const chatHistoryRecord = await memoryManager.writeToHistory(
-    result!.text + "\n"
+    result!.text + "\n",
+    companionKey
   );
   console.log("chatHistoryRecord", chatHistoryRecord);
   if (isText) {
