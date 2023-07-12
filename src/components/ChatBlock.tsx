@@ -15,7 +15,10 @@ export function ChatBlock({text, mimeType, url} : {
         if (mimeType.startsWith("audio")) {
             internalComponent = <audio controls={true} src={url} />
         } else if (mimeType.startsWith("video")) {
-            internalComponent = <video controls={true} src={url} />
+            internalComponent = <video controls width="250">
+                <source src={url} type={mimeType} />
+                Download the <a href={url}>video</a>
+            </video>
         } else if (mimeType.startsWith("image")) {
             internalComponent = <img src={url} />
         }
