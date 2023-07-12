@@ -36,3 +36,9 @@ next-env.d.ts
 
 /.env.prod
 /fly.toml
+
+# JetBrains
+.idea
+
+# Yarn Lockfiles (since this project uses NPM)
+yarn.lock
