@@ -36,3 +36,6 @@ next-env.d.ts
 
 /.env.prod
 /fly.toml
+
+# python
+__pycache__/
