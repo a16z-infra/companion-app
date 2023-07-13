@@ -9,7 +9,7 @@ import click
 from steamship import Steamship
 from steamship.cli.create_instance import load_manifest
 
-from python.src.api import FileType
+from src.api import FileType
 
 
 @click.command()

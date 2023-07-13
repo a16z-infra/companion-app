@@ -34,6 +34,11 @@ MODEL_NAME = "gpt-3.5-turbo"
 
 
 class CompanionConfig(TelegramTransportConfig):
+    """Config class for your companion.
+
+    It contains the full set of configuration that will be passed at initialization time to your Companion application
+    """
+
     name: str = Field(description="The name of your companion")
     preamble: str = Field(description="The preamble of your companion")
     seed_chat: str = Field(description="The seed chat of your companion")

@@ -4,7 +4,7 @@ The following instructions should get you up and running with a fully functional
 companions.
 
 It currently contains a companion connected to ChatGPT that can run Tools such as Image Generation and Video Generation.
-The companions also have to option to return voice messages via [ElevenLabs]()
+The companions also have to option to return voice messages via [ElevenLabs](https://beta.elevenlabs.io/)
 
 ## Quick start
 
@@ -32,7 +32,10 @@ Make sure to override the companions.json file in the final step of the script.
 
 ### 4. Fill out secrets
 
+The front-end requires a few secrets to be filled before connecting to third-party services.
+
 ```
+# Run in the Root directory of this repo
 cp .env.local.example .env.local
 ```
 
@@ -42,6 +45,8 @@ Secrets mentioned below will need to be copied to `.env.local`
 and hosting.
 
 a. **Clerk Secrets**
+
+Clerk is used to authorize users of your application. Without completing this setup, you will not be able to access your companions via the supplied frontend
 
 Go to https://dashboard.clerk.com/ -> "Add Application" -> Fill in Application name/select how your users should sign in
 -> Create Application
@@ -62,7 +67,7 @@ b. **Steamship API key**
 ### 5. Install front-end dependencies
 
 ```
-cd companion-app
+# Run in the Root directory of this repo
 npm install
 ```
 
