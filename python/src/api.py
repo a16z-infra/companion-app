@@ -40,6 +40,9 @@ class CompanionConfig(TelegramTransportConfig):
     bot_token: str = Field(
         default="", description="The secret token for your Telegram bot"
     )
+    generate_voice_responses: bool = Field(
+        default=True, description="Enable voice responses"
+    )
     elevenlabs_api_key: str = Field(
         default="", description="Optional API KEY for ElevenLabs Voice Bot"
     )

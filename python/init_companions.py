@@ -53,7 +53,7 @@ def init_companions(ctx):
             new_companions[companion.stem] = {
                 "name": companion.stem,
                 "llm": "steamship",
-                "generateEndpoint": "https://a16z.steamship.run/a16z/rick-b1578149038e664bacae7fc083683565/answer",
+                "generateEndpoint": instance.invocation_url,
             }
 
     if click.confirm("Do you want to update the companions.json file?", default=True):

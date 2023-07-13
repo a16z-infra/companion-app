@@ -6,9 +6,7 @@ from steamship_langchain.tools import SteamshipSERP
 
 NAME = "Search"
 
-DESCRIPTION = """
-Useful for when you need to answer questions about current events
-"""
+DESCRIPTION = "Useful for when you need to answer questions about current events"
 
 
 class SearchTool(Tool):

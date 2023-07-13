@@ -10,11 +10,11 @@ from steamship.utils.signed_urls import upload_to_signed_url
 
 NAME = "VideoMessage"
 
-DESCRIPTION = """
-Useful for when you want to send a video message. 
-Input: The message you want to say in a video.  
-Output: the UUID of the generated video message with your message. 
-"""
+DESCRIPTION = (
+    "Useful for when you want to send a video message."
+    "Input: The message you want to say in a video."
+    "Output: the UUID of the generated video message with your message."
+)
 
 PLUGIN_HANDLE = "did-video-generator"
 
