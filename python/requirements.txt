@@ -1,5 +1,8 @@
-python-dotenv==1.0.0
-upstash-redis==0.12.0
-pinecone-client==2.2.2
-openai==0.27.0
-langchain==0.0.219
+steamship_langchain==0.0.25
+termcolor
+steamship~=2.17.17
+langchain==0.0.209
+pypdf
+youtube_transcript_api
+pytube
+scrapetube

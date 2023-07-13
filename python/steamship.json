@@ -1,0 +1,68 @@
+{
+	"type": "package",
+	"handle": "ai-companion",
+	"version": "0.0.1",
+	"description": "",
+	"author": "",
+	"entrypoint": "Unused",
+	"public": true,
+	"plugin": null,
+	"build_config": {
+		"ignore": [
+			"tests",
+			"examples"
+		]
+	},
+	"configTemplate": {
+		"bot_token": {
+			"type": "string",
+			"description": "The secret token for your Telegram bot",
+			"default": ""
+		},
+		"api_base": {
+			"type": "string",
+			"description": "The root API for Telegram",
+			"default": "https://api.telegram.org/bot"
+		},
+		"companion_name": {
+			"type": "string",
+			"description": "The name of your companion",
+			"default": null
+		},
+		"elevenlabs_api_key": {
+			"type": "string",
+			"description": "Optional API KEY for ElevenLabs Voice Bot",
+			"default": ""
+		},
+		"elevenlabs_voice_id": {
+			"type": "string",
+			"description": "Optional voice_id for ElevenLabs Voice Bot",
+			"default": ""
+		},
+		"use_gpt4": {
+			"type": "boolean",
+			"description": "If True, use GPT-4. Use GPT-3.5 if False. GPT-4 generates better responses at higher cost and latency.",
+			"default": false
+		}
+	},
+	"steamshipRegistry": {
+		"tagline": "",
+		"tagline2": null,
+		"usefulFor": null,
+		"videoUrl": null,
+		"githubUrl": null,
+		"demoUrl": null,
+		"blogUrl": null,
+		"jupyterUrl": null,
+		"authorGithub": null,
+		"authorName": null,
+		"authorEmail": null,
+		"authorTwitter": null,
+		"authorUrl": null,
+		"tags": [
+			"Telegram",
+			"LangChain",
+			"GPT"
+		]
+	}
+}
