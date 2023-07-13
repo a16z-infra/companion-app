@@ -111,8 +111,7 @@ class LangChainTelegramBot(AgentService):
             self.get_memory(chat_id).chat_memory.clear()
             return [Block(text="New conversation started.")]
 
-        agent = self.get_agent(chat_id, name)
-        response = agent.run(
+        response = self.get_agent(chat_id, name).run(
             input=incoming_message.text,
             relevantHistory=self.get_relevant_history(incoming_message.text),
         )

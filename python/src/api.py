@@ -1,3 +1,4 @@
+import re
 from enum import Enum
 from typing import List, Type, Optional, Union
 
@@ -5,7 +6,7 @@ from langchain.agents import Tool, initialize_agent, AgentType, AgentExecutor
 from langchain.document_loaders import PyPDFLoader, YoutubeLoader
 from langchain.memory import ConversationBufferMemory
 from langchain.prompts import MessagesPlaceholder, SystemMessagePromptTemplate
-from langchain.schema import SystemMessage, Document
+from langchain.schema import SystemMessage, Document, BaseChatMessageHistory
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.vectorstores import VectorStore
 from pydantic import Field, AnyUrl
@@ -17,6 +18,7 @@ from steamship_langchain.memory import ChatMessageHistory
 from steamship_langchain.vectorstores import SteamshipVectorStore
 
 from base import LangChainTelegramBot, TelegramTransportConfig
+
 # noinspection PyUnresolvedReferences
 from tools import (
     GenerateImageTool,
@@ -31,9 +33,10 @@ VERBOSE = True
 MODEL_NAME = "gpt-3.5-turbo"
 
 
-class ChatbotConfig(TelegramTransportConfig):
-    companion_name: str = Field(description="The name of your companion")
-    companion_preamble: str = Field(description="The preamble of your companion")
+class CompanionConfig(TelegramTransportConfig):
+    name: str = Field(description="The name of your companion")
+    preamble: str = Field(description="The preamble of your companion")
+    seed_chat: str = Field(description="The seed chat of your companion")
     bot_token: str = Field(
         default="", description="The secret token for your Telegram bot"
     )
@@ -57,35 +60,31 @@ FILE_LOADERS = {
         content_or_url, add_video_info=True
     ).load(),
     FileType.PDF: lambda content_or_url: PyPDFLoader(content_or_url).load(),
-    FileType.TEXT: lambda content_or_url: [Document(
-        page_content=content_or_url, metadata={}
-    )],
+    FileType.TEXT: lambda content_or_url: [
+        Document(page_content=content_or_url, metadata={})
+    ],
 }
 
 SYSTEM_MESSAGE_TEMPLATE = """
-         You are {companion_name}.
+You are {companion_name}.
 
-    {preamble}
+{preamble}
 
-  You reply with answers that range from one sentence to one paragraph and with some details. 
-
+You reply with answers that range from one sentence to one paragraph and with some details. 
 """
 
 
-class MyBot(LangChainTelegramBot):
-    config: ChatbotConfig
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+class MyCompanion(LangChainTelegramBot):
+    config: CompanionConfig
 
     @post("index_content", public=True)
     def index_content(
-            self,
-            content: Union[str, AnyUrl],
-            file_type: FileType,
-            metadata: Optional[dict] = None,
-            index_handle: Optional[str] = None,
-            mime_type: Optional[str] = None,
+        self,
+        content: Union[str, AnyUrl],
+        file_type: FileType,
+        metadata: Optional[dict] = None,
+        index_handle: Optional[str] = None,
+        mime_type: Optional[str] = None,
     ) -> str:
         loaded_documents = FILE_LOADERS[file_type](content)
         metadata = metadata or {}
@@ -140,8 +139,10 @@ class MyBot(LangChainTelegramBot):
             memory=memory,
             agent_kwargs={
                 "system_message": SystemMessage(
-                    content=SYSTEM_MESSAGE_TEMPLATE.format(companion_name=self.config.companion_name,
-                                                           preamble=self.config.companion_preamble)),
+                    content=SYSTEM_MESSAGE_TEMPLATE.format(
+                        companion_name=self.config.name, preamble=self.config.preamble
+                    )
+                ),
                 "extra_prompt_messages": [
                     SystemMessagePromptTemplate.from_template(
                         template="Relevant details about your past: {relevantHistory} Use these details to answer questions when relevant."
@@ -155,8 +156,24 @@ class MyBot(LangChainTelegramBot):
         return SteamshipVectorStore(
             client=self.client,
             embedding="text-embedding-ada-002",
-            index_name=convert_to_handle(self.config.companion_name),
+            index_name=convert_to_handle(self.config.name),
         )
+
+    def add_seed_chat(self, chat_memory: BaseChatMessageHistory):
+        pattern = r"### (.*?):(.*?)(?=###|$)"
+
+        # Find all matches
+        matches = re.findall(pattern, self.config.seed_chat, re.DOTALL)
+
+        # Process matches and create list of JSON objects
+        for m in matches:
+            role = m[0].strip().lower()
+            content = m[1].replace("\\n\\n", "").strip()
+            if content:
+                if role == "human":
+                    chat_memory.add_user_message(message=content)
+                else:
+                    chat_memory.add_ai_message(message=content)
 
     def get_memory(self, chat_id: str):
         memory = ConversationBufferMemory(
@@ -167,6 +184,9 @@ class MyBot(LangChainTelegramBot):
             return_messages=True,
             input_key="input",
         )
+
+        if len(memory.chat_memory.messages) == 0:
+            self.add_seed_chat(memory.chat_memory)
         return memory
 
     def get_relevant_history(self, prompt: str):
@@ -192,4 +212,4 @@ class MyBot(LangChainTelegramBot):
 
     @classmethod
     def config_cls(cls) -> Type[Config]:
-        return ChatbotConfig
+        return CompanionConfig

@@ -17,37 +17,43 @@ from python.src.api import FileType
 def init_companions(ctx):
     companions_dir = (Path(__file__) / ".." / ".." / "companions").resolve()
 
-    if click.confirm("Do you want to deploy a new version of your companion?", default=True):
+    if click.confirm(
+        "Do you want to deploy a new version of your companion?", default=True
+    ):
         ctx.invoke(deploy)
 
     new_companions = {}
     for companion in companions_dir.iterdir():
         if companion.suffix == ".txt":
             companion_file = companion.open().read()
-            preamble, rest = companion_file.split('###ENDPREAMBLE###', 1)
-            seed_chat, backstory = rest.split('###ENDSEEDCHAT###', 1)
+            preamble, rest = companion_file.split("###ENDPREAMBLE###", 1)
+            seed_chat, backstory = rest.split("###ENDSEEDCHAT###", 1)
 
             # Create instances for your companion
             print(f"Creating an instance for {companion.stem}")
             client = Steamship(workspace=companion.stem.lower())
             manifest = load_manifest()
-            instance = client.use(manifest.handle,
-                                  version=manifest.version,
-                                  config={
-                                      "companion_name": companion.stem,
-                                      "companion_preamble": preamble,
-                                  })
+            instance = client.use(
+                manifest.handle,
+                version=manifest.version,
+                config={
+                    "name": companion.stem,
+                    "preamble": preamble,
+                    "seed_chat": seed_chat,
+                },
+            )
 
-            instance.invoke("index_content",
-                            content=backstory,
-                            file_type=FileType.TEXT,
-                            metadata={"title": "backstory"})
+            instance.invoke(
+                "index_content",
+                content=backstory,
+                file_type=FileType.TEXT,
+                metadata={"title": "backstory"},
+            )
 
             new_companions[companion.stem] = {
                 "name": companion.stem,
                 "llm": "steamship",
                 "generateEndpoint": "https://a16z.steamship.run/a16z/rick-b1578149038e664bacae7fc083683565/answer",
-
             }
 
     if click.confirm("Do you want to update the companions.json file?", default=True):
@@ -56,12 +62,12 @@ def init_companions(ctx):
 
         for name, companion in new_companions.items():
             old_companion = name_to_companion.get(name, {})
-            name_to_companion[name] = {
-                **old_companion,
-                **companion
-            }
+            name_to_companion[name] = {**old_companion, **companion}
 
-        json.dump(list(name_to_companion.values()), (companions_dir / "companions_new.json").open("w"))
+        json.dump(
+            list(name_to_companion.values()),
+            (companions_dir / "companions_new.json").open("w"),
+        )
 
 
 if __name__ == "__main__":

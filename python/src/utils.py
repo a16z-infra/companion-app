@@ -1,6 +1,9 @@
 """Define your LangChain chatbot."""
 import re
 import uuid
+from typing import List
+
+from langchain.schema import BaseMessage, HumanMessage, AIMessage
 
 UUID_PATTERN = re.compile(
     r"([0-9A-Za-z]{8}-[0-9A-Za-z]{4}-[0-9A-Za-z]{4}-[0-9A-Za-z]{4}-[0-9A-Za-z]{12})"

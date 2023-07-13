@@ -1,7 +1,7 @@
 {
 	"type": "package",
 	"handle": "ai-companion-test",
-	"version": "0.0.2-rc.6",
+	"version": "0.0.2-rc.7",
 	"description": "",
 	"author": "",
 	"entrypoint": "Unused",
@@ -24,14 +24,19 @@
 			"description": "The root API for Telegram",
 			"default": "https://api.telegram.org/bot"
 		},
-		"companion_name": {
+		"name": {
 			"type": "string",
 			"description": "The name of your companion",
 			"default": null
 		},
-		"companion_preamble": {
+		"preamble": {
 			"type": "string",
 			"description": "The preamble of your companion",
+			"default": null
+		},
+		"seed_chat": {
+			"type": "string",
+			"description": "The seed chat of your companion",
 			"default": null
 		},
 		"elevenlabs_api_key": {
