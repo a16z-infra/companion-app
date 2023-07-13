@@ -200,6 +200,7 @@ class MyCompanion(LangChainTelegramBot):
 
     def get_tools(self, chat_id: str) -> List[Tool]:
         return [
+            SearchTool(self.client),
             GenerateImageTool(self.client),
             VideoMessageTool(self.client, voice_tool=self.voice_tool()),
         ]

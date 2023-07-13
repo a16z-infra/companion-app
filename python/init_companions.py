@@ -53,7 +53,7 @@ def init_companions(ctx):
             new_companions[companion.stem] = {
                 "name": companion.stem,
                 "llm": "steamship",
-                "generateEndpoint": instance.invocation_url,
+                "generateEndpoint": f"{instance.invocation_url}answer",
             }
 
     if click.confirm("Do you want to update the companions.json file?", default=True):
@@ -66,7 +66,7 @@ def init_companions(ctx):
 
         json.dump(
             list(name_to_companion.values()),
-            (companions_dir / "companions_new.json").open("w"),
+            (companions_dir / "companions.json").open("w"),
         )
 
 
