@@ -1,7 +1,7 @@
 {
 	"type": "package",
-	"handle": "ai-companion-test",
-	"version": "0.0.2-rc.7",
+	"handle": "ai-companion",
+	"version": "0.0.1",
 	"description": "",
 	"author": "",
 	"entrypoint": "Unused",
@@ -38,6 +38,11 @@
 			"type": "string",
 			"description": "The seed chat of your companion",
 			"default": null
+		},
+		"generate_voice_responses": {
+			"type": "boolean",
+			"description": "Enable voice responses",
+			"default": true
 		},
 		"elevenlabs_api_key": {
 			"type": "string",
