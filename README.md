@@ -113,14 +113,23 @@ e. **Upstash API key**
 - Scroll down to "REST API" section and click on ".env". Now you can copy paste both environment variables to your `.env.local`
 <img width="866" alt="Screen Shot 2023-07-10 at 11 07 21 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/f8e6c43f-8810-423e-86b4-9e8aa70598c9">
 
-
-e. **Supabase API key** (optional)
+f. **Supabase API key** (optional)
 If you prefer to use Supabsae, you will need to uncomment `VECTOR_DB=supabase` and fill out the Supabase credentials in `.env.local`.
 
 - Create a Supabase instance [here](https://supabase.com/dashboard/projects); then go to Project Settings -> API
 - `SUPABASE_URL` is the URL value under "Project URL"
 - `SUPABASE_PRIVATE_KEY` is the key starts with `ey` under Project API Keys
 - Now, you should enable pgvector on Supabase and create a schema. You can do this easily by clicking on "SQL editor" on the left hand side on Supabase UI and then clicking on "+New Query". Copy paste [this code snippet](https://github.com/a16z-infra/ai-getting-started/blob/main/pgvector.sql) in the SQL editor and click "Run".
+
+g. **Steamship API key**
+
+You can connect Steamship agent instance as if it were an LLM with personality, vector storage, and tools built-in. To do so:
+
+- Sign in to [Steamship](https://steamship.com/account)
+- Copy the API key from your account settings page
+- Add it as the `STEAMSHIP_API_KEY` variable
+
+Next, [build an agent](https://www.steamship.com/learn/agent-guidebook), create your own instance of it, and connect it in `companions.json` using the *Rick* example as a guide.
 
 ### 4. Generate embeddings
 

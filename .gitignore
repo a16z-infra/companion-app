@@ -40,4 +40,8 @@ next-env.d.ts
 # python
 __pycache__/
 
+# JetBrains
 .idea/**
+
+# Yarn Lockfiles (since this project uses NPM)
+yarn.lock
