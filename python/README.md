@@ -14,7 +14,7 @@ The companions also have to option to return voice messages via [ElevenLabs](htt
 pip install -r requirements.txt
 ```
 
-### 2. Authenticate with steamship
+### 2. Authenticate with Steamship
 
 ```commandline
 ship login
