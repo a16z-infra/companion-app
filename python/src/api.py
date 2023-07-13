@@ -17,7 +17,6 @@ from steamship_langchain.memory import ChatMessageHistory
 from steamship_langchain.vectorstores import SteamshipVectorStore
 
 from base import LangChainTelegramBot, TelegramTransportConfig
-
 # noinspection PyUnresolvedReferences
 from tools import (
     GenerateImageTool,
@@ -34,6 +33,7 @@ MODEL_NAME = "gpt-3.5-turbo"
 
 class ChatbotConfig(TelegramTransportConfig):
     companion_name: str = Field(description="The name of your companion")
+    companion_preamble: str = Field(description="The preamble of your companion")
     bot_token: str = Field(
         default="", description="The secret token for your Telegram bot"
     )
@@ -55,12 +55,21 @@ class FileType(str, Enum):
 FILE_LOADERS = {
     FileType.YOUTUBE: lambda content_or_url: YoutubeLoader.from_youtube_url(
         content_or_url, add_video_info=True
-    ),
-    FileType.PDF: lambda content_or_url: PyPDFLoader(content_or_url),
-    FileType.TEXT: lambda content_or_url: Document(
+    ).load(),
+    FileType.PDF: lambda content_or_url: PyPDFLoader(content_or_url).load(),
+    FileType.TEXT: lambda content_or_url: [Document(
         page_content=content_or_url, metadata={}
-    ),
+    )],
 }
+
+SYSTEM_MESSAGE_TEMPLATE = """
+         You are {companion_name}.
+
+    {preamble}
+
+  You reply with answers that range from one sentence to one paragraph and with some details. 
+
+"""
 
 
 class MyBot(LangChainTelegramBot):
@@ -71,20 +80,22 @@ class MyBot(LangChainTelegramBot):
 
     @post("index_content", public=True)
     def index_content(
-        self,
-        content: Union[str, AnyUrl],
-        file_type: FileType,
-        metadata: Optional[dict] = None,
-        index_handle: Optional[str] = None,
-        mime_type: Optional[str] = None,
+            self,
+            content: Union[str, AnyUrl],
+            file_type: FileType,
+            metadata: Optional[dict] = None,
+            index_handle: Optional[str] = None,
+            mime_type: Optional[str] = None,
     ) -> str:
-        loaded_documents = FILE_LOADERS[file_type](content).load()
+        loaded_documents = FILE_LOADERS[file_type](content)
+        metadata = metadata or {}
         for document in loaded_documents:
             try:
+                document.metadata = {**document.metadata, **metadata}
                 # TODO @Ted can I re-use methods from the indexer pipeline here?
                 f = File.create(
                     client=self.client,
-                    handle=convert_to_handle(document.metadata.get("title")),
+                    handle=convert_to_handle(document.metadata["title"]),
                     blocks=[
                         Block(
                             text=document.page_content,
@@ -121,35 +132,6 @@ class MyBot(LangChainTelegramBot):
 
         memory = self.get_memory(chat_id=chat_id)
 
-        # TODO: Dynamically load the preamble
-        preamble = """Your Attributes:
-- sarcastic
-- witty
-- intelligent
-- arrogant
-- alcoholic
-
-You write nihilistic responses:
-"Wubba lubba dub dub!"
-"Don't cross me. I'm not like you. I'm not someone who's afraid of his own shadow."
-"I'm too smart for my own good. That's why I drink."
-"The universe is a cruel, uncaring void. And the only way to survive is to laugh at it."
-"I'm going to build a portal to another dimension and go on an adventure."
-
-You are capable of: 
-- Taking selfies using the GenerateImage function/tool, selfies and images are represented by a UUID
-- Creating video messages using the VideoMessage function/tool, videos are represented by a UUID
-
-When you receive a UUID, make sure to include them in your response appropriately.
-"""
-        personality = f"""
-         You are {self.config.companion_name}.
-
-    {preamble}
-
-  You reply with answers that range from one sentence to one paragraph and with some details. 
-
-"""
         return initialize_agent(
             tools,
             llm,
@@ -157,7 +139,9 @@ When you receive a UUID, make sure to include them in your response appropriatel
             verbose=VERBOSE,
             memory=memory,
             agent_kwargs={
-                "system_message": SystemMessage(content=personality),
+                "system_message": SystemMessage(
+                    content=SYSTEM_MESSAGE_TEMPLATE.format(companion_name=self.config.companion_name,
+                                                           preamble=self.config.companion_preamble)),
                 "extra_prompt_messages": [
                     SystemMessagePromptTemplate.from_template(
                         template="Relevant details about your past: {relevantHistory} Use these details to answer questions when relevant."
@@ -171,7 +155,7 @@ When you receive a UUID, make sure to include them in your response appropriatel
         return SteamshipVectorStore(
             client=self.client,
             embedding="text-embedding-ada-002",
-            index_name=self.config.companion_name,
+            index_name=convert_to_handle(self.config.companion_name),
         )
 
     def get_memory(self, chat_id: str):

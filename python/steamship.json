@@ -1,11 +1,11 @@
 {
 	"type": "package",
-	"handle": "ai-companion",
-	"version": "0.0.1",
+	"handle": "ai-companion-test",
+	"version": "0.0.2-rc.6",
 	"description": "",
 	"author": "",
 	"entrypoint": "Unused",
-	"public": true,
+	"public": false,
 	"plugin": null,
 	"build_config": {
 		"ignore": [
@@ -29,6 +29,11 @@
 			"description": "The name of your companion",
 			"default": null
 		},
+		"companion_preamble": {
+			"type": "string",
+			"description": "The preamble of your companion",
+			"default": null
+		},
 		"elevenlabs_api_key": {
 			"type": "string",
 			"description": "Optional API KEY for ElevenLabs Voice Bot",
@@ -38,11 +43,6 @@
 			"type": "string",
 			"description": "Optional voice_id for ElevenLabs Voice Bot",
 			"default": ""
-		},
-		"use_gpt4": {
-			"type": "boolean",
-			"description": "If True, use GPT-4. Use GPT-3.5 if False. GPT-4 generates better responses at higher cost and latency.",
-			"default": false
 		}
 	},
 	"steamshipRegistry": {
