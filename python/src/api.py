@@ -1,15 +1,6 @@
 from enum import Enum
 from typing import List, Type, Optional, Union
 
-from base import LangChainTelegramBot, TelegramTransportConfig
-# noinspection PyUnresolvedReferences
-from tools import (
-    GenerateImageTool,
-    SearchTool,
-    GenerateSpeechTool,
-    VideoMessageTool,
-)
-from utils import convert_to_handle
 from langchain.agents import Tool, initialize_agent, AgentType, AgentExecutor
 from langchain.document_loaders import PyPDFLoader, YoutubeLoader
 from langchain.memory import ConversationBufferMemory
@@ -25,8 +16,20 @@ from steamship_langchain.chat_models import ChatOpenAI
 from steamship_langchain.memory import ChatMessageHistory
 from steamship_langchain.vectorstores import SteamshipVectorStore
 
+from base import LangChainTelegramBot, TelegramTransportConfig
+
+# noinspection PyUnresolvedReferences
+from tools import (
+    GenerateImageTool,
+    SearchTool,
+    GenerateSpeechTool,
+    VideoMessageTool,
+)
+from utils import convert_to_handle
+
 TEMPERATURE = 0.2
 VERBOSE = True
+MODEL_NAME = "gpt-3.5-turbo"
 
 
 class ChatbotConfig(TelegramTransportConfig):
@@ -39,11 +42,6 @@ class ChatbotConfig(TelegramTransportConfig):
     )
     elevenlabs_voice_id: Optional[str] = Field(
         default="", description="Optional voice_id for ElevenLabs Voice Bot"
-    )
-    use_gpt4: bool = Field(
-        False,
-        description="If True, use GPT-4. Use GPT-3.5 if False. "
-                    "GPT-4 generates better responses at higher cost and latency.",
     )
 
 
@@ -70,15 +68,16 @@ class MyBot(LangChainTelegramBot):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.model_name = "gpt-4" if self.config.use_gpt4 else "gpt-3.5-turbo-16k"
 
     @post("index_content", public=True)
-    def index_content(self, content: Union[str, AnyUrl],
-                      file_type: FileType,
-                      metadata: Optional[dict] = None,
-                      index_handle: Optional[str] = None,
-                      mime_type: Optional[str] = None,
-                      ) -> str:
+    def index_content(
+        self,
+        content: Union[str, AnyUrl],
+        file_type: FileType,
+        metadata: Optional[dict] = None,
+        index_handle: Optional[str] = None,
+        mime_type: Optional[str] = None,
+    ) -> str:
         loaded_documents = FILE_LOADERS[file_type](content).load()
         for document in loaded_documents:
             try:
@@ -113,7 +112,7 @@ class MyBot(LangChainTelegramBot):
     def get_agent(self, chat_id: str, name: Optional[str] = None) -> AgentExecutor:
         llm = ChatOpenAI(
             client=self.client,
-            model_name=self.model_name,
+            model_name=MODEL_NAME,
             temperature=TEMPERATURE,
             verbose=VERBOSE,
         )
@@ -122,6 +121,7 @@ class MyBot(LangChainTelegramBot):
 
         memory = self.get_memory(chat_id=chat_id)
 
+        # TODO: Dynamically load the preamble
         preamble = """Your Attributes:
 - sarcastic
 - witty

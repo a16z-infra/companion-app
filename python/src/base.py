@@ -100,17 +100,18 @@ class LangChainTelegramBot(AgentService):
         return None
 
     def respond(
-            self, incoming_message: Block, chat_id: str, context: AgentContext, name: Optional[str] = None
+        self,
+        incoming_message: Block,
+        chat_id: str,
+        context: AgentContext,
+        name: Optional[str] = None,
     ) -> List[Block]:
 
         if incoming_message.text == "/new":
             self.get_memory(chat_id).chat_memory.clear()
             return [Block(text="New conversation started.")]
 
-        agent = self.get_agent(
-            chat_id,
-            name
-        )
+        agent = self.get_agent(chat_id, name)
         response = agent.run(
             input=incoming_message.text,
             relevantHistory=self.get_relevant_history(incoming_message.text),
@@ -137,7 +138,12 @@ class LangChainTelegramBot(AgentService):
             for response in response_messages
         ]
 
-    def run_agent(self, agent: Agent, context: AgentContext, name: Optional[str] = None, ):
+    def run_agent(
+        self,
+        agent: Agent,
+        context: AgentContext,
+        name: Optional[str] = None,
+    ):
         chat_id = context.metadata.get("chat_id")
 
         incoming_message = context.chat_history.last_user_message
