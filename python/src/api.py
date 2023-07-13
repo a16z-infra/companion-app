@@ -207,12 +207,14 @@ class MyCompanion(LangChainTelegramBot):
 
     def voice_tool(self) -> Optional[Tool]:
         """Return tool to generate spoken version of output text."""
-        # return None
-        return GenerateSpeechTool(
-            client=self.client,
-            voice_id=self.config.elevenlabs_voice_id,
-            elevenlabs_api_key=self.config.elevenlabs_api_key,
-        )
+        if self.config.generate_voice_responses:
+            return GenerateSpeechTool(
+                client=self.client,
+                voice_id=self.config.elevenlabs_voice_id,
+                elevenlabs_api_key=self.config.elevenlabs_api_key,
+            )
+        else:
+            return None
 
     @classmethod
     def config_cls(cls) -> Type[Config]:
