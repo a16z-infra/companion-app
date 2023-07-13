@@ -3,17 +3,19 @@
     "name": "Alex",
     "title": "I love talking about books and games",
     "imageUrl": "/alex.png",
-    "llm": "chatgpt",
+    "llm": "steamship",
     "phone": "OPTIONAL_COMPANION_PHONE_NUMBER",
-    "telegram": "OPTIONAL_TELEGRAM_LINK"
+    "telegram": "OPTIONAL_TELEGRAM_LINK",
+    "generateEndpoint": "https://enias.steamship.run/alex/ai-companion-test-f963ad6cc8d7ebbe16e54c8b2c597159/"
   },
   {
     "name": "Rosie",
     "title": "I'm a house robot who became aware",
     "imageUrl": "/rosie.png",
-    "llm": "vicuna13b",
+    "llm": "steamship",
     "phone": "OPTIONAL_COMPANION_PHONE_NUMBER",
-    "telegram": "OPTIONAL_TELEGRAM_LINK"
+    "telegram": "OPTIONAL_TELEGRAM_LINK",
+    "generateEndpoint": "https://enias.steamship.run/rosie/ai-companion-test-91283246cb8020651fb583e63417b342/"
   },
   {
     "name": "Rick",
@@ -28,16 +30,18 @@
     "name": "Sebastian",
     "title": "I'm a travel blogger and a mystery novel writer",
     "imageUrl": "/sebastian.png",
-    "llm": "chatgpt",
+    "llm": "steamship",
     "phone": "OPTIONAL_COMPANION_PHONE_NUMBER",
-    "telegram": "OPTIONAL_TELEGRAM_LINK"
+    "telegram": "OPTIONAL_TELEGRAM_LINK",
+    "generateEndpoint": "https://enias.steamship.run/sebastian/ai-companion-test-e60c00f3574b40f4a77c9d531bc8226c/"
   },
   {
     "name": "Lucky",
     "title": "I am a space corgi",
     "imageUrl": "/corgi.png",
-    "llm": "vicuna13b",
+    "llm": "steamship",
     "phone": "OPTIONAL_COMPANION_PHONE_NUMBER",
-    "telegram": "OPTIONAL_TELEGRAM_LINK"
+    "telegram": "OPTIONAL_TELEGRAM_LINK",
+    "generateEndpoint": "https://enias.steamship.run/lucky/ai-companion-test-6f461a49557723b71ea1769db1c51f14/"
   }
 ]
