@@ -3,7 +3,7 @@ import clerk from "@clerk/clerk-sdk-node";
 import { NextResponse } from "next/server";
 import { currentUser } from "@clerk/nextjs";
 import { rateLimit } from "@/app/utils/rateLimit";
-import md5 from "md5"
+import {Md5} from 'ts-md5'
 import ConfigManager from "@/app/utils/config";
 
 dotenv.config({ path: `.env.local` });
@@ -72,7 +72,7 @@ export async function POST(req: Request) {
   }
 
   // Create a chat session id for the user
-  const chatSessionId = md5(userId || "anonymous");
+  const chatSessionId = Md5.hashStr(userId || "anonymous");
 
   // Make sure we have a generate endpoint.
   // TODO: Create a new instance of the agent per user if this proves advantageous.
