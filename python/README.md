@@ -79,30 +79,5 @@ You can connect to the project with your browser typically at http://localhost:3
 
 ## Stack
 
-The stack is based on the [AI Getting Started Stack](https://github.com/a16z-infra/ai-getting-started):
-
-- VectorDB: [Steamship](https://www.steamship.com/)
-- LLM orchestration: [Langchain](https://langchain.com/docs/)
-- Text model: [OpenAI](https://platform.openai.com/docs/models)
-- Conversation history: [Steamship](https://www.steamship.com/)
-- Deployment: [Steamship](https://www.steamship.com/)
-- Text with companion: [Telegram](https://telegram.org/)
-
-## Upgrades
-
-### Modifying your companion logic
-
-You can modify your companion by editing the `src/api.py`. Here are a few interesting ideas:
-
-* Add tools
-* Modify the logic of your agent
-* Add endpoints
-* Add webhooks
-
-This is a separate step from adding personality and backstory -- those are done elsewhere.
-
-### Connecting to Telegram
-
-You can connect your chatbot to Telegram by providing a bot
-token. [This guide](https://github.com/steamship-packages/langchain-production-starter/blob/f51a3ecc8a15ced84dca5845fd1a18bc3f015418/docs/register-telegram-bot.md)
-will show you how. will show you how.
+The AI companions are hosted on [Steamship](https://www.steamship.com/). You can personalize their personality 
+by adding or changing your companions in the `companions` folder.

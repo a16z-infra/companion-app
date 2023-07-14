@@ -1,26 +1,14 @@
 import json
-import sys
 from pathlib import Path
 
-from steamship.cli.cli import deploy
-
-sys.path.append(str((Path(__file__) / ".." / "src").resolve()))
 import click
 from steamship import Steamship
-from steamship.cli.create_instance import load_manifest
-
-from src.api import FileType
 
 
 @click.command()
 @click.pass_context
 def init_companions(ctx):
     companions_dir = (Path(__file__) / ".." / ".." / "companions").resolve()
-
-    if click.confirm(
-        "Do you want to deploy a new version of your companion?", default=True
-    ):
-        ctx.invoke(deploy)
 
     new_companions = {}
     for companion in companions_dir.iterdir():
@@ -32,10 +20,8 @@ def init_companions(ctx):
             # Create instances for your companion
             print(f"Creating an instance for {companion.stem}")
             client = Steamship(workspace=companion.stem.lower())
-            manifest = load_manifest()
             instance = client.use(
-                manifest.handle,
-                version=manifest.version,
+                "ai-companion",
                 config={
                     "name": companion.stem,
                     "preamble": preamble,
@@ -46,7 +32,7 @@ def init_companions(ctx):
             instance.invoke(
                 "index_content",
                 content=backstory,
-                file_type=FileType.TEXT,
+                file_type="TEXT",
                 metadata={"title": "backstory"},
             )
 
