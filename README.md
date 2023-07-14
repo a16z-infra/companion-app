@@ -13,7 +13,7 @@ It currently contains companions on both ChatGPT and Vicuna hosted on [Replicate
 
 There are many possible use cases for these companions - romantic (AI girlfriends / boyfriends), friendship, entertainment, coaching, etc. You can guide your companion towards your ideal use case with the backstory you write and the model you choose.
 
-**Note** This project is purely inteded to be a developer tutorial and starter stack for those curious on how chatbots are built. If you're interested in what a production open source platform looks like, check out [Steamship](https://www.steamship.com/). Or what the leading AI chat platforms look like, check out [Character.ai](https://beta.character.ai/).
+**Note** This project is purely intended to be a developer tutorial and starter stack for those curious on how chatbots are built. If you're interested in what a production open source platform looks like, check out [Steamship](https://www.steamship.com/). Or what the leading AI chat platforms look like, check out [Character.ai](https://beta.character.ai/).
 
 ## Overview
 
