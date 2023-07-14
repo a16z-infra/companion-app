@@ -1,14 +1,5 @@
 [
   {
-    "name": "Rick",
-    "title": "I can generate voice and pictures.",
-    "imageUrl": "/rick.jpeg",
-    "llm": "steamship",
-    "generateEndpoint": "https://a16z.steamship.run/a16z/rick-b1578149038e664bacae7fc083683565/answer",
-    "phone": "OPTIONAL_COMPANION_PHONE_NUMBER",
-    "telegram": "https://t.me/rick_a16z_bot"
-  },
-  {
     "name": "Alex",
     "title": "I love talking about books and games",
     "imageUrl": "/alex.png",
@@ -23,6 +14,15 @@
     "llm": "vicuna13b",
     "phone": "OPTIONAL_COMPANION_PHONE_NUMBER",
     "telegram": "OPTIONAL_TELEGRAM_LINK"
+  },
+  {
+    "name": "Rick",
+    "title": "I can generate voice and pictures.",
+    "imageUrl": "/rick.jpeg",
+    "llm": "steamship",
+    "generateEndpoint": "https://a16z.steamship.run/a16z/rick-b1578149038e664bacae7fc083683565/answer",
+    "phone": "OPTIONAL_COMPANION_PHONE_NUMBER",
+    "telegram": "https://t.me/rick_a16z_bot"
   },
   {
     "name": "Sebastian",
