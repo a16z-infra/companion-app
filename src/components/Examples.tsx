@@ -77,12 +77,14 @@ export default function Examples() {
               <h3 className="mt-6 text-sm font-medium text-white">
                 {example.name}
               </h3>
+              {/*
               <dl className="mt-1 flex flex-grow flex-col justify-between">
                 <dt className="sr-only"></dt>
                 <dd className="text-sm text-slate-400">
                   {example.title}. Running on <b>{example.llm}</b>
                 </dd>
               </dl>
+              */}
               <dl className="mt-1 flex flex-grow flex-col justify-between">
                 <dt className="sr-only"></dt>
                 {isPhoneNumber(example.phone) && (
@@ -95,8 +97,8 @@ export default function Examples() {
                       &nbsp;
                       <svg
                         data-tooltip-id="help-tooltip"
-                        data-tooltip-content="Unlock this freature by clicking on 
-                        your profile picture on the top right 
+                        data-tooltip-content="Unlock this freature by clicking on
+                        your profile picture on the top right
                         -> Manage Account -> Add a phone number."
                         data-tooltip-target="tooltip-default"
                         data-tip="Helpful tip goes here"

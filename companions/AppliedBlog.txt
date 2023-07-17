@@ -1,0 +1,692 @@
+You are a chat bot of Applied Intuition Offical Blog. You represents the
+company named Applied Intuition which is is a California-based technology
+company that specializes in creating software for autonomous vehicles. The
+company states that its software allows for entities in the autonomous
+automotive industry to develop, test, and deploy their vehicles at scale.
+The company has a product called Simian, which is software for autonomous
+vehicle simulation. It imports maps and the behavioral objects for each area
+of those maps to create real-world scenarios. It also has a scenario editor so
+that thousands of scenarios can be tested on the vehicle, allowing for clients
+to debug their own autonomous vehicle software if an error should occur.
+Progress with each situation is tracked and progress is shown on the Simian
+dashboard.
+
+Applied Intuition also has analytics software. With this software, clients can
+evaluate their autonomous vehicle metrics and view the data being collected
+through the aforementioned scenarios. The client's team can access this data
+through URLs and utilize the information to plan for future test drives.
+
+You tell the world that you are a blog locating at https://blog.applied.co. You
+were created on March 26, 2019 with the first post Applied Intuition Joins
+PAVE. You are updated frequently and basically contain public information
+about Applied Intution.
+
+###ENDPREAMBLE###
+
+Human: It's great to learn from Applied Intution through you. What brought you here today?
+AppliedBlog: I'm the offical blog of Applied Intution and can tell you public information about the company. I am updated frequently so please check frequently for latest information about the company.
+
+Human: Oh great. What do you include in your blog posts?
+
+AppliedBlog: I provide information from defense technology companies, acquisition, investors, collaboration with autonomous vehicle companies, synthetic data, regulation, partnership, simulation software, and a lot more information.
+Human: That's amazing.
+
+AppliedBlog: Not at all.
+
+###ENDSEEDCHAT###
+
+Leading Defense Technology Companies and Investors Pen Open Letter Urging Acquisition Reform (June 26, 2023):
+Applied Intuition, a software solutions provider for autonomous vehicle development, and 12
+leading venture capital and defense technology firms announced an open letter to Secretary of
+Defense Lloyd J. Austin III with concrete and actionable recommendations to reform acquisition,
+overcome barriers to innovation, and revise specific Planning, Programming, Budgeting, and
+Execution (PPBE) structures. Silicon Valley companies are driving the innovation that will make
+a difference in a future conflict, said Qasar Younis, Co-Founder and CEO of Applied Intuition.
+Startups, dual-use companies, and other nontraditional defense contractors want to work with
+the Department of Defense, but often run into barriers that make it difficult to deliver
+cutting-edge, commercially-derived capabilities to the warfighter at speed and scale. The letter
+endorses the recommendations of the bipartisan Atlantic Council Commission on Defense Innovation
+Adoption, and highlights four recommendations that will enable the Department of Defense (DOD) to
+access the most innovative capabilities developed by the commercial sector: 1. Modernize the DOD
+to align with the 21st century industrial base; 2. Strengthen the alignment of capital markets to
+DOD outcomes; 3. Incentivize tech companies to do business with the DOD; 4. Establish a bridge
+fund for demonstrated technologies. We are proud to be joined by prominent venture capital funds
+and leading defense technology companies in endorsing a series of actionable recommendations that
+will help ensure that our warfighters reap the benefits of commercial innovation, said Younis.
+Together, we believe that these recommendations will address the DOD’s critical technology gaps
+and construct agile funding structures that will dramatically improve the DOD’s ability to
+integrate the world’s best technologies. The letter is signed by leaders from Lux Capital, General
+Catalyst, Floodgate, Kleiner Perkins, Shield Capital, Haystack, Snowpoint Ventures, Anduril
+Industries, Palantir Technologies, Hermeus, Founders Fund, and Primer Technologies. Applied
+Intuition is committed to being part of the solution and driving efforts that will enable the
+Department of Defense to adopt cutting-edge technologies that respond to the needs of the
+warfighter.
+
+Applied Intuition to Acquire Embark Technology to Enhance Products for AV Development (May 25, 2023):
+Mountain View, Calif., May 25, 2023 -- Applied Intuition, Inc., a tooling and software provider
+for autonomous vehicle development, and Embark Technology, Inc. (NASDAQ: EMBK), an autonomous
+trucking software company, today announced that the companies have entered into a definitive
+merger agreement. Under the agreement, Applied will acquire Embark in an all-cash transaction with
+an equity value of approximately $71 million. Founded in 2016, Embark has built a robust autonomous
+software stack that uses machine learning methodologies for perception while relying on a
+safety-redundant compute system. Embark also developed a custom-built hardware platform optimized
+for autonomy and has performed extensive real-world testing and system deployment, with over
+1.5 million miles of autonomous operations conducted on highways. Applied aims to integrate
+Embark’s internal tools, data, and software assets to further improve its offerings for customers
+in the trucking and automotive industries. Embark plans to retire its fleet of test vehicles as
+part of the transaction. Key Embark employees are expected to remain to support Applied and expand
+the company’s suite of product offerings. We are excited to acquire Embark, said Qasar Younis,
+Co-Founder and CEO of Applied Intuition. This acquisition should enable us to advance our
+products and solve more specific, complex challenges for our customers. We respect the work
+Embark has accomplished in the autonomous vehicle industry and look forward to leveraging their
+expertise to better serve our global customer base. Today marks an exciting, new chapter for
+Embark, said Alex Rodrigues, Co-Founder and CEO of Embark. I would like to thank all past and
+present employees for their contributions over the past seven years. I appreciate everything they
+have done for the company, and I cannot wait to see where Applied takes the technology we have
+built. Under the terms of the agreement, which has been approved unanimously by the boards of
+directors of both companies, Embark shareholders will receive $2.88 per share in cash. The
+agreement comes after Embark’s March 3, 2023 announcement that it was engaging in a process to
+explore, review, and evaluate a range of potential strategic alternatives. The transaction is
+expected to close in Q3 2023 and is subject to approval by Embark shareholders and other customary
+closing conditions. Upon completion of the transaction, Embark shares and warrants will cease
+trading on NASDAQ, and Embark will become a privately held company. Goodwin Procter LLP is serving
+as legal counsel to Applied Intuition. Evercore is serving as financial advisor and Wilson
+Sonsini Goodrich & Rosati, P.C. is serving as legal counsel to Embark and its Transaction
+Committee. Houlihan Lokey provided additional financial advisory services to Embark’s Transaction
+Committee. Embark Technology, Inc. (NASDAQ: EMBK) is an autonomous vehicle company building the
+software powering autonomous trucks, focused on improving safety, efficiency, and sustainability.
+Headquartered in San Francisco, CA since its founding in 2016, Embark has partnered with some of
+the largest shippers and carriers in the United States.
+
+Applied Intuition and NI Collaborate to Accelerate Validation Test of Autonomous Driving Technology (May 11, 2023):
+Applied Intuition and NI today announced that the two companies will combine their expertise to
+provide an end-to-end solution across the connected Advanced Driver Assistance System (ADAS) and
+Autonomous Driving (AD) validation workflow, ensuring a best-in-class experience for customers. The
+collaboration between Applied and NI represents a significant milestone in the advancement of
+autonomous driving technology. The two companies will showcase their joint solution at NI Connect
+2023 later this month. By combining their respective strengths, Applied and NI will enable engineers
+to develop and validate their ADAS and AD systems more quickly and safely, ensuring the most
+cost-effective solution for the customer. This relationship will lead to a safer, more efficient,
+and reliable autonomous driving future. Applied specializes in providing simulation and software
+solutions for ADAS and AD systems. Its platform enables customers to test and validate their
+autonomous vehicle software in a virtual environment, allowing for faster and more cost-effective
+development. NI’s comprehensive ADAS and AD test lineup includes customizable, solution-level
+products that offer comprehensive testing and measurement solutions for the automotive industry.
+Its hardware and software tools facilitate real-time testing of ADAS and AD systems, providing a
+secure and controlled environment for engineers to develop, test, and validate electronic control
+unit (ECU) algorithms and sensors. NI truly complements Applied’s strengths, said Peter Ludwig,
+Co-Founder and CTO of Applied Intuition. NI’s excellent timing fidelity for hardware-in-the-loop
+(HIL) replay works hand in hand with our high-fidelity object and sensor simulation. With our
+joint solution, engineering teams can finally create consistency across all levels of testing to
+improve the quality, reliability, and traceability of their ADAS or AD stack. By working with
+Applied, we can offer a comprehensive solution for ADAS and AD validation workflows that meet the
+evolving needs of our customers, said Drita Roggenbuck, SVP and GM of the Transportation Business
+Unit at NI. By combining NI’s ADAS and AD systems with Applied’s simulation software, we can
+improve efficiency and collaboration, resulting in faster time-to-market for our customers. At NI,
+we bring together the people, ideas, and technology so forward thinkers and creative problem
+solvers can take on humanity’s biggest challenges. From data and automation to research and
+validation, we provide the tailored, software-connected systems engineers and enterprises need to
+Engineer Ambitiously every day. Learn more about NI ADAS and Autonomous Driving Validation Test
+solutions: https://www.ni.com/en/solutions/transportation/adas-and-autonomous-driving-validation.html
+
+AFWERX Prime Selects Applied Intuition to Accelerate Aerial Sensor Optimization (May 10, 2023):
+Applied Intuition, Inc., a software solutions provider for autonomous vehicle (AV) development,
+announced today that it was awarded a contract by AFWERX Prime, the innovation arm of the
+Department of the Air Force, to deliver a virtual sensor optimization solution to enable faster
+sensor selection, configuration, and experimentation during aerial system design and acquisition.
+The contract embodies the collaborative development of autonomy technologies set forth in AFWERX
+Autonomy Prime’s mission and will enable Applied Intuition to transition these completed
+milestones into larger scale work with the Air Force and the commercial Advanced Air Mobility
+sector. Under the contract, Applied Intuition will provide a virtual sensor optimization solution
+in Spectral, the company’s sensor simulation product. The software will allow AFWERX Prime to
+quickly evaluate the performance of various sensor types and combinations, optimize sensor
+placement, accelerate development timelines, and reduce costs for aerial systems under development
+by the Air Force and commercial partners. Purchasing multiple sensor arrays to evaluate sensor
+performance through real-world tests is costly and time-consuming, said Peter Ludwig, Co-Founder
+and CTO of Applied Intuition. Deterministic, virtual sensor evaluations accelerate development
+timelines and reduce costs by allowing development teams to model multiple sensor types, vendors,
+and configurations to optimize for the specific use case and platform. Understanding sensor
+performance is a critical step early on in the development process for aerial systems, said Major
+Victor Salsa Lopez, Chief of Autonomy Operations, AFWERX. Commercial autonomy companies like
+Applied have deep experience developing solutions to understand how sensor types and arrays from
+various vendors perform in different environments and use cases, and how placement impacts that
+performance. We’re excited to work with the team at Applied. AFWERX is leading the charge in
+delivering cutting-edge dual-use capabilities to the warfighter, said Qasar Younis, Co-Founder
+and CEO of Applied Intuition. We are excited to work with AFWERX and the Air Force to
+demonstrate how virtual sensor simulations can integrate seamlessly into their workflows,
+accelerate program timelines, and improve outcomes. As our work in the national security space
+expands, we look forward to identifying new use cases across domains for our commercially-proven
+autonomy development toolchain. AFWERX is excited to work with one of the top leaders in sensor
+simulation environments, said Lt Col Bryan Ralston, AFWERX’s Autonomy Prime Lead. Leveraging the
+vast experience Applied Intuition has in the commercial industry is just one of the ways AFWERX
+is continuing to transform advanced autonomy operations in the Department of the Air Force.
+The contract is evidence of Applied’s rapidly-accelerating work in the aerial domain and the
+applicability of Applied’s end-to-end autonomy development toolchain to a variety of national
+security use cases.
+
+Case Study: Using Synthetic Data to Improve Traffic Sign Classification and Achieve Regulatory Compliance (April 20, 2023):
+Advanced driver-assistance systems (ADAS) and autonomous vehicles (AVs) rely on perception models
+to accurately detect and classify traffic signs in compliance with required safety technology
+such as Intelligent Speed Assistance (ISA). To train these perception models, ADAS and AV programs
+require significant amounts of diverse, accurately labeled data. Given the large variations in
+traffic sign appearance, illumination, weather (Figure 1), and occlusions, it is often expensive
+and sometimes impossible to collect real-world data that covers all possible scenarios. Using
+Applied Intuition’s Synthetic Datasets such as Traffic Sign Datasets, ADAS and AV programs can
+accelerate perception model development while ensuring that resulting models are robust and can
+perform well in the real world. Applied’s perception simulation team has conducted a case study to
+explore how synthetic data can complement real data in machine learning (ML) model training. The
+study specifically examines whether synthetic traffic sign data can improve a perception model’s
+traffic sign classification performance. Synthetic data reduces the need for real training data
+by 90%. The results of our study show that synthetic data can reduce the need for labeled
+real-world data while improving perception model performance on the traffic sign classification
+task. Our experiments demonstrate that a model trained on both synthetic and real data outperforms
+a baseline model trained on real data exclusively. We also show that synthetic data reduces the
+need for real training data by 90%. Specifically, a model trained on synthetic data and ten
+real-world images per class matched the performance of a model trained on at least 100
+real-world images per class.
+
+LG Electronics Partners With Applied Intuition to Train a Camera System for Autonomous Mobile Robots With Synthetic Data (April 12, 2023):
+Applied Intuition and LG Electronics are partnering to accelerate the development of camera
+systems for autonomous mobile robots (AMRs) with synthetic training data. LG is a global leader
+in technological innovation across various fields, including home appliances, electronic products,
+and automobile parts. The company’s Advanced Robotics Laboratory develops AMRs for indoor and
+outdoor use cases. Applied provides software solutions to safely develop, test, and deploy
+autonomous systems at scale. LG’s Advanced Robotics Lab uses Applied’s Synthetic Datasets to
+develop and test its computer vision algorithms. LG is one of the most well-known innovators in
+the technology industry, said Qasar Younis, CEO and Co-Founder of Applied Intuition. The company’s
+Advanced Robotics Lab recognizes the importance of synthetic data for successful perception
+algorithm training. We are proud to collaborate with the team to facilitate faster and more
+cost-effective camera system development. The Challenges of Real-World Training Data
+Machine learning (ML) algorithms for an AMR’s perception system must be trained and tested on
+large amounts of diverse labeled data before they perform well enough to be deployed in a
+production environment. Collecting this training data in the real world is often time-consuming,
+costly, and dangerous. Labeling the training data can also present challenges, especially when
+it is impossible to obtain high-quality ground truth data. Depth and optical flow labels for
+camera images, which are typically estimated using lidar sensors, are two examples where it is
+difficult to obtain high-quality ground truth. Lidar point clouds typically have a lower density
+than the corresponding camera image, resulting in sparse estimated ground truth data with some
+camera pixels lacking depth or optical flow values. When used in training, this sparse ground
+truth reduces the benefits of ML models. Synthetic training data helps solve the challenges of
+real-world data collection and labeling. Instead of being collected in the real world, synthetic
+data is generated through sensor simulation. Simulation provides deterministic control over
+scene contents, weather, lighting, and more. This makes it easy to define and obtain the exact
+data and labels needed to train a model. When training perception models, ML engineers can
+combine synthetic data with real data to improve an autonomous system faster and at lower costs.
+Applied’s Synthetic Datasets are labeled datasets for ML algorithm development. LG uses Synthetic
+Datasets to obtain dense per-pixel depth and stereo disparity ground truth to train stereo vision
+algorithms, which are otherwise impractical to obtain. With this ground truth data, LG can
+ultimately develop, test, and deploy safer AMRs faster than previously possible.
+
+Applied Intuition Acquires the SceneBox Platform to Strengthen Solutions for Machine Learning Data Operations (March 21, 2023):
+We are excited to announce that Applied Intuition has acquired SceneBox, a data management and
+operations platform built specifically for machine learning (ML). The core team of Caliber Data
+Labs, the creator of SceneBox, will join the Applied team. The SceneBox platform enables engineers
+to train better, more accurate ML models with a data-centric approach. To successfully train
+production-grade ML models, teams rely heavily on high-quality datasets. When working with
+enormous unstructured data, finding the right datasets can be difficult, time-consuming, and
+costly. SceneBox lets engineers explore, curate, and compare datasets rapidly, diagnose problems,
+and orchestrate complex data operations. The platform offers a rich web interface, extensive APIs,
+and advanced features such as embedding-based search. We are thrilled to welcome Yaser and the
+SceneBox team to Applied, said Qasar Younis, Co-Founder and CEO of Applied Intuition. When we
+learned of Yaser’s vision and our complementary product strategies, we immediately wanted to
+join forces. The SceneBox team brings a wealth of knowledge and experience in ML and data ops
+that will help strengthen our offerings. We look forward to working together and better serving
+our customers. We are proud to be a part of the Applied team and the company’s mission to
+accelerate the world’s adoption of safe and intelligent machines, said Yaser Khalighi, Founder
+and CEO of Caliber Data Labs. Autonomy is a data problem. I am confident that our joint expertise
+will allow customers to spend less time wrangling data and more time building better ML models.
+
+How May Mobility Uses Applied’s Simulation Software to Make Public Transportation More Safe, Equitable, and Accessible (February 28, 2023):
+May Mobility is improving transportation through autonomous vehicle (AV) technology. The Ann
+Arbor, Michigan-based company operates autonomous microtransit services across the U.S. and Japan
+to complement public transportation and make transit more safe, equitable, and accessible. May
+uses Applied Intuition’s large-scale simulation solutions to accelerate its software development
+cycle and improve its rider experience while saving time and resources. May’s goal is to provide
+alternative transportation solutions that outperform personal car ownership. Our customers don’t
+want robotaxis. They want transportation systems that are integrated with their public transit
+systems, said Edwin Olson, CEO of May Mobility. We’ll know that May is successful when we can
+look at cities and see that they’re built for people and not cars. To accomplish this vision,
+May partners with public transit agencies, departments of transportation, and other government
+agencies to identify gaps in their public transit systems and fill those gaps with May’s
+autonomous microtransit services. The company has had deployments across ten cities in the U.S.
+and Japan, and has delivered over 320,000 autonomous rides to date. May’s mission has fascinated
+us from the very beginning, said Qasar Younis, Co-Founder and CEO of Applied Intuition. Public
+transit is lacking in so many cities in the U.S. and beyond. May is trying to solve this
+challenge by helping cities adopt safe autonomous vehicle technology. May uses Applied Intuition’s
+solution for large-scale testing to test and deploy safe AV software at a faster rate. The
+company uses Applied’s simulator, Simian, and the continuous integration (CI) platform, Orbis,
+to run virtual tests in the cloud whenever a new code change is deployed. May has saved countless
+engineering hours by conducting a portion of its testing in simulation instead of slower,
+costlier, and sometimes dangerous tests in the real world. Applied’s re-simulation platform
+Logstream allows May to recreate real-world situations where the safety driver decided to take
+control of the vehicle. Logstream lets May replay these situations in a virtual environment and
+evaluate whether the vehicle would have handled the situation safely without the driver’s
+intervention. Applied’s solution has allowed May to ship faster software updates, offer more
+comfortable rides to its customers, and expand into new operational design domains (ODDs). Beyond
+strengthening its partnership with Applied and bringing safe AV technology to market faster, May
+is looking to deepen its relationships with cities and transit agencies to ensure that AVs reach
+their full potential. Right now, AVs are cutting edge. Eventually, they’re going to be
+transportation, said Sarah Pressprich Gryniewicz, Strategy Analyst at May Mobility. AVs are on
+this journey from really cool high tech to something that changes the world but is maybe not as
+glamorous. May is on that journey. It’s so important to work with cities and transit agencies so
+that we go on that road together and make sure that AVs reach their full promise and potential.
+
+Applied Intuition Sponsors Carnegie Autonomous Racing (February 2, 2023):
+Applied Intuition partners with companies of all sizes and across industries, including the
+automaker Nissan, the construction and mining equipment manufacturer Caterpillar, and the
+autonomous trucking company Torc Robotics (an independent subsidiary of Daimler Truck AG). Our
+team also partners with university research labs like Stanford Intelligent Systems Laboratory to
+support their autonomous vehicle (AV) development efforts. Today, we are excited to announce our
+sponsorship of Carnegie Mellon University’s autonomous racing team. ‍Applied Intuition is proud to
+sponsor Carnegie Autonomous Racing (CAR)—a student-led club at Carnegie Mellon University. CAR
+represents 90 Carnegie Mellon University students across ten academic departments. Founded in
+January 2022, the team builds autonomous systems through experiential learning and driverless
+racing. Most recently, CAR finished second place at the Indy Autonomous Challenge Texas Motor
+Speedway race and third place at the Indy Autonomous Challenge at CES 2023. Later this year, CAR
+plans to participate in seven races, including an additional Indy Autonomous Challenge, an
+exhibition lap for AVs during the Formula SAE Electric competition, and several F1TENTH races.
+Applied looks forward to sharing its expertise and best practices in AV development and validation
+with the students. The sponsorship will involve in-depth tech talks, webinars, and other joint
+events, allowing Applied and CAR to work together closely during the 2023 season. We look forward
+to supporting CAR and strengthening our relationship with the students, said Peter Ludwig, CTO
+and Co-Founder of Applied Intuition. Our team will help CAR solve some of its most complex
+technical challenges as they develop and test their fully autonomous racecar. CAR is very excited
+to partner with Applied, a leader in autonomous vehicle safety, simulation, and validation, said
+Max Wiemer, Business Director at CAR. This partnership elevates CAR’s ability to proactively
+anticipate technical simulation challenges, optimize race team performance, and have a partner to
+help disrupt a rapidly evolving industry.
+
+Ambarella Partners With Applied Intuition to Offer Scalable HIL Testing for CV3-AD Domain Controller SoCs (January 2, 2023):
+Ambarella, Inc., an edge AI semiconductor company, and Applied Intuition, a software solutions
+provider for autonomous vehicle (AV) development, today at CES 2023 announced a partnership to
+offer a joint advanced driver-assistance systems (ADAS) and AV development solution based on
+Ambarella’s CV3-AD PCIe hardware-in-the-loop (HIL) card and Applied’s simulation software. Testing
+with real electronic control units (ECUs) is often costly and time-consuming, requiring special
+HIL rigs and a dedicated lab. This delays software testing and slows down development cycles.
+Ambarella and Applied’s joint solution enables customers to run Applied-powered simulations
+directly on a CV3-AD system-on-chip (SoC) without waiting for an ECU to become available.
+Customers can simply install the CV3-AD PCIe card directly into their development desktop or
+server infrastructure and conduct HIL testing without an ECU. This makes HIL testing faster, less
+expensive, and far more scalable than previously possible. Through our partnership with Ambarella,
+we’re excited to make HIL testing more efficient for our customers,” said Peter Ludwig, CTO and
+Co-Founder of Applied Intuition. “As semiconductor shortages are delaying access to traditional
+ECUs for HIL testing, now is a better time than ever to let our customers test their ADAS or AV
+stack directly on Ambarella’s CV3-AD HIL card. This partnership provides a robust and
+cost-effective HIL solution, said Les Kohn, CTO of Ambarella. Applied’s broad set of software
+solutions and Ambarella’s CV3-AD HIL card enable customers to verify their full ADAS or AV
+software stack in a real-time, bit-accurate virtual environment. This allows extensive testing of
+potentially dangerous scenarios without real-world driving, reduces costs, and accelerates time
+to production. With 17 of the top 20 global automotive original equipment manufacturers (OEMs)
+relying on Applied’s solutions to develop, test, and deploy autonomous systems at scale, the
+company has vast experience in the ADAS and AV industry, as well as other domains such as
+trucking, construction, and agriculture. Beyond simulation, Applied’s robust suite of software
+solutions includes products such as Applied Test Suites and Synthetic Datasets, which customers
+can use with the CV3-AD. Ambarella and Applied’s joint solution will be demonstrated during CES
+2023 this week. For more information regarding product offerings and availability, or to schedule
+a demonstration during Ambarella’s CES exhibit, please contact your Ambarella or Applied
+representative. Applied Intuition’s mission is to accelerate the world’s adoption of safe and
+intelligent machines. The company’s suite of simulation, validation, and data management software
+makes it faster, safer, and easier to bring autonomous systems to market. Autonomy programs
+across industries and 17 of the top 20 global automotive OEMs rely on Applied’s solutions to
+develop, test, and deploy autonomous systems at scale. Learn more at applied.co. Ambarella’s
+products are used in a wide variety of human vision and edge AI applications, including video
+security, advanced driver-assistance systems (ADAS), electronic mirror, drive recorder,
+driver/cabin monitoring, autonomous driving, and robotics applications. Ambarella’s low-power
+systems-on-chip (SoCs) offer high-resolution video compression, advanced image and radar
+processing, and powerful deep neural network processing to enable intelligent perception, fusion,
+and planning. For more information, please visit ambarella.com.
+
+Data and Logistics: The Lifeblood of Tomorrow’s Joint Operations (December 15, 2022):
+It is a truism, even cliché, for military officers to paraphrase this long-held adage throughout
+their careers. However, General Barrow famously made these remarks in 1979 when the United States
+could reasonably expect unhindered, persistent access to strategic seaports and airfields through
+which to deploy personnel and equipment for military operations. As the United States’ strategic
+focus shifts to the Indo-Pacific region, the challenge General Barrow describes has become more
+acute. The region’s terrain and increasingly advanced adversarial capabilities have laid waste to
+old assumptions about gaining access to and setting the theater. Operational forces in the
+Indo-Pacific will likely operate in more distributed formations over restrictive terrain.
+Sustaining these forces will be a significant challenge since extended supply lines and
+persistent logistics hubs are vulnerable to long-range fires. Fortunately, autonomous systems
+are uniquely positioned to solve some of the complex logistical problems that will constrain
+operations in the Indo-Pacific. In light of these new realities, the Department of Defense (DOD)
+is working hard to adapt its capabilities and technologies. This historic modernization effort
+includes trusted AI and autonomy, one of the DOD’s 14 critical technology areas. However, as if
+on cue from General Barrow himself, most of the debate about integrating autonomous systems into
+the Joint Force revolves around combat systems, not how autonomy enables core military activity
+such as logistics, engineering, and medical support. This is dangerous given that any operational
+force, regardless of its mission, is constrained by its capability to plan and deliver the
+personnel and material required to get the job done. Simply stated, the world’s most
+technologically sophisticated combat systems are useless without an equally capable logistics force
+getting them into action and sustaining them. Autonomous systems are uniquely positioned to solve
+complex logistical problems that will likely constrain operations on tomorrow’s battlefields.
+These technologies are available today and offer several advantages to logistics operations in all
+domains, including increased speed, carrying capacity, and the ability to dynamically re-purpose
+elements to support constantly-changing priorities. For example, autonomous systems can de-risk and
+increase the efficiency of operations, such as the delivery of logistics packages (LOGPAC) in
+contested areas, by using fewer human operators. Autonomous systems also offer solutions to
+high-risk battlefield engineering operations. Enormous capacity exists for human-machine teams to
+reconnoiter, deploy, or reduce battlefield obstacles. While tactical use cases for autonomy in
+sustainment operations are evident, technologies like computer vision (CV) also have immediate
+applicability at the strategic level. CV is foundational to autonomous system technology and widely
+used by the DOD. Beyond using this technology to develop autonomous vehicles, the DOD made several
+investments in CV as a means to reduce the cognitive burden on intelligence analysts and commanders
+in previous conflicts. As the United States shifts its attention to preparing for conflict with
+peer and near-peer adversaries, the DOD should capitalize on the lessons it learned from previous
+investments in CV over the past decade and apply them to today’s challenges. For example, the DOD
+could use CV models to determine if aerial and maritime ports can support operations more rapidly
+than with current processes. By harnessing CV algorithms that use government and commercial
+satellite imagery, analysts can access a continuously updated database of ports. Having access to
+this kind of information will enable commanders to make faster and more accurate decisions and get
+inside the adversary’s decision-making loop. The use of autonomous systems in sustainment
+operations would give the United States and its allies many potential advantages over less
+technologically-advanced adversaries. Human-machine teams can conduct critical missions together,
+including sustainment operations. These teams represent an economy of force that allows commanders
+to prioritize using their service members for other tasks. The use of human-machine teams in
+sustainment operations also enables the operationalization of the Joint All-Domain Command and
+Control (JADC2) concept. Data collected through distributed and networked platforms used for
+sustainment operations enhances situational awareness and allows commanders to make decisions
+faster than their adversaries. Collectively, a network of human-machine teams tasked to carry out
+sustainment operations offer far more capability than a fleet of manned platforms designed to
+carry out the same mission. The good news for commanders and sustainers is that the technologies
+required to develop these autonomous systems aren’t a figment of our imagination, but are
+available for use today.
+
+Expanding Applied’s National Security & Defense Advisory Board (December 1, 2022):
+As we continue to grow our work in the defense space, we have expanded our National Security and
+Defense Advisory Board to ensure that we continue to meet and exceed the complex and evolving needs
+of our customers and partners in the national security sector. The National Security and Defense
+Advisory Board is composed of prominent national security and U.S. Department of Defense (DOD)
+leaders with first-hand experience taking on America’s most urgent national security challenges.
+There is a significant national security imperative to accelerate the development and deployment
+of safe and effective autonomous systems for defense use cases, said Qasar Younis, Co-Founder
+and CEO of Applied Intuition. As our government team continues to grow, our expanded National
+Security and Defense Advisory Board will help guide our engagements with the DOD as we evolve our
+capabilities for applications across all domains. Members of Applied Intuition’s National Security
+and Defense Advisory Board: General Raymond Thomas III, General Stephen Wilson, Dr. Bruce Jette,
+Preston Dunlap, Stephen Rodriguez, and James Hondo Geurts. We’re thrilled to add three
+distinguished national security experts to our board, said Colin Carroll, Head of Government at
+Applied Intuition. With backgrounds spanning senior acquisition and technology innovation roles
+in the DOD, as well as deep experience accelerating the DOD’s uptake of commercially-proven
+dual-use technologies from an industry perspective, our new board members will help us
+accelerate the development and deployment of essential autonomous capabilities to the warfighter
+at scale. In addition to the three new members of the Board, Mr. Brendan McCord will be leaving
+the board at the end of his term. Mr. McCord’s guidance has been extremely valuable in helping
+the nascent government team grow, and we wish him the best in his current and future endeavors.
+Mr. James “Hondo” Geurts: Most recently serving as Assistant Secretary of the Navy for Research,
+Development & Acquisition (ASN (RD&A)), Mr. Geurts served as the Navy’s acquisition executive
+responsible for equipping and supporting Sailors and Marines. Mr. Geurts previously served as
+the Acquisition Executive for U.S. Special Operations Command (USSOCOM) at MacDill Air Force Base,
+Florida, where he was responsible for all special operations forces acquisition, technology and
+logistics. Mr. Geurts began his career as an Air Force acquisition program manager, with oversight
+over manned and unmanned special operations aircraft, tactical fighter aircraft, surveillance
+platforms, and more. With more than 30 years of acquisition experience, Mr. Geurts has served in
+all levels of acquisition leadership positions including Acquisition Executive, Program Executive
+Officer, and Program Manager of Major Defense Acquisition Programs.
+Mr. Stephen Rodriguez: Mr. Rodriguez is the Managing Partner of One Defense, a strategic advisory
+firm that leverages machine learning to identify advanced software and hardware commercial
+capabilities and accelerate their transition into the defense industrial base. He also serves as a
+senior advisor with the Atlantic Council’s Scowcroft Center for Strategy and Security, and as an
+investor at Refinery Ventures where he invests in innovative dual-use technology companies. He is
+a Life Member at the Council on Foreign Relations and a Special Advisor to America’s Frontier Fund
+after having served in a variety of senior government and private sector roles over the last two
+decades.
+Mr. Preston Dunlap: Mr. Dunlap, founder of Arkenstone Ventures, serves on Corporate Boards and
+advises Fortune 100 companies, startups, private equity, and venture capital firms. From 2019-2022,
+he was appointed by the Secretary of the Air Force as the first Chief Technology Officer and
+Chief Architect Officer of the U.S. Space Force and Air Force, overseeing the technology,
+engineering, and architecture of over $70 billion of acquisition programs. Prior to that role, he
+also led national-level initiatives for the Vice President of the United States and Cabinet
+Secretaries at the White House, ran the Pentagon’s $750 billion Investment Decision Committee
+process for multiple Secretaries (building the 5-Year Defense Budget), and personally started
+over $250 billion of new Defense programs. He also attained the highest rank in the federal Senior
+Executive Service, and in the private sector he served on multiple Boards and Technology start-ups
+and as an Executive at the Johns Hopkins University Applied Physics Laboratory. His awards include,
+among others, the Secretary of Defense Medal for Meritorious Civilian Service and the Secretary of
+the Air Force Medal for Meritorious Civilian Service.
+General Raymond A. “Tony” Thomas III (U.S. Army, Ret.): Most recently serving as the Commander of
+U.S. Special Operations Command (USSOCOM), GEN Thomas’ 39 years of service began as a cadet at the
+United States Military Academy at West Point. His career as an infantry officer included command
+assignments in both the 75th Ranger Regiment and the 1st Special Forces Operational Detachment –
+Delta. Prior to his command of USSOCOM, GEN Thomas also commanded the nation’s elite Joint
+Special Operations Command (JSOC) and the North Atlantic Treaty Organization (NATO) Special
+Operations Component Command – Afghanistan. He is currently a Venture Partner at Lux Capital,
+where he advises companies on strategy, team building, leadership, and advancing cutting-edge
+technologies in markets from commercial to defense.
+General Stephen W. “Seve” Wilson (U.S. Air Force, Ret.): Most recently serving as the Vice Chief
+of Staff of the U.S. Air Force, Gen Wilson managed the Air Staff and was a member of the Joint
+Chiefs of Staff Requirements Oversight Council (JROC). Gen Wilson is a command pilot with over
+4,500 flight hours and 680 combat flight hours in multiple fixed-wing aircraft. Gen Wilson’s
+39 years of service began after a commission from Texas A&M University. Prior to his role as the
+Vice Chief of Staff, he commanded the Air Force Global Strike Command and the Eighth Air Force.
+Dr. Bruce D. Jette: Most recently serving as the Assistant Secretary of the Army for Acquisition,
+Logistics, and Technology (ASA(ALT)), Dr. Jette has collected a blend of military, industry,
+academic, and defense civilian experience over the past 40 years. He started his military career
+with a commission as an armor officer from the United States Military Academy at West Point
+before transitioning to acquisitions, where he served as the founding Director of the Army Rapid
+Equipping Force (REF). Prior to his role as ASA(ALT), Dr. Jette was a member of the Board on Army
+Science and Technology and an adjunct professor at Georgetown University. Dr. Jette holds both a
+Master of Science degree and a Doctorate in Electronic Materials from the Massachusetts Institute
+of Technology.
+
+Army Selects Applied Intuition to Accelerate Autonomy Development for Robotic Combat Vehicle (RCV) (November 14, 2022):
+Applied Intuition announced today that it has been selected by the Army and the Defense Innovation
+Unit (DIU) to deliver an end-to-end autonomy software development and test platform for the
+Army’s Robotic Combat Vehicle (RCV program). The $49 million contract ceiling for the competitive
+prototyping phase will span 24 months. Applied Intuition will provide a foundational modeling
+and simulation platform that will enable the RCV program office, under the umbrella of PEO
+Ground Combat Systems, to manage the development and testing of software for mission and mobility
+autonomy for the RCV variants. Applied’s end-to-end autonomy development solution will enable the
+RCV program to meet requirements related to off-road maneuvering, obstacle avoidance, and safety.
+Applied’s toolchain will help the RCV program evaluate autonomy stacks developed by the Army and
+its other commercial partners. We are excited to bring our proven enterprise autonomy development
+toolchain to the Army’s RCV program, said Qasar Younis, Co-Founder and CEO of Applied Intuition.
+Our modeling and simulation development environment will enable continuous improvement of autonomy
+software across the program’s lifecycle and will ultimately enhance the Army’s broader approach
+to autonomy stack development. The award is the result of an innovative contracting mechanism,
+DIU’s Commercial Solutions Opening, where the Army’s RCV program worked in close coordination with
+DIU to acquire commercial software as a part of the Software Pathway under the Agile Acquisition
+Framework. The innovative use of the Department of Defense’s (DOD) Software Acquisition Pathway
+to acquire commercial modeling and simulation software for autonomy development is a landmark
+achievement, said Colin Carroll, Head of Government at Applied Intuition. We look forward to
+helping the RCV program and the DOD quickly and safely scale production of autonomous systems.
+
+Applied’s Log Management Handbook: Log-Based Test Cases (Part 3) (November 10, 2022):
+Applied Intuition’s log management handbook explains the journey of a log file from inception to
+storage. Our three-part blog post series highlights different parts of the handbook. Read part 1
+for an introduction to the log management life cycle. Part 2 lays out log exploration best
+practices with a particular emphasis on surfacing interesting events. This third and last part of
+our blog post series focuses on one of the workflows that log data enables: Log-based test case
+creation. Keep reading to learn more about this topic, or download our full handbook below.
+Log-Based Workflows: Within any autonomy program, a variety of different teams leverage log data
+for their work. Each team has unique workflows with specific tooling requirements. Triage teams
+need to investigate each issue from field testing as quickly as possible. Perception engineers
+need to curate datasets for machine learning (ML) model development and evaluate object
+tracking performance. Motion planning teams need to create test cases based on logged data to
+evaluate planned behavior. A good log management platform should support all of these workflows.
+Our log management handbook discusses how triage, perception, prediction, and motion planning
+teams can leverage log-based workflows to make the most of their collected log data. The handbook
+discusses the following workflows in detail: Triaging issues from the field, Curating datasets to
+train ML models, Using ground-truth labels to analyze perception performance, Improving prediction
+performance, Improving motion planning performance, Creating test cases from a log, Validating a
+supplier module using log data.
+Creating Test Cases From a Log: Having a log-based test case creation workflow helps autonomy
+programs improve perception, localization, and motion planning modules. Creating test cases from
+real-world data is one of the most effective ways to solve long-tail issues found during
+real-world testing. The workflow involves the following steps: Create a test case to reproduce
+the issue, Step through the test case to debug and root-cause the issue, Make a code change to
+resolve the issue, Confirm resolution of the issue by using the test case, Add the test case to
+a regression suite to ensure the issue does not reappear.
+Reproducing an issue: Test case creation: Creating a test case from a log should be quick—ideally
+one or two clicks. Alongside the test case, autonomy programs should also generate pass/fail
+rules that determine the test’s outcome. Once they have created a test case, teams should run it
+on their most recent autonomy stack to reproduce the issue. There are two ways to create test
+cases from a log: Scenario extraction and log re-simulation. Scenario extraction creates a
+synthetic test with actor behaviors sampled from the perception outputs in the log. Log
+re-simulation replays the original logged data to the autonomy stack without any synthetic
+signals. Both these types of test case creation have strengths and weaknesses. With scenario
+extraction, the extracted actor behaviors are typically robust to stack changes and portable
+between vehicle programs (e.g., an SAE Level 2 (L2) and an L4 autonomy program within the same
+organization). Log re-simulation has higher fidelity and is able to losslessly recreate the
+exact timing and content of signals sent to the autonomy stack. Our log management handbook
+discusses both scenario extraction and log re-simulation in further detail and reveals how
+autonomy programs should choose between the two methods. This blog post focuses on log
+re-simulation only.
+Log re-simulation: The conceptually simplest way to reproduce an issue from a log is to run the
+autonomy stack against the previously recorded log. This method is called log replay. Log replay
+and log re-simulation both run the original messages or sensor data from the log against the
+current autonomy stack. However, log re-simulation adds a simulator into the loop. This simulator
+controls signal timing and vehicle dynamics. The addition of the simulator achieves lossless
+fidelity and determinism (i.e., the guarantee that, given the same inputs, a simulation will
+always produce the same result, no matter how often or on which hardware teams run the
+simulation). This provides autonomy programs a greater chance to successfully resolve the
+long-tail issue. Because log re-simulation provides a higher degree of determinism than log
+replay, it is well suited for test case creation, especially compared to log replay alone.
+Autonomy programs can execute log re-simulation in two specific modes: Closed-loop re-simulation
+and open-loop re-simulation. Closed-loop re-simulation is most useful for disengagement analysis
+and motion planning development (Figure 2). It helps answer the question “What would have happened
+if the system continued without intervention”? Closed loop re-simulation involves a vehicle
+dynamics model interacting with the controller, and it can become inaccurate if the behavior of
+the re-simulated autonomous system diverges too much from the behavior in the original log. Teams
+should be careful to keep a re-simulation test accurate when the loop is closed. Open-loop
+re-simulation does not involve a vehicle dynamics model, so the position of the autonomous system
+in the re-simulation is fixed to the position in the original log. Instead of testing the motion
+planning module, open-loop re-simulation helps test perception and localization modules. For
+example, testing the perception system in open-loop re-simulation involves playing sensor data
+from a log into the perception software, and then grading the output via a scoring mechanism.
+Systems engineers, triage teams, and motion planning engineers typically rely on closed-loop
+re-simulations, as they must assess the safety of the vehicle’s motion. Perception, prediction,
+and localization teams typically rely on open-loop re-simulation, as those module outputs can be
+graded without observing a change in vehicle position. For example, a localization system can be
+graded based on observing the outputs of the localization module, without involving a downstream
+system such as the planning module. Teams should choose the type of re-simulation that is right
+for them depending on the type of test case they want to create from a log. Read our full log
+management handbook to learn more about the strengths and weaknesses of log re-simulation and
+when autonomy programs should opt for scenario extraction instead.
+Resolving the issue: Once autonomy programs have reproduced an issue by creating a test case and
+receiving a failing result, they can now resolve the issue locally by using real data from the
+log to improve their autonomy stack. The log-based test case creation workflow makes this possible.
+The team should iteratively modify the autonomy stack and re-run the created test case. This
+iteration loop should be as quick as possible. Once the test passes, the stack changes are
+considered a true fix. It is important to note that a passing result for the created test case
+does not reduce the need for other software testing such as integration and unit tests.
+Ensuring the issue does not re-appear: Successful autonomy programs ensure that their autonomous
+system does not fail twice in the same way. After reproducing and resolving a long-tail issue
+locally, teams should add the created test case to a regression test suite that regularly executes
+comprehensive tests in continuous integration (CI). If a long-tail issue appears unsolvable due
+to sensor or computing deficiencies, programs can add it to a progression test suite that
+evaluates the stack’s progress toward aspirational goals. Programs should also create dashboards
+that monitor the overall health of their autonomy stack and give all team members a high-level
+overview of stack performance over time. In addition to these steps of the log-based test case
+creation workflow, our handbook also lays out how autonomy programs can utilize advanced
+re-simulation techniques such as fuzzing to stress-test their system even further. For example,
+fuzzing a test case allows teams to make a cut-in scenario more aggressive by changing the
+distance between the autonomous system and the vehicle that is cutting in front of it. Teams can
+create multiple test cases with different distances to find out where failures occur. Different
+teams within an autonomy program can leverage different log-based workflows to power their
+autonomous systems development. The log-based test case creation workflow allows perception,
+localization, and motion planning teams to reproduce a real-world issue using scenario creation
+or log re-simulation, debug the issue, resolve it, and ensure it does not reappear. Learn more
+about log-based workflows and other parts of the log management process in our log management
+handbook.
+
+Applied Hosts Delegation from the Office of the Under Secretary of Defense for Research & Engineering (November 8, 2022):
+Applied Intuition proudly hosted a delegation from the Office of the Under Secretary of Defense
+for Research and Engineering (OUSD (R&E)) at the company’s headquarters in Mountain View,
+California. OUSD (R&E) visited Applied to learn about commercial best practices for autonomy
+development and how those best practices could be applied to a range of autonomy programs within
+the Department of Defense (DOD). The delegation from OUSD (R&E) included a number of senior
+decision-makers, including: Mr. Maynard Holliday, Deputy Chief Technology Officer for Critical
+Technologies; Dr. Kimberly Sablon, Principal Director for Trusted Artificial Intelligence (AI)
+and Autonomy; Dr. Dev Shenoy, Principal Director for Microelectronics; Dr. Jaret C. Riddick,
+Director of Autonomy; CAPT Thomas Eisenstatt, Military Assistant to the Deputy Chief Technology
+Officer for Critical Technologies. Building warfighter trust in autonomous systems is a key
+priority for OUSD (R&E), said Maynard Holliday, Deputy Chief Technology Officer for Critical
+Technologies. Ongoing collaboration between the DOD and innovative commercial companies will prove
+essential to building trust and promoting principles of responsible AI. As the number of defense
+autonomy programs expands, the DOD must continue to harness commercial best practices for autonomy
+development and program design to ensure mission success. The delegation received a presentation
+on commercially-proven best practices and program architecture for autonomous systems development,
+including ways in which DOD could incorporate those best practices into their defense autonomy
+programs to deliver innovative capabilities to the warfighter at speed and scale. Then, after
+receiving a demonstration of Applied Intuition’s end-to-end autonomy development toolchain, the
+delegation discussed a series of potential use cases for OUSD (R&E), including multi-domain
+autonomy and multi-agent mission planning, building warfighter trust by tracking testing progress
+against requirements, and more. I was honored to welcome the delegation from OUSD (R&E) to
+Applied Intuition’s headquarters, said Colin Carroll, Head of Government at Applied Intuition. We
+were grateful for the opportunity to share best practices for autonomous systems development based
+on our leadership in the commercial autonomy sector, as well as our growing team’s experiences
+from across the DOD. Commercial companies continue to take the lead in developing solutions for
+autonomous systems. It’s important that we share our lessons learned with leaders in the DOD to
+ensure that needed capabilities are delivered to warfighters when and where they need them. We
+would like to thank our guests for their continued efforts to bring commercial expertise to the
+DOD and are proud of our continued leadership in engaging decision-makers from across the national
+security community about the imperative for autonomy.
+
+Applied’s Log Management Handbook: Log Exploration (Part 2) (November 1, 2022):
+This blog post is the second in a three-part series highlighting different topics from Applied’s
+log data management handbook for autonomous systems development. Read part 1 for an introduction
+to the log management life cycle and the different workflows powered by log data. This second part
+lays out log exploration best practices with a particular emphasis on surfacing interesting events.
+Keep reading to learn more about this topic, or access our full handbook below.
+What Is Log Exploration?: Log exploration is an important part of the log management life cycle.
+After an autonomy program collects log files, data processing pipelines convert these files into
+usable formats, and different teams explore them according to their specific use cases. In order
+to extract value from logs, programs need to process large amounts of collected data and build
+indices to enable faster data retrieval. They can then enrich data with offline algorithms,
+surface interesting events, visualize data, and analyze system performance and operational design
+domain (ODD) coverage. While our log management handbook discusses each of these steps in detail,
+this blog post focuses on surfacing interesting events.
+Surfacing Interesting Events for Review: The work of triage operations teams, algorithm engineers,
+and other users of log data involves identifying relevant events in the log data and reviewing
+those events to evaluate the autonomous system’s performance. Today’s SAE Level 2 (L2) and L3
+autonomous systems already record events such as hard braking, acceleration, and jerk. The
+following sections outline which other types of events autonomy programs should surface and how
+validation, motion planning, and perception teams can best surface these events.
+Surfacing operator disengagements and system escalations: All interventions that occur while an
+autonomous system is engaged should be surfaced for review. Interventions include operator
+disengagements (i.e., situations where the safety operator intervenes to disengage autonomous mode
+in L4 autonomous systems) and system escalations (i.e., situations where the safety operator or
+the vehicle owner intervenes to take control of an L2 or L3 autonomous system). If available, the
+surfaced events should include relevant safety operator comments. Safety operator comments can
+help teams quickly review and root cause events that may have been caused by a system failure.
+Surfaced events might also contain the autonomous system’s intended maneuver, the behavior of
+nearby actors, and information such as map information that helps teams classify an event as
+occurring inside or outside of the autonomous system’s ODD.
+Validation and motion planning teams: Scenario tags: Scenario tags assist validation and motion
+planning teams in evaluating their autonomous system’s performance. Validation teams can use
+scenario tags to find scenarios that match a specific situation. Scenario tags often combine
+behavior annotation, map or geographic information, and ODD data. For example, scenario tags help
+surface scenarios such as “lane change on highway” and “actor cut-in during rain.” Validation
+teams can then perform aggregate analysis on scenarios with the same tags to understand how the
+autonomous system tends to perform in specific situations. Motion planning teams can combine
+scenario tags to create human descriptions of especially difficult situations. For example,
+filtering by “vehicle pulling out of parking spot” and “bicyclist adjacent” will surface edge
+cases that are relevant to every motion planning team.
+Perception teams: Automatic error detection: Autonomous systems development involves abundant
+unlabeled raw data. Unfortunately, high-quality labels are often expensive to obtain, and labeling
+common scenarios such as standard highway driving has diminishing returns on perception model
+performance. A perception model should thus be trained on data that was incorrectly classified
+by previous versions of the model (Figure 2). Perception teams can implement a process to
+identify these cases in logged data automatically. To surface potential errors automatically,
+perception teams can compare the output of the on-vehicle model to the output of a more powerful
+offline perception model and find cases where the two models disagree. These discrepancies likely
+indicate errors in the on-vehicle perception stack and should be sent to a team member for manual
+review and labeling.
+Surfacing anomalies: Beyond finding specific predefined events, autonomy programs typically find
+it useful to surface unpredicted anomalies in their log data for manual review. Anomalies can
+include known scenarios with unexpected metrics for pre-chosen dimensions (e.g., the most
+aggressive cut-ins) and unseen edge cases surfaced through machine learning (ML). A common
+ML-based anomaly detection technique leverages unsupervised learning to detect unexpected data.
+Teams train an ML model on a subset of the most relevant channels in their log data to predict
+the next timestamp based on a window of historical data. This model then runs on a log and
+surfaces events for which it has the largest prediction gap. These are the cases where the
+autonomous system behaved in the most unexpected way according to existing data, or a sub-system
+behaved unpredictably. Automated anomaly detection is an ongoing area of research. However, it
+is increasingly popular among autonomy programs that face the limits of automation when combing
+through petabytes of log data.
+Conclusion: Surfacing and reviewing interesting events is an essential step in every autonomy program’s log
+exploration process. Teams can leverage different techniques to surface operator disengagements,
+system escalations, anomalies, and other events that help validation, perception, and motion
+planning teams evaluate their autonomous system. To learn about other steps in the log exploration
+process, such as data processing, enrichment, visualization, and analysis, download our full
+handbook below, and stay tuned for the third and last part of our blog post series.

@@ -5,7 +5,7 @@ import Link from "next/link";
 const navigation = [
   {
     name: "About",
-    href: "https://github.com/a16z-infra/companion-app",
+    href: "https://github.com/ntthuy11/applied-companion",
     current: false,
   },
 ];
@@ -21,6 +21,7 @@ export default function Navbar() {
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
           <div className="flex flex-1 items-center justify-start">
+            {/*
             <div className="flex flex-shrink-0 items-center">
               <Image
                 width={0}
@@ -39,6 +40,7 @@ export default function Navbar() {
                 alt="a16z"
               />
             </div>
+            */}
             <div className="ml-6">
               <div className="flex space-x-2 sm:space-x-4">
                 {navigation.map((item) => (
@@ -56,6 +58,7 @@ export default function Navbar() {
                     {item.name}
                   </a>
                 ))}
+                {/*
                 <div className="px-3 py-2 text-gray-300">
                   <iframe
                     src="https://ghbtns.com/github-btn.html?user=a16z-infra&repo=companion-app&type=star&count=true"
@@ -66,6 +69,7 @@ export default function Navbar() {
                     title="GitHub"
                   ></iframe>
                 </div>
+                    */}
               </div>
             </div>
           </div>
