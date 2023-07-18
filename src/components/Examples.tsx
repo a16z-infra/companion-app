@@ -26,8 +26,7 @@ export default function Examples() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const companions = await getCompanions();
-        let entries = JSON.parse(companions);
+        let entries = await getCompanions();
         let setme = entries.map((entry: any) => ({
           name: entry.name,
           title: entry.title,
@@ -71,7 +70,7 @@ export default function Examples() {
                 height={0}
                 sizes="100vw"
                 className="mx-auto h-32 w-32 flex-shrink-0 rounded-full"
-                src={example.imageUrl}
+                src={example.imageUrl || "/next.svg"}
                 alt=""
               />
               <h3 className="mt-6 text-sm font-medium text-white">

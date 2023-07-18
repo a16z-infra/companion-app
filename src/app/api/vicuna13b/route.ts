@@ -7,8 +7,17 @@ import MemoryManager from "@/app/utils/memory";
 import { currentUser } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 import { rateLimit } from "@/app/utils/rateLimit";
+import { headers } from "next/headers";
 
 dotenv.config({ path: `.env.local` });
+
+const fetchCompanionByName = async(name: string | null) => {
+  const headerOptions = headers();
+  const baseUrl = headerOptions.get("x-forwarded-proto") + "://" + headerOptions.get("host");
+  return fetch(baseUrl + "/api/companions/")
+    .then((response) => response.json())
+    .then((companions) => companions.find((companion : any) => companion?.name === name));
+}
 
 export async function POST(request: Request) {
   const { prompt, isText, userId, userName } = await request.json();
@@ -61,8 +70,7 @@ export async function POST(request: Request) {
   // only included if it matches a similarity comparioson with the current
   // discussion. The PREAMBLE should include a seed conversation whose format will
   // vary by the model using it.
-  const fs = require("fs").promises;
-  const data = await fs.readFile("companions/" + companion_file_name, "utf8");
+  const data = await fetchCompanionByName(name).then((companion) => companion?.prompt);
 
   // Clunky way to break out PREAMBLE and SEEDCHAT from the character file
   const presplit = data.split("###ENDPREAMBLE###");

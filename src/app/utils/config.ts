@@ -1,13 +1,13 @@
 import fs from "fs";
 import { Config } from "twilio/lib/twiml/VoiceResponse";
+import { companions } from '@/app/api/companions/config';
 
 class ConfigManager {
   private static instance: ConfigManager;
   private config: any;
 
   private constructor() {
-    const data = fs.readFileSync("companions/companions.json", "utf8");
-    this.config = JSON.parse(data);
+    this.config = companions;
   }
 
   public static getInstance(): ConfigManager {
