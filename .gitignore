@@ -36,3 +36,13 @@ next-env.d.ts
 
 /.env.prod
 /fly.toml
+
+# python
+__pycache__/
+.venv
+
+# JetBrains
+.idea/**
+
+# Yarn Lockfiles (since this project uses NPM)
+yarn.lock

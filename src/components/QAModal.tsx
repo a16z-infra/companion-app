@@ -1,8 +1,9 @@
 "use client";
 
-import { Fragment, useEffect } from "react";
+import {Fragment, useEffect, useState} from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useCompletion } from "ai/react";
+import {ChatBlock, responseToChatBlocks} from "@/components/ChatBlock";
 
 var last_name = "";
 
@@ -35,6 +36,17 @@ export default function QAModal({
     api: "/api/" + example.llm,
     headers: { name: example.name },
   });
+
+  let [blocks, setBlocks] = useState<ChatBlock[] | null>(null)
+
+  useEffect(() => {
+    // When the completion changes, parse it to multimodal blocks for display.
+    if (completion) {
+      setBlocks(responseToChatBlocks(completion))
+    } else {
+      setBlocks(null)
+    }
+  }, [completion])
 
   if (!example) {
     console.log("ERROR: no companion selected");
@@ -82,7 +94,7 @@ export default function QAModal({
                       className={"w-full flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 shadow-sm focus:outline-none sm:text-sm sm:leading-6 " + (isLoading && !completion ? "text-gray-600 cursor-not-allowed" : "text-white")}                      
                       value={input}
                       onChange={handleInputChange}
-                      disabled={isLoading && !completion}
+                      disabled={isLoading && !blocks}
                     />
                   </form>
                   <div className="mt-3 sm:mt-5">
@@ -91,13 +103,13 @@ export default function QAModal({
                         Chat with {example.name}
                       </p>
                     </div>
-                    {completion && (
+                    {blocks && (
                       <div className="mt-2">
-                        <p className="text-sm text-gray-200">{completion}</p>
+                        {blocks}
                       </div>
                     )}
 
-                    {isLoading && !completion && (
+                    {isLoading && !blocks && (
                       <p className="flex items-center justify-center mt-4">
                         <svg
                           className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
