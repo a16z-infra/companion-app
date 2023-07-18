@@ -81,7 +81,7 @@ export async function POST(request: Request) {
   if (records.length === 0) {
     await memoryManager.seedChatHistory(seedchat, "\n\n", companionKey);
   }
-  await memoryManager.writeToHistory("Human: " + prompt + "\n", companionKey);
+  await memoryManager.writeToHistory("User: " + prompt + "\n", companionKey);
 
   // Query Pinecone
 
@@ -106,9 +106,6 @@ export async function POST(request: Request) {
     model: <ReplicateInput["model"]>process.env.SHINY_MODEL,
     input: {
       max_length: 2048,
-      temperature: 0.75,
-      top_p: 1,
-      repetition_penalty: 1,
     },
     apiKey: process.env.REPLICATE_API_TOKEN,
     callbackManager: CallbackManager.fromHandlers(handlers),
@@ -123,7 +120,6 @@ export async function POST(request: Request) {
         `
        ONLY generate NO more than three sentences as ${name}. DO NOT generate more than three sentences. 
        Make sure the output you generate starts with '${name}:' and ends with a period.
-       NEVER generate anything that starts with 'Human:' or 'human:'. ONLY generate things that start with '${name}:'.
 
        ${preamble}
 
@@ -131,8 +127,7 @@ export async function POST(request: Request) {
        ${relevantHistory}
 
 
-       ${recentChatHistory}\n${name}:
-       `
+       ${recentChatHistory}\n${name}:`
       )
       .catch(console.error)
   );
