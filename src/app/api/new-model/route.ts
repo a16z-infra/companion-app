@@ -73,7 +73,7 @@ export async function POST(request: Request) {
   const companionKey = {
     companionName: name!,
     userId: clerkUserId!,
-    modelName: "llama2-13b",
+    modelName: "new-model",
   };
   const memoryManager = await MemoryManager.getInstance();
 
