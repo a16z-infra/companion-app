@@ -10,7 +10,7 @@
     "name": "Evelyn",
     "title": "Adventurous and curious. Working at the space station",
     "imageUrl": "/evelyn.png",
-    "llm": "new-model",
+    "llm": "llama2-13b",
     "phone": "OPTIONAL_COMPANION_PHONE_NUMBER"
   },
   {

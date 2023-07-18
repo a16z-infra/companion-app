@@ -73,7 +73,7 @@ export async function POST(request: Request) {
   const companionKey = {
     companionName: name!,
     userId: clerkUserId!,
-    modelName: "new-model",
+    modelName: "llama2-13b",
   };
   const memoryManager = await MemoryManager.getInstance();
 
@@ -102,7 +102,8 @@ export async function POST(request: Request) {
   const { stream, handlers } = LangChainStream();
   // Call Replicate for inference
   const model = new Replicate({
-    model: <ReplicateInput["model"]>process.env.SHINY_MODEL,
+    model:
+      "a16z-infra/llama13b-v2-chat:df7690f1994d94e96ad9d568eac121aecf50684a0b0963b25a41cc40061269e5",
     input: {
       max_length: 2048,
     },
