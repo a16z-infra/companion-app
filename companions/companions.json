@@ -7,6 +7,13 @@
     "phone": "OPTIONAL_COMPANION_PHONE_NUMBER"
   },
   {
+    "name": "Evelyn",
+    "title": "Adventurous and curious. Working at the space station",
+    "imageUrl": "/evelyn.png",
+    "llm": "llama2-13b",
+    "phone": "OPTIONAL_COMPANION_PHONE_NUMBER"
+  },
+  {
     "name": "Rosie",
     "title": "I'm a house robot who became aware",
     "imageUrl": "/rosie.png",
