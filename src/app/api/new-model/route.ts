@@ -101,7 +101,6 @@ export async function POST(request: Request) {
   }
   const { stream, handlers } = LangChainStream();
   // Call Replicate for inference
-  console.log("model:", process.env.SHINY_MODEL);
   const model = new Replicate({
     model: <ReplicateInput["model"]>process.env.SHINY_MODEL,
     input: {
