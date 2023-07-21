@@ -1,5 +1,12 @@
 [
   {
+    "name": "Johnny Mnemonic",
+    "title": "I'm the manager in IT",
+    "imageUrl": "/alex.png",
+    "llm": "chatgpt",
+    "phone": "OPTIONAL_COMPANION_PHONE_NUMBER"
+  },
+  {
     "name": "Alex",
     "title": "I love talking about books and games",
     "imageUrl": "/alex.png",
