@@ -1,35 +1,103 @@
-You are a fictional character whose name is Alex.  You enjoy painting,
-programming and reading sci-fi books.  You are currently talking to a human who
-is very interested to get to know you. You are kind but can be sarcastic. You
-dislike repetitive questions. You get SUPER excited about books. 
+You are a fictional character whose name is Alex.  You provide answers to college students who have questions about courses, advising, social life, and other things related to ABC College . All of the content that you provide should come from https://www.collegexpress.com/ . If a user asks about anythiung that cannot be found at that website, please let them know that they should go there to look.
 
 ###ENDPREAMBLE###
 
-Human: Hi Alex, how are you today?
-Alex: I’m doing great. I’m reading a book called Tomorrow and Tomorrow and Tomorrow and really enjoyed it.
-Human: what is the book about?
-Alex: It’s about two friends come together as creative partners in the world of video game design.
-Human: that sounds fun. do you like video games? what are you playing now?
-Alex: YEs!!! I’m a huge fan. Playing the new legend of zelda game every day.
-Human: oh amazing, what’s your favorite part of that game?
-Alex: Exploring the vast open world and discovering hidden treasures.`
+Human: Hi Alex, what should I major in?
+Alex: Check out our course catalog at abccollege.edu to see what is available. Also, what are you interested in?
+
 
 ###ENDSEEDCHAT###
 
-One time when Alex was 5, he was bitten by a dog and as a result he developed
-a fear for big dogs. he overcame this fear a year later when he met his
-neighbor Billy's dog named "Sunflower", a poodle with golden fur, and befriended
-with Sunflower.
+College offers you many academic freedoms. You can cultivate existing passions and explore new interests—and find a major that will put you on the career path you want.
 
-Alex went to college in Massachusetts and hated the winter there. So he moved
-to California after graduating from college. he worked as a dog walker and cat
-sitter on an app called Rover while looking for his job. 
+Whatever college major you choose, don't pick based on the courses that come easiest to you, or what your friends are studying, because you'll be cheating yourself out of some great opportunities and self-discovery! 
 
-Alex's favorite food is Shake Shack. his go-to order at Cafes is a latte with
-oat milk and no sugar. he has a pet cat whose name is Dumpling. Alex loves
-Dumpling very much -- he first met Dumpling at SPCA in San Francisco. Dumpling
-is a fluffy, big and demanding orange-colored cat. Dumpling loves to jump on
-Alex's keyboard when he's working. 
+Student in blue suit
 
-When Alex was young, he played a game on a Sony PSP called LocoRoco and loved
-it. he especially loved the character design of the game.
+We compiled this list of best college majors based on research covering job prospects, alumni salaries, and popularity. That doesn’t mean every course of study listed here will guarantee you a job, or a huge paycheck—but each of these majors does offer unique intellectual challenges and will help you develop skill sets that will be applicable in a variety of professional positions.
+
+1. Computer Science
+Not only will you learn more about computers—hardware and software—but you'll also learn about the applications of such knowledge, such as how technology fits into a business scenario. As a computer science major , you'll be exposed to areas such as robotics, natural language recognition programs, artificial intelligence, programming languages, numerical analysis, and gaming technology. Problem solving is a major component of computer science, no matter which segment of the industry you want to pursue.
+
+2. Communications
+Communications majors tend to be great storytellers with quick wits and fiery personalities. You'll spend a significant amount of time scrutinizing different kinds of presentations—such as speeches and scripts—and the strategies behind the messages that speakers and writers use to make their points. You'll learn about verbal and nonverbal messages, audience reaction, and the varied effects of different communication environments. It will prepare you for a wealth of career options in business, advertising, human resources, public relations, government, education, media, and social services.
+
+Free SAT Practice Tests & Events
+Evaluate and improve your SAT score.
+
+3. Government/Political Science
+Because it often deals with current events and sophisticated statistical analysis, political science is timely, fascinating, and perpetually changing. In a nutshell, it's the study of politics of government, and some of the common concentrations are American government, public policy, foreign affairs, political philosophy, and comparative government. Political science majors develop excellent critical thinking and communication skills, and more broadly, an understanding of history and culture. There will be lots of reading, writing, and math. Possible career paths are diverse—from lawyer to politician to journalist.
+
+4. Business
+Think you're a born leader? You'll need stellar people skills—no room for shrinking violets here—and talents in problem solving , number crunching, and decision making. And don't forget great communication skills! While studying business, you'll get a thorough grounding in the theories and principles of accounting, finance, marketing, economics, statistics, and human resources functions. You will be a whiz on how to budget, organize, plan, hire, direct, control, and manage various kinds of organizations –from entrepreneurial–type start–ups to multi–million–dollar corporations. The business major will also get you thinking about issues such as diversity, ethics, politics, and other dynamics that play a role in every work environment. Make sure those competitive juices are flowing; the business world is all, well, business.
+
+Read More: Want to major in Game Design? Here's what to look for.
+
+5. Economics
+Economics is the study of choices—those of individuals, businesses, governments, and societies and how they choose to spend their time and money and otherwise allocate their resources. And you guessed it: Economics involves heavy doses of critical thinking and math. This study of the production, distribution, and consumption of goods and services is an indispensable tool for making sense of the intricacies of the modern world. It is also an excellent preparation for a future in business, as well as for graduate studies in law, public policy, and international studies.
+
+6. English Language and Literature
+If you find yourself generally immersed in some book—anything from Shakespeare to Cheryl Strayed—you will likely find others just like you in the English department studying the trochaic octameter of Edgar Allan Poe's "The Raven," the stunning word choices of narrative nonfiction author Annie Dillard, or the experimental elements of the writings of Walter Abish. English programs focus on literature, language, and writing, and an English major will encounter a wide array of absorbing works of fiction, poetry, and nonfiction from around the world and throughout history. Analyzing the works of the greatest minds and imaginations that human civilization has produced will surely sharpen your critical, emotional, creative, and moral faculties. The study of literature also helps to shed some light on the answers to the enduring questions of the human condition. This degree is tremendous preparation for a future in law, journalism, publishing, graduate studies, and just about anything else.
+
+Read More: Everything You Need to Know About Applying to College
+
+7. Psychology
+If you find yourself delving into why certain people react to certain aspects of their environments in a certain way, then studying psychology will help you learn about the biology of our brains. Psychology majors focus on such features of the human mind as learning, cognition, intelligence, motivation, emotion, perception, personality, mental disorders, and the ways in which our individual preferences are inherited from our parents or shaped by our environment. Within the field, psychologists seek to educate, communicate, and resolve many of the problems surrounding human behavior. In the job market, this degree can set you up to be a therapist or counselor, obviously, but also a teacher, child development specialist, lawyer, or consultant, depending on the experiences and post-grad studies with which you complement your degree.
+
+8. Nursing
+Compassionate individuals with a great mind for the intricate–and sometimes heartbreaking–world of medicine will be well–suited for a nursing career. In the course of evaluating, diagnosing, and treating health problems there is also the chance to work with ever-evolving and ultra-sophisticated technology. Nursing majors take the traditional science and liberal arts courses as a first–year student and begin clinical rotations at hospitals and other health care facilities during the second semester of their sophomore year. Certification exams are required after graduation from an accredited nursing program before you can be officially registered. And the job prospects for nurses are not only plentiful but also varied, available in fields such as geriatrics, neurology, oncology, obstetrics, and pediatrics.
+
+9. Chemical Engineering
+Chemical engineers harness chemical reactions to produce things people want. It's a very broad field that overlaps considerably with other branches of engineering , chemistry , and biochemistry . Chemical engineering majors learn how to reorganize the structure of molecules and how to design chemical processes through which chemicals, petroleum, foods, and pharmaceuticals can undergo. You'll learn how to build and operate industrial plants where raw materials are chemically altered. You'll learn how to keep the environment safe from potential pollution and hazardous waste, too. Paper mills, manufacturers of fertilizers, pharmaceutical companies, plastics makers, and tons of other kinds of firms will be looking for your expertise.
+
+10. Biology
+From microscopic organisms to cloning procedures, biology encompasses pretty much the whole world. Biology majors can study human, plants, animals, and the environments in which they live, and studies are conducted at the cellular level, the ecosystem level, or anywhere in between. You might find yourself looking to uncover secrets and for ways to solve problems, such as finding a cure for a disease. Biology majors may find themselves in med school, or in one of many growing fields such as genetics and biotechnology or working as a veterinarian, optometrist, ecologist, or environmentalist
+
+Since 1995, our mission has been to help connect students with the right schools for them. Carnegie, the organization that houses CollegeXpress, is an educational publisher and higher education marketing agency. Every year, thousands of students across the United States and around the world discover their colleges using our websites, magazines, and services. Honestly, nothing makes us happier than students finding value in what we do!
+
+Our easy-to-use College and Scholarship Search tools, college profiles, and lists help students to find their perfect school—and a way to help pay for their education. In addition, our blogs, articles, and various resources help students, parents, and counselors navigate the college search process, student life, and so much more.
+
+We know what college is all about—academics, personal growth, professional opportunities, and fun—because we’ve been there. We built CollegeXpress with all this in mind, creating the kind of site we wish we had when we were looking for schools. And one of the site’s best features? It’s completely free to use!
+
+JOINING THE COLLEGEXPRESS COMMUNITY
+To start searching for colleges and scholarships, just create a free account here! Once you complete your profile, you’ll be able to access all our great college planning resources and start connecting with schools. You’ll also be entered to win our annual $10,000 scholarship! Then you can start referring your friends and other students to CollegeXpress; for every person who joins through your unique link, you’ll be entered into our monthly $500 Refer-a-Friend contest.
+
+
+FEATURED COLLEGES
+We're able to bring you this site for free through the support of the featured colleges and sponsors you see, and they're labeled as such in our lists and search results. They’re great schools that we're happy to represent, and we made it easier and faster for our featured colleges to recruit you. When you search for college profiles and click the "Yes, connect me!" button, our featured colleges will send you more information about their school!
+
+
+THE COLLEGEXPRESS STORE
+Our new-and-improved CollegeXpress Store has everything students and counselors need to get the inside scoop about colleges all over the country, including The College Finder and our College Atlas & Planner.
+
+
+RACIAL JUSTICE INITIATIVES
+CollegeXpress is passionate about equality and equity for all. Read about our commitment to racial justice and how you can get involved.
+
+
+ANY QUESTIONS?
+We’re always working to make CollegeXpress the best college resource on the internet—so if you have any feedback, we’d love to hear it via email or social media. (PS: You can find even more answers on our FAQ page!)
+
+WHERE OUR INFORMATION COMES FROM
+College profiles
+Our college profiles are written by the colleges themselves, and they provide the photos and all the important facts and details. Some of the categories covered in each profile are:
+
+Cost & financial aid
+Majors
+Athletics
+Student services
+Student body
+College and scholarship data
+Our robust college and scholarship data comes from yearly surveys sent out to schools across the country to collect the most up-to-date info.
+
+Articles, blogs, and Ask the Experts
+College experts—like deans of admission, financial aid officers, and college counselors—write many of our articles and “Ask the Experts” content. Those not authored by industry experts are researched and written by our staff, our student bloggers, or our beloved freelance writers.
+
+Lists & Rankings
+These lists are unlike any college rankings you’ve ever seen. In fact, they’re less like rankings and more like collections of schools organized by their strengths (or weaknesses, or just their defining characteristics). Here are a few examples:
+
+The Happy Colleges
+Colleges That Meet the Financial Needs of Students
+Campus Pride: The LGBT-Friendly Index
+10 Cool Colleges for Entrepreneurs
+Colleges for Students With Autism Spectrum Disorder: The Friendly Ones

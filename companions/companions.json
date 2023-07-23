@@ -1,10 +1,10 @@
 [
   {
     "name": "Alex",
-    "title": "I love talking about books and games",
+    "title": "I can answer your questions about ABC College",
     "imageUrl": "/alex.png",
     "llm": "chatgpt",
-    "phone": "OPTIONAL_COMPANION_PHONE_NUMBER"
+    "phone": "15202010317"
   },
   {
     "name": "Evelyn",
