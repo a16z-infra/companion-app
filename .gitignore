@@ -46,3 +46,9 @@ __pycache__/
 
 # Yarn Lockfiles (since this project uses NPM)
 yarn.lock
+
+.venv
+
+*.log
+
+build/

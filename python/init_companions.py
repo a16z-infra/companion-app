@@ -1,14 +1,28 @@
 import json
+import re
+import sys
 from pathlib import Path
+from uuid import uuid1
 
+from steamship.cli.cli import deploy
+
+sys.path.append(str((Path(__file__) / ".." / "src").resolve()))
 import click
 from steamship import Steamship
+from steamship.cli.create_instance import load_manifest
+
+from src.api import FileType
 
 
 @click.command()
 @click.pass_context
 def init_companions(ctx):
     companions_dir = (Path(__file__) / ".." / ".." / "companions").resolve()
+
+    if click.confirm(
+        "Do you want to deploy a new version of your companion?", default=True
+    ):
+        ctx.invoke(deploy)
 
     new_companions = {}
     for companion in companions_dir.iterdir():
@@ -17,22 +31,35 @@ def init_companions(ctx):
             preamble, rest = companion_file.split("###ENDPREAMBLE###", 1)
             seed_chat, backstory = rest.split("###ENDSEEDCHAT###", 1)
 
+            pattern = r"### (.*?):(.*?)(?=###|$)"
+
+            # Find all matches
+            matches = re.findall(pattern, seed_chat, re.DOTALL)
+            if matches:
+                seed_chat = []
+                for match in matches:
+                    user = match[0]
+                    message = match[1].strip().replace("\\n\\n", "")
+                    seed_chat.append(f"{user}:{message}")
+                seed_chat = "\n".join(seed_chat)
             # Create instances for your companion
             print(f"Creating an instance for {companion.stem}")
             client = Steamship(workspace=companion.stem.lower())
+            manifest = load_manifest()
             instance = client.use(
-                "ai-companion",
+                manifest.handle,
+                version=manifest.version,
                 config={
                     "name": companion.stem,
-                    "preamble": preamble,
-                    "seed_chat": seed_chat,
+                    "preamble": preamble.strip(),
+                    "seed_chat": seed_chat.strip(),
                 },
             )
 
             instance.invoke(
                 "index_content",
-                content=backstory,
-                file_type="TEXT",
+                content=backstory.strip(),
+                file_type=FileType.TEXT,
                 metadata={"title": "backstory"},
             )
 
