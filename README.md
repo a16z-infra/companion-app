@@ -124,7 +124,7 @@ If you prefer to use Supabase, you will need to uncomment `VECTOR_DB=supabase` a
 
 g. **Steamship API key**
 
-You can connect Steamship agent instance as if it were an LLM with personality, vector storage, and tools built-in. To do so:
+You can connect a Steamship agent instance as if it were an LLM with personality, vector storage, and tools built-in. To do so:
 
 - Sign in to [Steamship](https://steamship.com/account)
 - Copy the API key from your account settings page
