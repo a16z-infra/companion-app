@@ -8,13 +8,26 @@ from steamship.base.error import SteamshipError
 
 NAME = "GenerateImage"
 
-DESCRIPTION = (
-    "Useful for when you need to generate an image."
-    "Input: A detailed prompt describing an image"
-    "Output: the UUID of a generated image"
-)
+DESCRIPTION = """
+Useful for when you need to generate an image. 
+Input: A detailed prompt describing an image. Be detailed, don't just say 'A picture of me' Instead say picture Rick Sanchez. Don't just say 'My dog' instead describe your dog in detail.
+Output: the UUID of a generated image
+"""
 
 PLUGIN_HANDLE = "stable-diffusion"
+
+NEGATIVE_PROMPT = (
+    "(nsfw:1.4),easynegative,(deformed, distorted,disfigured:1.3), poorly drawn, bad anatomy, wrong anatomy, extra limb,"
+    " missing limb, (mutated hands and finger:1.4), disconnected limbs, mutation, mutated, ugly, "
+    "disgusting, blurry, amputation"
+)
+
+PROMPT_TEMPLATE = (
+    "full body pose, hyperrealistic photograph of rick sanchez from rick and morty, dim volumetric lighting, 8 k, "
+    "octane beautifully detailed render, extremely hyper detailed, intricate, epic composition, cinematic lighting, "
+    "masterpiece, trending on artstation, very very detailed, stunning, hdr, smooth, sharp focus, high resolution, "
+    "award, winning photo, dslr, 5 0 mm"
+)
 
 
 class GenerateImageTool(Tool):
@@ -47,7 +60,9 @@ class GenerateImageTool(Tool):
         if not isinstance(prompt, str):
             prompt = json.dumps(prompt)
 
-        task = image_generator.generate(text=prompt, append_output_to_file=True)
+        task = image_generator.generate(text=prompt + PROMPT_TEMPLATE,
+                                        options={"negative_prompt": NEGATIVE_PROMPT},
+                                        append_output_to_file=True)
         task.wait()
         blocks = task.output.blocks
         logging.info(f"[{self.name}] got back {len(blocks)} blocks")
