@@ -123,13 +123,13 @@ If you prefer to use Supabsae, you will need to uncomment `VECTOR_DB=supabase` a
 
 g. **Steamship API key**
 
-You can connect Steamship agent instance as if it were an LLM with personality, vector storage, and tools built-in. To do so:
+You can connect a Steamship agent instance as an LLM with personality, voice and image generation capabilities built in. It also includes its own vector storage and tools. To do so:
 
-- Sign in to [Steamship](https://steamship.com/account)
+- Create an account on [Steamship](https://steamship.com/account)
 - Copy the API key from your account settings page
-- Add it as the `STEAMSHIP_API_KEY` variable
+- Add it as the `STEAMSHIP_API_KEY` variable 
 
-Next, [build an agent](https://www.steamship.com/learn/agent-guidebook), create your own instance of it, and connect it in `companions.json` using the *Rick* example as a guide.
+If you'd like to create your own character personality, add a custom voice, or use a different image model, visit [Steamship Agent Guidebook](https://www.steamship.com/learn/agent-guidebook), create your own instance and connect it in `companions.json` using the *Rick* example as a guide.
 
 ### 4. Generate embeddings
 
