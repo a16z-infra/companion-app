@@ -168,20 +168,16 @@ class MyCompanion(LangChainTelegramBot):
         )
 
     def add_seed_chat(self, chat_memory: BaseChatMessageHistory):
-        pattern = r"### (.*?):(.*?)(?=###|$)"
+        matches = self.config.seed_chat.split("\n")
 
-        # Find all matches
-        matches = re.findall(pattern, self.config.seed_chat, re.DOTALL)
-
-        # Process matches and create list of JSON objects
         for m in matches:
-            role = m[0].strip().lower()
-            content = m[1].replace("\\n\\n", "").strip()
-            if content:
-                if role == "human":
-                    chat_memory.add_user_message(message=content)
-                else:
-                    chat_memory.add_ai_message(message=content)
+            if m.strip():
+                role, content = m.lower().split(":")
+                if content:
+                    if role == "human":
+                        chat_memory.add_user_message(message=content)
+                    else:
+                        chat_memory.add_ai_message(message=content)
 
     def get_memory(self, chat_id: str):
         memory = ConversationBufferMemory(

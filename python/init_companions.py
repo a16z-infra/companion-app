@@ -1,6 +1,8 @@
 import json
+import re
 import sys
 from pathlib import Path
+from uuid import uuid1
 
 from steamship.cli.cli import deploy
 
@@ -29,6 +31,17 @@ def init_companions(ctx):
             preamble, rest = companion_file.split("###ENDPREAMBLE###", 1)
             seed_chat, backstory = rest.split("###ENDSEEDCHAT###", 1)
 
+            pattern = r"### (.*?):(.*?)(?=###|$)"
+
+            # Find all matches
+            matches = re.findall(pattern, seed_chat, re.DOTALL)
+            if matches:
+                seed_chat = []
+                for match in matches:
+                    user = match[0]
+                    message = match[1].strip().replace("\\n\\n", "")
+                    seed_chat.append(f"{user}:{message}")
+                seed_chat = "\n".join(seed_chat)
             # Create instances for your companion
             print(f"Creating an instance for {companion.stem}")
             client = Steamship(workspace=companion.stem.lower())
@@ -38,14 +51,14 @@ def init_companions(ctx):
                 version=manifest.version,
                 config={
                     "name": companion.stem,
-                    "preamble": preamble,
-                    "seed_chat": seed_chat,
+                    "preamble": preamble.strip(),
+                    "seed_chat": seed_chat.strip(),
                 },
             )
 
             instance.invoke(
                 "index_content",
-                content=backstory,
+                content=backstory.strip(),
                 file_type=FileType.TEXT,
                 metadata={"title": "backstory"},
             )

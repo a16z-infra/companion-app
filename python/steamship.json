@@ -1,11 +1,11 @@
 {
 	"type": "package",
 	"handle": "ai-companion",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "",
 	"author": "",
 	"entrypoint": "Unused",
-	"public": false,
+	"public": true,
 	"plugin": null,
 	"build_config": {
 		"ignore": [
