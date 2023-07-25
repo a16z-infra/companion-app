@@ -14,59 +14,23 @@ from src.api import FileType
 
 
 @click.command()
+@click.option('--all', default=False)
 @click.pass_context
-def init_companions(ctx):
+def init_companions(ctx, all: bool):
     companions_dir = (Path(__file__) / ".." / ".." / "companions").resolve()
 
     if click.confirm(
-        "Do you want to deploy a new version of your companion?", default=True
+            "Do you want to deploy a new version of your companion?", default=True
     ):
         ctx.invoke(deploy)
-
     new_companions = {}
-    for companion in companions_dir.iterdir():
-        if companion.suffix == ".txt":
-            companion_file = companion.open().read()
-            preamble, rest = companion_file.split("###ENDPREAMBLE###", 1)
-            seed_chat, backstory = rest.split("###ENDSEEDCHAT###", 1)
-
-            pattern = r"### (.*?):(.*?)(?=###|$)"
-
-            # Find all matches
-            matches = re.findall(pattern, seed_chat, re.DOTALL)
-            if matches:
-                seed_chat = []
-                for match in matches:
-                    user = match[0]
-                    message = match[1].strip().replace("\\n\\n", "")
-                    seed_chat.append(f"{user}:{message}")
-                seed_chat = "\n".join(seed_chat)
-            # Create instances for your companion
-            print(f"Creating an instance for {companion.stem}")
-            client = Steamship(workspace=f"{companion.stem.lower()}_workspace_new")
-            manifest = load_manifest()
-            instance = client.use(
-                manifest.handle,
-                version=manifest.version,
-                config={
-                    "name": companion.stem,
-                    "preamble": preamble.strip(),
-                    "seed_chat": seed_chat.strip(),
-                },
-            )
-
-            instance.invoke(
-                "index_content",
-                content=backstory.strip(),
-                file_type=FileType.TEXT,
-                metadata={"title": "backstory"},
-            )
-
-            new_companions[companion.stem] = {
-                "name": companion.stem,
-                "llm": "steamship",
-                "generateEndpoint": f"{instance.invocation_url}answer",
-            }
+    if all:
+        for companion in companions_dir.iterdir():
+            if companion.suffix == ".txt":
+                new_companions[companion.stem] = _init_companion(companion)
+    else:
+        companion_name = click.prompt("What's the name of your companion?")
+        new_companions[companion_name] = _init_companion(companions_dir / f"{companion_name}.txt")
 
     if click.confirm("Do you want to update the companions.json file?", default=True):
         companions = json.load((companions_dir / "companions.json").open())
@@ -80,6 +44,46 @@ def init_companions(ctx):
             list(name_to_companion.values()),
             (companions_dir / "companions.json").open("w"),
         )
+
+
+def _init_companion(companion):
+    companion_file = companion.open().read()
+    preamble, rest = companion_file.split("###ENDPREAMBLE###", 1)
+    seed_chat, backstory = rest.split("###ENDSEEDCHAT###", 1)
+    pattern = r"### (.*?):(.*?)(?=###|$)"
+    # Find all matches
+    matches = re.findall(pattern, seed_chat, re.DOTALL)
+    if matches:
+        seed_chat = []
+        for match in matches:
+            user = match[0]
+            message = match[1].strip().replace("\\n\\n", "")
+            seed_chat.append(f"{user}:{message}")
+        seed_chat = "\n".join(seed_chat)
+    # Create instances for your companion
+    print(f"Creating an instance for {companion.stem}")
+    client = Steamship(workspace=f"{companion.stem.lower()}_workspace_new")
+    manifest = load_manifest()
+    instance = client.use(
+        manifest.handle,
+        version=manifest.version,
+        config={
+            "name": companion.stem,
+            "preamble": preamble.strip(),
+            "seed_chat": seed_chat.strip(),
+        },
+    )
+    instance.invoke(
+        "index_content",
+        content=backstory.strip(),
+        file_type=FileType.TEXT,
+        metadata={"title": "backstory"},
+    )
+    return {
+        "name": companion.stem,
+        "llm": "steamship",
+        "generateEndpoint": f"{instance.invocation_url}answer",
+    }
 
 
 if __name__ == "__main__":
