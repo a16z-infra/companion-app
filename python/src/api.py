@@ -1,6 +1,6 @@
-import re
 from enum import Enum
 from typing import List, Type, Optional, Union
+from uuid import uuid4
 
 from langchain.agents import Tool, initialize_agent, AgentType, AgentExecutor
 from langchain.document_loaders import PyPDFLoader, YoutubeLoader
@@ -102,7 +102,9 @@ class MyCompanion(LangChainTelegramBot):
                 # TODO @Ted can I re-use methods from the indexer pipeline here?
                 f = File.create(
                     client=self.client,
-                    handle=convert_to_handle(document.metadata["title"]),
+                    handle=convert_to_handle(
+                        document.metadata.get("title", str(uuid4()))
+                    ),
                     blocks=[
                         Block(
                             text=document.page_content,
@@ -202,7 +204,7 @@ class MyCompanion(LangChainTelegramBot):
     def get_tools(self, chat_id: str) -> List[Tool]:
         return [
             SearchTool(self.client),
-            GenerateImageTool(self.client),
+            GenerateImageTool(self.client, self.config.name),
             VideoMessageTool(self.client, voice_tool=self.voice_tool()),
         ]
 

@@ -23,7 +23,7 @@ NEGATIVE_PROMPT = (
 )
 
 PROMPT_TEMPLATE = (
-    "full body pose, hyperrealistic photograph of rick sanchez from rick and morty, dim volumetric lighting, 8 k, "
+    "full body pose, hyperrealistic photograph of {person_description}, dim volumetric lighting, 8 k, "
     "octane beautifully detailed render, extremely hyper detailed, intricate, epic composition, cinematic lighting, "
     "masterpiece, trending on artstation, very very detailed, stunning, hdr, smooth, sharp focus, high resolution, "
     "award, winning photo, dslr, 5 0 mm"
@@ -34,13 +34,15 @@ class GenerateImageTool(Tool):
     """Tool used to generate images from a text-prompt."""
 
     client: Steamship
+    companion_name: str
 
-    def __init__(self, client: Steamship):
+    def __init__(self, client: Steamship, companion_name: str):
         super().__init__(
             name=NAME,
             func=self.run,
             description=DESCRIPTION,
             client=client,
+            companion_name=companion_name,
         )
 
     @property
@@ -60,9 +62,16 @@ class GenerateImageTool(Tool):
         if not isinstance(prompt, str):
             prompt = json.dumps(prompt)
 
-        task = image_generator.generate(text=prompt + PROMPT_TEMPLATE,
-                                        options={"negative_prompt": NEGATIVE_PROMPT},
-                                        append_output_to_file=True)
+        person_description = (
+            "rick sanchez from rick and morty"
+            if self.companion_name.lower() == "rick"
+            else self.companion_name
+        )
+        task = image_generator.generate(
+            text=prompt + PROMPT_TEMPLATE.format(person_description=person_description),
+            options={"negative_prompt": NEGATIVE_PROMPT},
+            append_output_to_file=True,
+        )
         task.wait()
         blocks = task.output.blocks
         logging.info(f"[{self.name}] got back {len(blocks)} blocks")

@@ -26,7 +26,12 @@ class ExtendedTelegramTransport(TelegramTransport):
     def instance_init(self, config: Config, invocation_context: InvocationContext):
         if config.bot_token:
             self.api_root = f"{config.api_base}{config.bot_token}"
-            super().instance_init(config=config, invocation_context=invocation_context)
+            try:
+                super().instance_init(
+                    config=config, invocation_context=invocation_context
+                )
+            except Exception:
+                pass
 
 
 class LangChainTelegramBot(AgentService):

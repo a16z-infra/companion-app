@@ -2,7 +2,6 @@ import json
 import re
 import sys
 from pathlib import Path
-from uuid import uuid1
 
 from steamship.cli.cli import deploy
 
@@ -44,7 +43,7 @@ def init_companions(ctx):
                 seed_chat = "\n".join(seed_chat)
             # Create instances for your companion
             print(f"Creating an instance for {companion.stem}")
-            client = Steamship(workspace=companion.stem.lower())
+            client = Steamship(workspace=f"{companion.stem.lower()}_workspace_new")
             manifest = load_manifest()
             instance = client.use(
                 manifest.handle,
