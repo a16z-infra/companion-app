@@ -22,11 +22,12 @@
   },
   {
     "name": "Rick",
-    "title": "I can generate voice and pictures.",
+    "title": "I can generate voice and pictures",
     "imageUrl": "/rick.jpeg",
     "llm": "steamship",
-    "generateEndpoint": "https://a16z.steamship.run/a16z/rick-b1578149038e664bacae7fc083683565/answer",
-    "phone": "OPTIONAL_COMPANION_PHONE_NUMBER"
+    "generateEndpoint": "https://a16z.steamship.run/rick/ai-companion-59f5d9816b627a45856239ae9f83525e/answer",
+    "phone": "OPTIONAL_COMPANION_PHONE_NUMBER",
+    "telegramLink": "https://t.me/rick_a16z_bot"
   },
   {
     "name": "Sebastian",
