@@ -1,9 +1,6 @@
 """Define your LangChain chatbot."""
 import re
 import uuid
-from typing import List
-
-from langchain.schema import BaseMessage, HumanMessage, AIMessage
 
 UUID_PATTERN = re.compile(
     r"([0-9A-Za-z]{8}-[0-9A-Za-z]{4}-[0-9A-Za-z]{4}-[0-9A-Za-z]{4}-[0-9A-Za-z]{12})"
@@ -30,5 +27,8 @@ def convert_to_handle(s: str) -> str:
 
 
 def replace_markdown_with_uuid(text):
-    pattern = r"(?:!\[.*?\]|)\((.*?)://?(.*?)\)"
-    return re.sub(pattern, r"\2", text)
+    pattern1 = r"\[.*?\]\((.*?):(.*?)\)"
+    pattern2 = r"\[.*?:(.*?)\]"
+    text = re.sub(pattern1, r"\2", text)
+    text = re.sub(pattern2, r"\1", text)
+    return text.strip()
