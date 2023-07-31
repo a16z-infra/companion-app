@@ -55,6 +55,7 @@ git clone git@github.com:[YOUR_GITHUB_ACCOUNT_NAME]/companion-app.git
 ```
 
 **Alternatively**, you can launch the app quickly through Github Codespaces by clicking on "Code" -> "Codespaces" -> "+"
+
 <img width="458" alt="Screen Shot 2023-07-10 at 11 04 04 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/eb954517-29f2-44b7-b9ca-4184dcf42806">
 
 If you choose to use Codespaces, npm dependencies will be installed automatically and you can proceed to step 3. 
