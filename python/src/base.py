@@ -16,22 +16,9 @@ from steamship.agents.schema import (
     Agent,
 )
 from steamship.agents.service.agent_service import AgentService
-from steamship.invocable import post, Config, InvocationContext
-from steamship.utils.kv_store import KeyValueStore
+from steamship.invocable import Config
 
 from utils import is_uuid, UUID_PATTERN, replace_markdown_with_uuid
-
-
-class ExtendedTelegramTransport(TelegramTransport):
-    def instance_init(self, config: Config, invocation_context: InvocationContext):
-        if config.bot_token:
-            self.api_root = f"{config.api_base}{config.bot_token}"
-            try:
-                super().instance_init(
-                    config=config, invocation_context=invocation_context
-                )
-            except Exception:
-                pass
 
 
 class LangChainTelegramBot(AgentService):
@@ -40,44 +27,25 @@ class LangChainTelegramBot(AgentService):
     NOTE: To extend and deploy this agent, copy and paste the code into api.py.
     """
 
-    USED_MIXIN_CLASSES = [ExtendedTelegramTransport, SteamshipWidgetTransport]
+    USED_MIXIN_CLASSES = [TelegramTransport, SteamshipWidgetTransport]
     config: TelegramTransportConfig
 
     def __init__(self, **kwargs):
 
         super().__init__(**kwargs)
 
-        # Set up bot_token
-        self.store = KeyValueStore(self.client, store_identifier="config")
-        bot_token = self.store.get("bot_token")
-        if bot_token:
-            bot_token = bot_token.get("token")
-        self.config.bot_token = self.config.bot_token or bot_token
-
         # Add transport mixins
         self.add_mixin(
             SteamshipWidgetTransport(client=self.client, agent_service=self, agent=None)
         )
         self.add_mixin(
-            ExtendedTelegramTransport(
+            TelegramTransport(
                 client=self.client,
                 config=self.config,
                 agent_service=self,
                 agent=None,
             ),
-            permit_overwrite_of_existing_methods=True,
         )
-
-    @post("connect_telegram", public=True)
-    def connect_telegram(self, bot_token: str):
-        self.store.set("bot_token", {"token": bot_token})
-        self.config.bot_token = bot_token
-
-        try:
-            self.instance_init()
-            return "OK"
-        except Exception as e:
-            return f"Could not set webhook for bot. Exception: {e}"
 
     @classmethod
     def config_cls(cls) -> Type[Config]:
@@ -129,10 +97,10 @@ class LangChainTelegramBot(AgentService):
         return response_blocks
 
     def run_agent(
-        self,
-        agent: Agent,
-        context: AgentContext,
-        name: Optional[str] = None,
+            self,
+            agent: Agent,
+            context: AgentContext,
+            name: Optional[str] = None,
     ):
         incoming_message = context.chat_history.last_user_message
         chat_id = context.metadata.get("chat_id") or incoming_message.chat_id
