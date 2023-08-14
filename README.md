@@ -114,13 +114,23 @@ e. **Upstash API key**
 <img width="866" alt="Screen Shot 2023-07-10 at 11 07 21 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/f8e6c43f-8810-423e-86b4-9e8aa70598c9">
 
 
-e. **Supabase API key** (optional)
+f. **Supabase API key** (optional)
 If you prefer to use Supabase, you will need to uncomment `VECTOR_DB=supabase` and fill out the Supabase credentials in `.env.local`.
 
 - Create a Supabase instance [here](https://supabase.com/dashboard/projects); then go to Project Settings -> API
 - `SUPABASE_URL` is the URL value under "Project URL"
 - `SUPABASE_PRIVATE_KEY` is the key starts with `ey` under Project API Keys
 - Now, you should enable pgvector on Supabase and create a schema. You can do this easily by clicking on "SQL editor" on the left hand side on Supabase UI and then clicking on "+New Query". Copy paste [this code snippet](https://github.com/a16z-infra/ai-getting-started/blob/main/pgvector.sql) in the SQL editor and click "Run".
+
+g. **Steamship API key**
+
+You can connect a Steamship agent instance as an LLM with personality, voice and image generation capabilities built in. It also includes its own vector storage and tools. To do so:
+
+- Create an account on [Steamship](https://steamship.com/account)
+- Copy the API key from your account settings page
+- Add it as the `STEAMSHIP_API_KEY` variable 
+
+If you'd like to create your own character personality, add a custom voice, or use a different image model, visit [Steamship Agent Guidebook](https://www.steamship.com/learn/agent-guidebook), create your own instance and connect it in `companions.json` using the *Rick* example as a guide.
 
 ### 4. Generate embeddings
 

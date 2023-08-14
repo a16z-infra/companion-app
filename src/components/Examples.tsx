@@ -20,6 +20,7 @@ export default function Examples() {
       imageUrl: "",
       llm: "",
       phone: "",
+      telegramLink: null
     },
   ]);
 
@@ -34,6 +35,7 @@ export default function Examples() {
           imageUrl: entry.imageUrl,
           llm: entry.llm,
           phone: entry.phone,
+          telegramLink: entry.telegramLink
         }));
         setExamples(setme);
       } catch (err) {
@@ -80,7 +82,10 @@ export default function Examples() {
               <dl className="mt-1 flex flex-grow flex-col justify-between">
                 <dt className="sr-only"></dt>
                 <dd className="text-sm text-slate-400">
-                  {example.title}. Running on <b>{example.llm}</b>
+                  {example.title}. Running on <b>{example.llm}</b>.
+                  {example.telegramLink && (
+                    <span className="ml-1"><a onClick={(event) => {event?.stopPropagation(); event?.preventDefault}} href={example.telegramLink}>Chat on <b>Telegram</b></a>.</span>
+                  )}
                 </dd>
               </dl>
               <dl className="mt-1 flex flex-grow flex-col justify-between">
