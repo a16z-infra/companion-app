@@ -62,7 +62,7 @@ export async function POST(req: Request) {
 
   // Load character "PREAMBLE" from character file. These are the core personality
   // characteristics that are used in every prompt. Additional background is
-  // only included if it matches a similarity comparioson with the current
+  // only included if it matches a similarity comparison with the current
   // discussion. The PREAMBLE should include a seed conversation whose format will
   // vary by the model using it.
   const fs = require("fs").promises;
