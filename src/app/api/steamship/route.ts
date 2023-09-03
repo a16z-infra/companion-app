@@ -27,6 +27,11 @@ export async function POST(req: Request) {
   const { prompt, isText, userId, userName } = await req.json();
   const companionName = req.headers.get("name");
 
+  if (!companionName) {
+    console.log("ERROR: no companion name");
+    return returnError(429, `Hi, please add a 'name' field in your headers specifying the Companion Name.`)
+  }
+
   // Load the companion config
   const configManager = ConfigManager.getInstance();
   const companionConfig = configManager.getConfig("name", companionName);

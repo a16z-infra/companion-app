@@ -37,7 +37,7 @@ export default function QAModal({
     headers: { name: example.name },
   });
 
-  let [blocks, setBlocks] = useState<ChatBlock[] | null>(null)
+  let [blocks, setBlocks] = useState<any[] | null>(null)
 
   useEffect(() => {
     // When the completion changes, parse it to multimodal blocks for display.
