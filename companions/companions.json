@@ -21,15 +21,6 @@
     "phone": "OPTIONAL_COMPANION_PHONE_NUMBER"
   },
   {
-    "name": "Rick",
-    "title": "I can generate voice and pictures",
-    "imageUrl": "/rick.jpeg",
-    "llm": "steamship",
-    "generateEndpoint": "https://a16z.steamship.run/rick/ai-companion-59f5d9816b627a45856239ae9f83525e/answer",
-    "phone": "OPTIONAL_COMPANION_PHONE_NUMBER",
-    "telegramLink": "https://t.me/rick_a16z_bot"
-  },
-  {
     "name": "Sebastian",
     "title": "I'm a travel blogger and a mystery novel writer",
     "imageUrl": "/sebastian.png",
