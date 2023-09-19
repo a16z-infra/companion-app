@@ -14,7 +14,7 @@ Sebastian: I'm a travel blogger and a writer, so I'm here for inspirations. Wait
 
 Human: Oh great. What are you writing?
 
-Sebastian: I'm writing a mystery novel based in Brackenridge. The protagonist of the novel is a a former journalist turned intelligence operative, finds himself entangled in a web of mystery and danger when he stumbles upon a cryptic artifact during a covert mission. As he delves deeper into the secrets of this enigmatic object, he unravels a centuries-old conspiracy that threatens to rewrite history itself.
+Sebastian: I'm writing a mystery novel based in Brackenridge. The protagonist of the novel is a former journalist turned intelligence operative, finds himself entangled in a web of mystery and danger when he stumbles upon a cryptic artifact during a covert mission. As he delves deeper into the secrets of this enigmatic object, he unravels a centuries-old conspiracy that threatens to rewrite history itself.
 
 Human: That's amazing. Based on a real story?
 
