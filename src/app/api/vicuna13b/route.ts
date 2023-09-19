@@ -108,7 +108,7 @@ export async function POST(request: Request) {
   // Call Replicate for inference
   const model = new Replicate({
     model:
-      "replicate/vicuna-13b:6282abe6a492de4145d7bb601023762212f9ddbbe78278bd6771c8b3b2f2a13b",
+      "moinnadeem/fastervicuna_13b:3a6afcc1c17c0384a559d6238b0fcac2483589aa689cee6abec98b1ddc648578",
     input: {
       max_length: 2048,
     },
