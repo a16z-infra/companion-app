@@ -160,23 +160,31 @@ You can assign a phone number to the character you are talking to and retain the
 
 a. Create a Twilio account.
 
-b. Once you created an account, create a Twilio phone number.
+b. Once you have created the account, create a Twilio phone number.
 
-c. On [Twilio dashboard](https://console.twilio.com/), scroll down to the "Account Info" section and paste `Account SID` value as `TWILIO_ACCOUNT_SID`, `Auth Token` as `TWILIO_AUTH_TOKEN` in `.env.local`
+c. On the [Twilio dashboard](https://console.twilio.com/), scroll down to the "Account Info" section and paste `Account SID` value as `TWILIO_ACCOUNT_SID`, `Auth Token` as `TWILIO_AUTH_TOKEN` in `.env.local`
 
-d. [Optional] If you are running the app locally, use [ngrok](https://ngrok.com/docs/getting-started/#step-2-install-the-ngrok-agent) to generate a public url that can forward the request to your localhost.
+d. [Optional] If you are running the app locally, you will need to generate a public URL that can forward a request to your `localhost`. This can be done using [Tunnelmole](https://github.com/robbie-cahill/tunnelmole-client), an open source tunnelling tool, or [ngrok](https://ngrok.com/docs/getting-started/#step-2-install-the-ngrok-agent), a popular closed source tunnelling tool. 
 
-e. On Twilio's UI, you can now click on "# Phone Numbers" -> "Manage" -> "[Active numbers](https://console.twilio.com/us1/develop/phone-numbers/manage/incoming)" on the left hand side nav.
+For Tunnelmole:
 
-f. Click on the phone number you just created from the list, scroll down to "Messaging Configuration" section and enter [your_app_url]/api/text in "A message comes in" section under "Webhook".
+Install Tunnelmole with `curl -O https://install.tunnelmole.com/ckz05/install && sudo bash install`. (On Windows, download [tmole.exe](https://tunnelmole.com/downloads/tmole.exe))
+Then, run `tmole 3000` (replacing `3000` with the port number you are listening on if it is different). In the output, you'll see two URLs, one HTTP and a HTTPS URL. It's best to use the HTTPS URL for privacy and security, you probably don't want to open up your chats to unauthorized viewers by using the unencrypted HTTP URL!.
+
+For ngrok:
+
+Fist install ngrok [ngrok](https://ngrok.com/docs/getting-started/#step-2-install-the-ngrok-agent), then run `ngrok http 3000` to generate a public url that can forward the request to your localhost. Replace port `3000` with your port if its different.
+
+e. On Twilio's UI, you can now click on "# Phone Numbers" -> "Manage" -> "[Active numbers](https://console.twilio.com/us1/develop/phone-numbers/manage/incoming)" on the left-hand side nav.
+
+f. Click on the phone number you just created from the list, scroll down to "Messaging Configuration" section and enter `[your_app_url]/api/text` in the "A message comes in" section under "Webhook".
 
 <img width="1062" alt="Screen Shot 2023-07-10 at 11 08 55 PM" src="https://github.com/a16z-infra/companion-app/assets/3489963/d7905f13-a83a-47f8-ac74-b66698d4292b">
 
 
-g. Add your Twilio phone number in `companions.json` under the companion you want to text with. Make sure you include area code when adding the phone number ("+14050000000" instead of "4050000000")
+g. Add your Twilio phone number in `companions.json` under the companion you want to text with. Make sure you include the area code when adding the phone number ("+14050000000" instead of "4050000000")
 
 h. Now you can text the Twilio phone number from your phone and get a response from your companion.
-
 ### 7. Deploy the app
 
 #### Deploy to fly.io
