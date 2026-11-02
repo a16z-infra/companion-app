@@ -3,11 +3,11 @@ import Link from "next/link";
 
 export default function Navbar() {
   const { userId } = auth();
-  
+
   return (
     <header className="w-full bg-stone-50/90 backdrop-blur-md border-b border-stone-200 sticky top-0 z-50">
       <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
-        
+
         {/* Logo / Nome da Marca */}
         <Link href="/" className="flex items-center gap-2">
           <span className="text-2xl">✨</span>
@@ -18,19 +18,28 @@ export default function Navbar() {
 
         {/* Menu e Autenticação */}
         <div className="flex items-center gap-6">
-          <Link 
-            href="/sobre" 
+          <Link
+            href="/sobre"
             className="text-sm font-medium text-stone-600 hover:text-rose-600 transition-colors hidden sm:block"
           >
             Como Funciona
           </Link>
-          
-          <Link 
-            href="/planos" 
+
+          <Link
+            href="/planos"
             className="text-sm font-medium text-stone-600 hover:text-rose-600 transition-colors hidden sm:block"
           >
             Planos
           </Link>
+
+          {userId && (
+            <Link
+              href="/dashboard/afiliado"
+              className="text-sm font-medium text-stone-600 hover:text-rose-600 transition-colors hidden sm:block"
+            >
+              Afiliados
+            </Link>
+          )}
 
           {/* Divisor e Botão de Login/Perfil do Clerk */}
           <div className="pl-4 border-l border-stone-200 flex items-center">
