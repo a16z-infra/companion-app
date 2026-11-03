@@ -27,7 +27,7 @@ interface ChatSession {
 }
 
 const STORAGE_KEY = "lilithlove_sessions_v1";
-const CHECKOUT_URL = "#checkout-premium";
+const CHECKOUT_URL = "/planos";
 
 export default function LilithChat() {
   const [sessions, setSessions] = useState<ChatSession[]>([]);
@@ -198,14 +198,14 @@ export default function LilithChat() {
     return tokens.map((token, index) => {
       if (token.startsWith("**") && token.endsWith("**")) {
         return (
-          <strong key={index} className="font-semibold text-rose-950">
+          <strong key={index} className="font-semibold text-rose-950 dark:text-rose-300">
             {token.slice(2, -2)}
           </strong>
         );
       }
       if (token.startsWith("*") && token.endsWith("*") && token.length > 2) {
         return (
-          <em key={index} className="italic text-stone-700 font-medium">
+          <em key={index} className="italic text-stone-700 dark:text-stone-300 font-medium">
             {token.slice(1, -1)}
           </em>
         );
@@ -271,7 +271,7 @@ export default function LilithChat() {
   };
 
   return (
-    <div className="flex h-screen bg-[#faf7f5] font-sans overflow-hidden">
+    <div className="flex h-screen bg-[#faf7f5] dark:bg-[#140a0f] font-sans overflow-hidden transition-colors">
       {/* BARRA LATERAL DE HISTÓRICO DE CASOS */}
       {isSidebarOpen && (
         <div
@@ -281,15 +281,15 @@ export default function LilithChat() {
       )}
 
       <aside
-        className={`fixed lg:static inset-y-0 left-0 z-40 w-72 bg-white border-r border-rose-100 flex flex-col transition-transform duration-200 ${
+        className={`fixed lg:static inset-y-0 left-0 z-40 w-[82%] max-w-xs lg:w-72 bg-white dark:bg-[#1c1016] border-r border-rose-100 dark:border-rose-400/15 flex flex-col transition-transform duration-200 ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         }`}
       >
-        <div className="p-4 border-b border-rose-100 flex items-center justify-between">
-          <span className="font-serif font-bold text-stone-800 text-base">Meus Casos</span>
+        <div className="p-4 border-b border-rose-100 dark:border-rose-400/15 flex items-center justify-between">
+          <span className="font-serif font-bold text-stone-800 dark:text-stone-100 text-base">Meus Casos</span>
           <button
             onClick={() => createNewSession()}
-            className="text-xs font-semibold px-3 py-1.5 rounded-full bg-rose-900 text-white hover:bg-rose-800 transition-colors"
+            className="text-xs font-semibold px-3 py-1.5 rounded-full bg-rose-900 dark:bg-rose-600 text-white hover:bg-rose-800 dark:hover:bg-rose-500 transition-colors"
           >
             + Novo Caso
           </button>
@@ -302,18 +302,18 @@ export default function LilithChat() {
               onClick={() => selectSession(s)}
               className={`group flex items-center justify-between p-3 rounded-2xl cursor-pointer transition-all text-left border ${
                 s.id === activeSessionId
-                  ? "bg-rose-50/80 border-rose-200 text-rose-950 font-medium"
-                  : "bg-stone-50/60 border-transparent hover:bg-stone-100 text-stone-700"
+                  ? "bg-rose-50/80 dark:bg-rose-500/15 border-rose-200 dark:border-rose-400/30 text-rose-950 dark:text-rose-200 font-medium"
+                  : "bg-stone-50/60 dark:bg-white/5 border-transparent hover:bg-stone-100 dark:hover:bg-white/10 text-stone-700 dark:text-stone-300"
               }`}
             >
               <div className="truncate pr-2">
                 <p className="text-xs truncate">{s.title}</p>
-                <span className="text-[10px] text-stone-400">{s.updatedAt}</span>
+                <span className="text-[10px] text-stone-400 dark:text-stone-500">{s.updatedAt}</span>
               </div>
               {sessions.length > 1 && (
                 <button
                   onClick={(e) => deleteSession(s.id, e)}
-                  className="opacity-0 group-hover:opacity-100 text-stone-400 hover:text-rose-700 text-xs px-1.5"
+                  className="opacity-60 lg:opacity-0 lg:group-hover:opacity-100 text-stone-400 hover:text-rose-700 dark:hover:text-rose-400 text-xs px-1.5"
                   title="Excluir caso"
                 >
                   ✕
@@ -323,31 +323,32 @@ export default function LilithChat() {
           ))}
         </div>
 
-        <div className="p-4 border-t border-stone-100 text-[11px] text-stone-400 text-center">
+        <div className="p-4 border-t border-stone-100 dark:border-rose-400/15 text-[11px] text-stone-400 dark:text-stone-500 text-center">
           Seus relatos ficam salvos neste dispositivo para consulta rápida.
         </div>
       </aside>
 
       {/* ÁREA PRINCIPAL DO CHAT */}
-      <div className="flex-1 flex flex-col h-screen overflow-hidden">
-        <header className="flex items-center justify-between px-4 sm:px-6 py-4 bg-white/90 backdrop-blur-md border-b border-rose-100 shadow-sm shrink-0">
-          <div className="flex items-center gap-2 sm:gap-3">
+      <div className="flex-1 flex flex-col h-screen overflow-hidden min-w-0">
+        <header className="flex items-center justify-between gap-2 px-3 sm:px-6 py-3 sm:py-4 bg-white/90 dark:bg-[#1c1016]/90 backdrop-blur-md border-b border-rose-100 dark:border-rose-400/15 shadow-sm shrink-0">
+          <div className="flex items-center gap-1.5 sm:gap-3 min-w-0">
             <button
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-              className="lg:hidden text-xs font-medium px-3 py-1.5 rounded-full bg-rose-50 text-rose-900 border border-rose-200"
+              className="lg:hidden text-base px-2.5 py-2 rounded-full bg-rose-50 dark:bg-rose-500/15 text-rose-900 dark:text-rose-300 border border-rose-200 dark:border-rose-400/30 shrink-0"
+              title="Meus Casos"
             >
-              📂 Casos ({sessions.length})
+              📂
             </button>
-            <Link href="/" className="text-sm font-medium px-3 py-1.5 rounded-full bg-stone-100 hover:bg-stone-200 transition-colors text-stone-700">
+            <Link href="/" className="hidden sm:inline-block text-sm font-medium px-3 py-1.5 rounded-full bg-stone-100 dark:bg-white/10 hover:bg-stone-200 dark:hover:bg-white/20 transition-colors text-stone-700 dark:text-stone-200">
               ← Voltar
             </Link>
-            <div className="flex items-center gap-3 ml-1 sm:ml-2">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-rose-900 to-rose-600 flex items-center justify-center text-white font-serif font-bold shadow-sm">
+            <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gradient-to-tr from-rose-900 to-rose-600 flex items-center justify-center text-white font-serif font-bold shadow-sm shrink-0">
                 L
               </div>
-              <div className="flex flex-col">
-                <span className="font-serif font-bold text-stone-900 leading-tight">Lilith</span>
-                <span className="text-xs text-rose-600 font-medium flex items-center gap-1.5">
+              <div className="flex flex-col min-w-0">
+                <span className="font-serif font-bold text-stone-900 dark:text-white leading-tight truncate">Lilith</span>
+                <span className="text-[11px] sm:text-xs text-rose-600 dark:text-rose-400 font-medium flex items-center gap-1.5">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                   Especialista Online
                 </span>
@@ -355,29 +356,29 @@ export default function LilithChat() {
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             <button
               onClick={() => setShowPaywallModal(true)}
-              className="flex items-center gap-1.5 text-xs font-semibold px-3.5 py-1.5 rounded-full bg-rose-50 text-rose-900 border border-rose-200 hover:bg-rose-100 transition-colors"
+              className="flex items-center gap-1.5 text-xs font-semibold px-2.5 sm:px-3.5 py-1.5 rounded-full bg-rose-50 dark:bg-rose-500/15 text-rose-900 dark:text-rose-300 border border-rose-200 dark:border-rose-400/30 hover:bg-rose-100 dark:hover:bg-rose-500/25 transition-colors"
             >
               <span>✨</span>
-              <span>Mensagens: {Math.max(0, totalAllowed - assistantRepliesCount)}/{totalAllowed}</span>
+              <span><span className="hidden sm:inline">Mensagens: </span>{Math.max(0, totalAllowed - assistantRepliesCount)}/{totalAllowed}</span>
             </button>
             <UserButton afterSignOutUrl="/" />
           </div>
         </header>
 
         {/* Mensagens */}
-        <main className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6 max-w-4xl w-full mx-auto">
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-5 sm:space-y-6 max-w-4xl w-full mx-auto">
           {messages.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-center px-4 space-y-4">
-              <div className="w-20 h-20 bg-gradient-to-tr from-rose-100 to-orange-50 border border-rose-200 rounded-full flex items-center justify-center text-4xl shadow-sm mb-2">
+              <div className="w-20 h-20 bg-gradient-to-tr from-rose-100 to-orange-50 dark:from-rose-500/20 dark:to-rose-900/10 border border-rose-200 dark:border-rose-400/20 rounded-full flex items-center justify-center text-4xl shadow-sm mb-2">
                 🔮
               </div>
-              <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-800">
+              <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-800 dark:text-stone-100">
                 Me mostre a verdade.
               </h2>
-              <p className="text-stone-500 max-w-md text-sm sm:text-base leading-relaxed">
+              <p className="text-stone-500 dark:text-stone-400 max-w-md text-sm sm:text-base leading-relaxed">
                 Desabafe sem filtros, cole o histórico do WhatsApp ou clique no clipe abaixo para enviar o <strong>print da conversa, áudio ou vídeo</strong>.
               </p>
             </div>
@@ -385,14 +386,14 @@ export default function LilithChat() {
             messages.map((m) => (
               <div key={m.id} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
                 <div
-                  className={`max-w-[92%] sm:max-w-[82%] rounded-3xl px-6 py-4 shadow-sm whitespace-pre-wrap leading-relaxed text-[15px] ${
+                  className={`max-w-[88%] sm:max-w-[82%] rounded-3xl px-4 py-3 sm:px-6 sm:py-4 shadow-sm whitespace-pre-wrap leading-relaxed text-[15px] ${
                     m.role === "user"
                       ? "bg-gradient-to-br from-rose-900 to-rose-800 text-rose-50 rounded-tr-sm shadow-md"
-                      : "bg-white text-stone-800 border border-rose-100/80 border-l-4 border-l-rose-800 rounded-tl-sm shadow-md"
+                      : "bg-white dark:bg-white/5 text-stone-800 dark:text-stone-200 border border-rose-100/80 dark:border-rose-400/20 border-l-4 border-l-rose-800 dark:border-l-rose-500 rounded-tl-sm shadow-md"
                   }`}
                 >
                   {m.role === "assistant" && (
-                    <div className="text-[11px] font-bold uppercase tracking-widest text-rose-800 mb-2 flex items-center gap-1.5">
+                    <div className="text-[11px] font-bold uppercase tracking-widest text-rose-800 dark:text-rose-400 mb-2 flex items-center gap-1.5">
                       <span>✦</span> DIAGNÓSTICO DE LILITH
                     </div>
                   )}
@@ -419,13 +420,13 @@ export default function LilithChat() {
           
           {isLoading && (
             <div className="flex justify-start">
-              <div className="bg-white border border-rose-100 border-l-4 border-l-rose-800 rounded-2xl rounded-tl-sm px-5 py-4 shadow-sm flex items-center gap-3">
+              <div className="bg-white dark:bg-white/5 border border-rose-100 dark:border-rose-400/20 border-l-4 border-l-rose-800 dark:border-l-rose-500 rounded-2xl rounded-tl-sm px-5 py-4 shadow-sm flex items-center gap-3">
                 <div className="flex gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-rose-700 animate-bounce" style={{ animationDelay: "0ms" }}></span>
-                  <span className="w-2 h-2 rounded-full bg-rose-700 animate-bounce" style={{ animationDelay: "150ms" }}></span>
-                  <span className="w-2 h-2 rounded-full bg-rose-700 animate-bounce" style={{ animationDelay: "300ms" }}></span>
+                  <span className="w-2 h-2 rounded-full bg-rose-700 dark:bg-rose-400 animate-bounce" style={{ animationDelay: "0ms" }}></span>
+                  <span className="w-2 h-2 rounded-full bg-rose-700 dark:bg-rose-400 animate-bounce" style={{ animationDelay: "150ms" }}></span>
+                  <span className="w-2 h-2 rounded-full bg-rose-700 dark:bg-rose-400 animate-bounce" style={{ animationDelay: "300ms" }}></span>
                 </div>
-                <span className="text-xs text-stone-500 font-medium">Lilith está analisando as entrelinhas...</span>
+                <span className="text-xs text-stone-500 dark:text-stone-400 font-medium">Lilith está analisando as entrelinhas...</span>
               </div>
             </div>
           )}
@@ -433,19 +434,19 @@ export default function LilithChat() {
         </main>
 
         {/* Rodapé de Digitação: Enter envia, Shift + Enter pula linha */}
-        <footer className="p-3 sm:p-4 bg-white border-t border-rose-100 shrink-0">
+        <footer className="p-3 sm:p-4 bg-white dark:bg-[#1c1016] border-t border-rose-100 dark:border-rose-400/15 shrink-0">
           <div className="max-w-4xl mx-auto">
             {attachment && (
-              <div className="mb-3 flex items-center justify-between bg-rose-50 border border-rose-200 px-4 py-2 rounded-2xl text-xs text-rose-900">
+              <div className="mb-3 flex items-center justify-between bg-rose-50 dark:bg-rose-500/15 border border-rose-200 dark:border-rose-400/30 px-4 py-2 rounded-2xl text-xs text-rose-900 dark:text-rose-200">
                 <div className="flex items-center gap-2 truncate">
                   <span className="text-base">📎</span>
                   <span className="font-medium truncate">{attachment.name}</span>
-                  <span className="text-rose-600">(Pronto para análise)</span>
+                  <span className="text-rose-600 dark:text-rose-400 hidden sm:inline">(Pronto para análise)</span>
                 </div>
                 <button
                   type="button"
                   onClick={() => setAttachment(null)}
-                  className="ml-3 text-rose-800 hover:text-rose-950 font-bold px-2 py-0.5 rounded-full hover:bg-rose-200/50"
+                  className="ml-3 text-rose-800 dark:text-rose-300 hover:text-rose-950 font-bold px-2 py-0.5 rounded-full hover:bg-rose-200/50 dark:hover:bg-rose-500/20"
                 >
                   ✕
                 </button>
@@ -462,11 +463,11 @@ export default function LilithChat() {
                     Desbloqueie o Plano de Ação Premium para liberar o roteiro completo e mensagens ilimitadas.
                   </p>
                 </div>
-                <div className="flex items-center gap-2 shrink-0">
+                <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto">
                   <button
                     type="button"
                     onClick={() => setShowPaywallModal(true)}
-                    className="px-4 py-2.5 bg-amber-400 hover:bg-amber-300 text-stone-950 font-bold text-xs sm:text-sm rounded-xl shadow transition-colors"
+                    className="w-full sm:w-auto px-4 py-2.5 bg-amber-400 hover:bg-amber-300 text-stone-950 font-bold text-xs sm:text-sm rounded-xl shadow transition-colors"
                   >
                     🔓 Desbloquear Agora
                   </button>
@@ -486,7 +487,7 @@ export default function LilithChat() {
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
                   title="Enviar Print, Áudio ou Vídeo"
-                  className="p-3.5 bg-stone-100 hover:bg-rose-100 text-stone-600 hover:text-rose-900 rounded-full transition-colors shrink-0 border border-stone-200 mb-0.5"
+                  className="p-3 sm:p-3.5 bg-stone-100 dark:bg-white/5 hover:bg-rose-100 dark:hover:bg-white/10 text-stone-600 dark:text-stone-300 hover:text-rose-900 rounded-full transition-colors shrink-0 border border-stone-200 dark:border-white/10 mb-0.5"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M18.375 12.739l-7.693 7.693a4.5 4.5 0 01-6.364-6.364l10.94-10.94A3 3 0 1119.5 7.372L8.552 18.32m.009-.01l-.01.01m5.699-9.941l-7.81 7.81a1.5 1.5 0 002.112 2.13" />
@@ -504,14 +505,14 @@ export default function LilithChat() {
                     }
                   }}
                   rows={Math.min(5, Math.max(1, input.split("\n").length))}
-                  placeholder="Conte o caso ou cole a conversa (Shift + Enter para pular linha)..."
-                  className="w-full bg-stone-50 border border-stone-200 text-stone-800 rounded-3xl pl-5 pr-14 py-3.5 focus:outline-none focus:ring-2 focus:ring-rose-200 focus:border-rose-400 transition-all shadow-inner text-sm sm:text-base resize-none max-h-40 overflow-y-auto"
+                  placeholder="Conte o caso ou cole a conversa..."
+                  className="w-full bg-stone-50 dark:bg-white/5 border border-stone-200 dark:border-white/10 text-stone-800 dark:text-stone-100 dark:placeholder-stone-500 rounded-3xl pl-5 pr-14 py-3 sm:py-3.5 focus:outline-none focus:ring-2 focus:ring-rose-200 dark:focus:ring-rose-500/40 focus:border-rose-400 transition-all shadow-inner text-sm sm:text-base resize-none max-h-40 overflow-y-auto"
                 />
 
                 <button 
                   type="submit" 
                   disabled={isLoading || (!input.trim() && !attachment)}
-                  className="absolute right-2 bottom-1.5 p-3 bg-rose-900 text-white rounded-full hover:bg-rose-800 disabled:opacity-40 transition-colors shadow-sm"
+                  className="absolute right-2 bottom-1.5 p-3 bg-rose-900 dark:bg-rose-600 text-white rounded-full hover:bg-rose-800 dark:hover:bg-rose-500 disabled:opacity-40 transition-colors shadow-sm"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
@@ -526,39 +527,39 @@ export default function LilithChat() {
       {/* MODAL DE PAYWALL QUANDO ATINGE O LIMITE DE 5 MENSAGENS */}
       {showPaywallModal && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white border border-rose-100 rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative">
+          <div className="bg-white dark:bg-[#1c1016] border border-rose-100 dark:border-rose-400/20 rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative">
             <button
               onClick={() => setShowPaywallModal(false)}
-              className="absolute top-4 right-4 w-8 h-8 rounded-full bg-stone-100 hover:bg-stone-200 flex items-center justify-center text-stone-600 font-bold"
+              className="absolute top-4 right-4 w-8 h-8 rounded-full bg-stone-100 dark:bg-white/10 hover:bg-stone-200 dark:hover:bg-white/20 flex items-center justify-center text-stone-600 dark:text-stone-300 font-bold"
             >
               ✕
             </button>
 
-            <div className="w-12 h-12 rounded-2xl bg-rose-100 text-rose-900 flex items-center justify-center text-2xl mb-4">
+            <div className="w-12 h-12 rounded-2xl bg-rose-100 dark:bg-rose-500/15 text-rose-900 dark:text-rose-300 flex items-center justify-center text-2xl mb-4">
               👑
             </div>
 
-            <span className="text-[11px] font-bold uppercase tracking-widest text-rose-600">
+            <span className="text-[11px] font-bold uppercase tracking-widest text-rose-600 dark:text-rose-400">
               Acesso VIP • LilithLove
             </span>
-            <h3 className="text-2xl font-serif font-bold text-stone-900 mt-1 mb-2">
+            <h3 className="text-2xl font-serif font-bold text-stone-900 dark:text-white mt-1 mb-2">
               Desbloqueie o Plano de Ação Completo
             </h3>
-            <p className="text-sm text-stone-600 leading-relaxed mb-5">
+            <p className="text-sm text-stone-600 dark:text-stone-300 leading-relaxed mb-5">
               Tenha acesso imediato à mensagem exata para virar o jogo e consultas ilimitadas com a Lilith:
             </p>
 
-            <ul className="space-y-2.5 text-sm text-stone-700 mb-6">
+            <ul className="space-y-2.5 text-sm text-stone-700 dark:text-stone-300 mb-6">
               <li className="flex items-start gap-2.5">
-                <span className="text-emerald-600 font-bold">✓</span>
+                <span className="text-emerald-600 dark:text-emerald-400 font-bold">✓</span>
                 <span><strong>A Mensagem Cirúrgica:</strong> O texto exato para copiar, colar e quebrar o silêncio.</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <span className="text-emerald-600 font-bold">✓</span>
+                <span className="text-emerald-600 dark:text-emerald-400 font-bold">✓</span>
                 <span><strong>Guia de Stories e Postura:</strong> O que postar para ativar gatilho de perda.</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <span className="text-emerald-600 font-bold">✓</span>
+                <span className="text-emerald-600 dark:text-emerald-400 font-bold">✓</span>
                 <span><strong>Consultas Ilimitadas:</strong> Envie quantos prints, áudios e textos quiser.</span>
               </li>
             </ul>
@@ -574,7 +575,7 @@ export default function LilithChat() {
               type="button"
               onClick={handleUnlockAdBonus}
               disabled={isWatchingAd}
-              className="w-full py-3 px-4 bg-stone-100 hover:bg-stone-200 text-stone-700 font-semibold text-xs rounded-2xl transition-colors flex items-center justify-center gap-2 border border-stone-200"
+              className="w-full py-3 px-4 bg-stone-100 dark:bg-white/5 hover:bg-stone-200 dark:hover:bg-white/10 text-stone-700 dark:text-stone-300 font-semibold text-xs rounded-2xl transition-colors flex items-center justify-center gap-2 border border-stone-200 dark:border-white/10"
             >
               {isWatchingAd ? (
                 <span>⏳ Carregando patrocinador... Aguarde 2s</span>
