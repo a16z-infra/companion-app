@@ -12,6 +12,7 @@
     "export-to-character": "node src/scripts/exportToCharacter.mjs"
   },
   "dependencies": {
+    "@google/generative-ai": "latest",
     "@clerk/clerk-sdk-node": "^4.10.12",
     "@clerk/nextjs": "^4.21.9-snapshot.56dc3e3",
     "@headlessui/react": "^1.7.15",
